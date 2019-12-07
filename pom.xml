@@ -136,6 +136,7 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
     </plugins>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <!-- TODO: add test resources directory -->
   </build>
-
 </project>

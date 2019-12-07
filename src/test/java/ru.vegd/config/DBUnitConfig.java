@@ -1,4 +1,4 @@
-package DBUnitConfig;
+package ru.vegd.config;
 
 import org.dbunit.DBTestCase;
 import org.dbunit.IDatabaseTester;
