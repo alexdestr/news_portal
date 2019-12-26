@@ -21,9 +21,7 @@ public class CommentDAOImplTest {
     @Autowired
     CommentDAO commentDAO;
 
-    private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(CommentDAOImpl.class.getName());
-
-    Comment comment = new Comment();
+    Comment comment;
 
     @Before
     public void before() {
@@ -46,11 +44,7 @@ public class CommentDAOImplTest {
     @Test
     public void add() throws SQLException {
 
-        comment.setNews_id(1L);
-        comment.setAuthor_id(4L);
-        comment.setComment_text("nice");
-        commentDAO.add(comment);
-        System.out.println(commentDAO.getAll());
+
 
     }
 

@@ -123,6 +123,19 @@
       <version>RELEASE</version>
     </dependency>
     <dependency>
+      <groupId>com.github.springtestdbunit</groupId>
+      <artifactId>spring-test-dbunit</artifactId>
+      <version>1.2.1</version>
+      <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>*</groupId>
+          <artifactId>*</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
@@ -137,6 +150,10 @@
       </plugin>
     </plugins>
     <testSourceDirectory>src/test/java</testSourceDirectory>
-    <!-- TODO: add test resources directory -->
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
   </build>
 </project>
