@@ -1,10 +1,8 @@
 package ru.vegd.entity;
 
-import org.springframework.stereotype.Component;
-
 import java.sql.Timestamp;
 import java.util.Objects;
-@Component("comments")
+
 public class Comment {
 
     private long comment_id;

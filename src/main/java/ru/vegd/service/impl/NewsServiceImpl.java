@@ -1,8 +1,8 @@
 package ru.vegd.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import ru.vegd.dao.NewDAO;
-import ru.vegd.entity.New;
+import ru.vegd.dao.NewsDAO;
+import ru.vegd.entity.News;
 import ru.vegd.service.NewsService;
 
 import java.sql.SQLException;
@@ -12,32 +12,32 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
 
     @Autowired
-    NewDAO newDAO;
+    NewsDAO newsDAO;
 
     @Override
     public List getAll() throws SQLException {
-        return newDAO.getAll();
+        return newsDAO.getAll();
     }
 
     @Override
-    public void add(New aNew) throws SQLException {
+    public void add(News aNews) throws SQLException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        aNew.setPublic_date(timestamp);
-        newDAO.add(aNew);
+        aNews.setPublic_date(timestamp);
+        newsDAO.add(aNews);
     }
 
     @Override
-    public New read(long ID) throws SQLException {
-        return newDAO.read(ID);
+    public News read(long ID) throws SQLException {
+        return newsDAO.read(ID);
     }
 
     @Override
     public void delete(long ID) throws SQLException {
-        newDAO.delete(ID);
+        newsDAO.delete(ID);
     }
 
     @Override
-    public void update(New aNew) throws SQLException {
-        newDAO.update(aNew);
+    public void update(News aNews) throws SQLException {
+        newsDAO.update(aNews);
     }
 }

@@ -2,8 +2,8 @@ package ru.vegd.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.vegd.dao.NewDAO;
-import ru.vegd.entity.New;
+import ru.vegd.dao.NewsDAO;
+import ru.vegd.entity.News;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class NewDAOImpl implements NewDAO {
+public class NewsDAOImpl implements NewsDAO {
 
-    private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NewDAOImpl.class.getName());
+    private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NewsDAOImpl.class.getName());
 
     @Autowired
     DataSource dataSource;
@@ -28,7 +28,7 @@ public class NewDAOImpl implements NewDAO {
     @Override
     public List getAll() throws SQLException {
 
-        List<New> newList = new ArrayList<>();
+        List<News> newsList = new ArrayList<>();
 
         Connection connection = dataSource.getConnection();
 
@@ -41,15 +41,15 @@ public class NewDAOImpl implements NewDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                New aNew = new New();
+                News aNews = new News();
 
-                aNew.setNews_id(resultSet.getLong("news_id"));
-                aNew.setAuthor_id(resultSet.getLong("author_id"));
-                aNew.setTittle(resultSet.getString("tittle"));
-                aNew.setNews_text(resultSet.getString("news_text"));
-                aNew.setPublic_date(resultSet.getTimestamp("public_date"));
+                aNews.setNews_id(resultSet.getLong("news_id"));
+                aNews.setAuthor_id(resultSet.getLong("author_id"));
+                aNews.setTittle(resultSet.getString("tittle"));
+                aNews.setNews_text(resultSet.getString("news_text"));
+                aNews.setPublic_date(resultSet.getTimestamp("public_date"));
 
-                newList.add(aNew);
+                newsList.add(aNews);
             }
 
         } catch (SQLException e) {
@@ -63,11 +63,11 @@ public class NewDAOImpl implements NewDAO {
             }
         }
 
-        return newList;
+        return newsList;
     }
 
     @Override
-    public void add(New aNew) throws SQLException {
+    public void add(News aNews) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
@@ -76,10 +76,10 @@ public class NewDAOImpl implements NewDAO {
         try {
             preparedStatement = connection.prepareStatement(SQL_ADD);
 
-            preparedStatement.setLong(1, aNew.getAuthor_id());
-            preparedStatement.setString(2, aNew.getTittle());
-            preparedStatement.setString(3, aNew.getNews_text());
-            preparedStatement.setTimestamp(4, aNew.getPublic_date());
+            preparedStatement.setLong(1, aNews.getAuthor_id());
+            preparedStatement.setString(2, aNews.getTittle());
+            preparedStatement.setString(3, aNews.getNews_text());
+            preparedStatement.setTimestamp(4, aNews.getPublic_date());
 
             preparedStatement.executeUpdate();
             logger.info("Success adding");
@@ -97,13 +97,13 @@ public class NewDAOImpl implements NewDAO {
     }
 
     @Override
-    public New read(long ID) throws SQLException {
+    public News read(long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
         PreparedStatement preparedStatement = null;
 
-        New aNew = new New();
+        News aNews = new News();
 
         try {
             preparedStatement = connection.prepareStatement(SQL_READ);
@@ -112,11 +112,11 @@ public class NewDAOImpl implements NewDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                aNew.setNews_id(resultSet.getLong("news_id"));
-                aNew.setAuthor_id(resultSet.getLong("author_id"));
-                aNew.setTittle(resultSet.getString("tittle"));
-                aNew.setNews_text(resultSet.getString("news_text"));
-                aNew.setPublic_date(resultSet.getTimestamp("public_date"));
+                aNews.setNews_id(resultSet.getLong("news_id"));
+                aNews.setAuthor_id(resultSet.getLong("author_id"));
+                aNews.setTittle(resultSet.getString("tittle"));
+                aNews.setNews_text(resultSet.getString("news_text"));
+                aNews.setPublic_date(resultSet.getTimestamp("public_date"));
             }
 
         } catch (SQLException e) {
@@ -129,7 +129,7 @@ public class NewDAOImpl implements NewDAO {
                 connection.close();
             }
         }
-        return aNew;
+        return aNews;
     }
 
     @Override
@@ -160,7 +160,7 @@ public class NewDAOImpl implements NewDAO {
     }
 
     @Override
-    public void update(New aNew) throws SQLException {
+    public void update(News aNews) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
@@ -169,10 +169,10 @@ public class NewDAOImpl implements NewDAO {
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE);
 
-            preparedStatement.setLong(1, aNew.getAuthor_id());
-            preparedStatement.setString(2, aNew.getTittle());
-            preparedStatement.setString(3, aNew.getNews_text());
-            preparedStatement.setLong(4, aNew.getNews_id());
+            preparedStatement.setLong(1, aNews.getAuthor_id());
+            preparedStatement.setString(2, aNews.getTittle());
+            preparedStatement.setString(3, aNews.getNews_text());
+            preparedStatement.setLong(4, aNews.getNews_id());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");

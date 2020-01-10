@@ -1,4 +1,4 @@
-package ru.vegd.dao.impl;
+package test.ru.vegd.dao.impl;
 
 import org.junit.Before;
 import org.junit.Test;

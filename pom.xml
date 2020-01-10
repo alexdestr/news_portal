@@ -104,13 +104,13 @@
       <scope>test</scope>
     </dependency>
 
-      <!-- https://mvnrepository.com/artifact/org.dbunit/dbunit -->
-      <dependency>
-          <groupId>org.dbunit</groupId>
-          <artifactId>dbunit</artifactId>
-          <version>2.5.1</version>
-          <scope>test</scope>
-      </dependency>
+    <!-- https://mvnrepository.com/artifact/org.dbunit/dbunit -->
+    <dependency>
+        <groupId>org.dbunit</groupId>
+        <artifactId>dbunit</artifactId>
+        <version>2.5.1</version>
+        <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>commons-configuration</groupId>
@@ -134,6 +134,21 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-orm</artifactId>
+      <version>2.5.1</version>
+    </dependency>
+
+    <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-jdbc</artifactId>
+      <version>5.2.2.RELEASE</version>
+    </dependency>
+
+
 
     <dependency>
       <groupId>junit</groupId>

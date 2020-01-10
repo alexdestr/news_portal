@@ -1,9 +1,7 @@
 package ru.vegd.entity;
 
-import org.springframework.stereotype.Component;
-
 import java.util.Objects;
-@Component("tags")
+
 public class Tag {
 
     private long news_ID;

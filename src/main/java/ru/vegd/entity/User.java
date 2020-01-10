@@ -1,10 +1,8 @@
 package ru.vegd.entity;
 
-import org.springframework.stereotype.Component;
-
 import java.sql.Timestamp;
 import java.util.Objects;
-@Component("users")
+
 public class User {
 
     private long user_id;

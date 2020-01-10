@@ -1,11 +1,9 @@
 package ru.vegd.entity;
 
-import org.springframework.stereotype.Component;
-
 import java.sql.Timestamp;
 import java.util.Objects;
-@Component("news")
-public class New {
+
+public class News {
 
     private long news_id;
     private long author_id;
@@ -13,7 +11,7 @@ public class New {
     private String news_text;
     private Timestamp public_date;
 
-    public New(long news_id, long author_id, String tittle, String news_text, Timestamp public_date) {
+    public News(long news_id, long author_id, String tittle, String news_text, Timestamp public_date) {
         this.news_id = news_id;
         this.author_id = author_id;
         this.tittle = tittle;
@@ -21,7 +19,7 @@ public class New {
         this.public_date = public_date;
     }
 
-    public New() {}
+    public News() {}
 
     public long getNews_id() {
         return news_id;
@@ -68,12 +66,12 @@ public class New {
 
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        New aNew = (New) o;
-        return news_id == aNew.news_id &&
-                author_id == aNew.author_id &&
-                Objects.equals(tittle, aNew.tittle) &&
-                Objects.equals(news_text, aNew.news_text) &&
-                Objects.equals(public_date, aNew.public_date);
+        News aNews = (News) o;
+        return news_id == aNews.news_id &&
+                author_id == aNews.author_id &&
+                Objects.equals(tittle, aNews.tittle) &&
+                Objects.equals(news_text, aNews.news_text) &&
+                Objects.equals(public_date, aNews.public_date);
     }
 
     @Override
@@ -84,7 +82,7 @@ public class New {
 
     @Override
     public String toString() {
-        return "New{" +
+        return "News{" +
                 "news_id=" + news_id +
                 ", author_id=" + author_id +
                 ", tittle='" + tittle + '\'' +
