@@ -5,60 +5,60 @@ import java.util.Objects;
 
 public class Comment {
 
-    private long comment_id;
-    private long news_id;
-    private long author_id;
-    private String comment_text;
-    private Timestamp sending_date;
+    private Long commentId;
+    private Long newsId;
+    private Long authorId;
+    private String commentText;
+    private Timestamp sendingDate;
 
-    public Comment(long comment_id, long news_id, long author_id, String comment_text, Timestamp sending_date) {
-        this.comment_id = comment_id;
-        this.news_id = news_id;
-        this.author_id = author_id;
-        this.comment_text = comment_text;
-        this.sending_date = sending_date;
+    public Comment(Long commentId, Long news_id, Long author_id, String comment_text, Timestamp sending_date) {
+        this.commentId = commentId;
+        this.newsId = news_id;
+        this.authorId = author_id;
+        this.commentText = comment_text;
+        this.sendingDate = sending_date;
     }
 
     public Comment() {}
 
-    public long getComment_id() {
-        return comment_id;
+    public Long getComment_id() {
+        return commentId;
     }
 
-    public void setComment_id(long comment_id) {
-        this.comment_id = comment_id;
+    public void setComment_id(Long comment_id) {
+        this.commentId = comment_id;
     }
 
-    public long getNews_id() {
-        return news_id;
+    public Long getNews_id() {
+        return newsId;
     }
 
-    public void setNews_id(long news_id) {
-        this.news_id = news_id;
+    public void setNews_id(Long news_id) {
+        this.newsId = news_id;
     }
 
-    public long getAuthor_id() {
-        return author_id;
+    public Long getAuthor_id() {
+        return authorId;
     }
 
-    public void setAuthor_id(long author_id) {
-        this.author_id = author_id;
+    public void setAuthor_id(Long author_id) {
+        this.authorId = author_id;
     }
 
     public String getComment_text() {
-        return comment_text;
+        return commentText;
     }
 
     public void setComment_text(String comment_text) {
-        this.comment_text = comment_text;
+        this.commentText = comment_text;
     }
 
     public Timestamp getSending_date() {
-        return sending_date;
+        return sendingDate;
     }
 
     public void setSending_date(Timestamp sending_date) {
-        this.sending_date = sending_date;
+        this.sendingDate = sending_date;
     }
 
     @Override
@@ -67,27 +67,27 @@ public class Comment {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return comment_id == comment.comment_id &&
-                news_id == comment.news_id &&
-                Objects.equals(author_id, comment.author_id) &&
-                Objects.equals(comment_text, comment.comment_text) &&
-                Objects.equals(sending_date, comment.sending_date);
+        return commentId == comment.commentId &&
+                newsId == comment.newsId &&
+                Objects.equals(authorId, comment.authorId) &&
+                Objects.equals(commentText, comment.commentText) &&
+                Objects.equals(sendingDate, comment.sendingDate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(comment_id, news_id, author_id, comment_text, sending_date);
+        return Objects.hash(commentId, newsId, authorId, commentText, sendingDate);
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "comment_id=" + comment_id +
-                ", news_id=" + news_id +
-                ", author_id='" + author_id + '\'' +
-                ", comment_text='" + comment_text + '\'' +
-                ", sending_date=" + sending_date +
+                "comment_id=" + commentId +
+                ", news_id=" + newsId +
+                ", author_id='" + authorId + '\'' +
+                ", comment_text='" + commentText + '\'' +
+                ", sending_date=" + sendingDate +
                 '}';
     }
 }

@@ -27,12 +27,12 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public News read(long ID) throws SQLException {
+    public News read(Long ID) throws SQLException {
         return newsDAO.read(ID);
     }
 
     @Override
-    public void delete(long ID) throws SQLException {
+    public void delete(Long ID) throws SQLException {
         newsDAO.delete(ID);
     }
 

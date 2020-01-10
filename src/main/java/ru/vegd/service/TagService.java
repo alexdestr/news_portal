@@ -9,8 +9,8 @@ public interface TagService {
 
     List getAll() throws SQLException;
     void add(Tag tag) throws SQLException;
-    Tag read(long ID) throws SQLException;
-    void delete(long ID) throws SQLException;
+    Tag read(Long ID) throws SQLException;
+    void delete(Long ID) throws SQLException;
     void update(Tag tag) throws SQLException;
 
 }

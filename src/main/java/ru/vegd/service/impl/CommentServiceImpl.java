@@ -29,12 +29,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Comment read(long ID) throws SQLException {
+    public Comment read(Long ID) throws SQLException {
         return commentDAO.read(ID);
     }
 
     @Override
-    public void delete(long ID) throws SQLException {
+    public void delete(Long ID) throws SQLException {
         commentDAO.delete(ID);
     }
 

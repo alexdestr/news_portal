@@ -9,8 +9,8 @@ public interface NewsService {
 
     List getAll() throws SQLException;
     void add(News aNews) throws SQLException;
-    News read(long ID) throws SQLException;
-    void delete(long ID) throws SQLException;
+    News read(Long ID) throws SQLException;
+    void delete(Long ID) throws SQLException;
     void update(News aNews) throws SQLException;
 
 }

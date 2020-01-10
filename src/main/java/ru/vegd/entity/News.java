@@ -5,36 +5,36 @@ import java.util.Objects;
 
 public class News {
 
-    private long news_id;
-    private long author_id;
+    private Long newsId;
+    private Long authorId;
     private String tittle;
-    private String news_text;
-    private Timestamp public_date;
+    private String newsText;
+    private Timestamp publicDate;
 
-    public News(long news_id, long author_id, String tittle, String news_text, Timestamp public_date) {
-        this.news_id = news_id;
-        this.author_id = author_id;
+    public News(Long news_id, Long author_id, String tittle, String news_text, Timestamp public_date) {
+        this.newsId = news_id;
+        this.authorId = author_id;
         this.tittle = tittle;
-        this.news_text = news_text;
-        this.public_date = public_date;
+        this.newsText = news_text;
+        this.publicDate = public_date;
     }
 
     public News() {}
 
-    public long getNews_id() {
-        return news_id;
+    public Long getNews_id() {
+        return newsId;
     }
 
-    public void setNews_id(long news_id) {
-        this.news_id = news_id;
+    public void setNews_id(Long news_id) {
+        this.newsId = news_id;
     }
 
-    public long getAuthor_id() {
-        return author_id;
+    public Long getAuthor_id() {
+        return authorId;
     }
 
-    public void setAuthor_id(long author_id) {
-        this.author_id = author_id;
+    public void setAuthor_id(Long author_id) {
+        this.authorId = author_id;
     }
 
     public String getTittle() {
@@ -46,19 +46,19 @@ public class News {
     }
 
     public String getNews_text() {
-        return news_text;
+        return newsText;
     }
 
     public void setNews_text(String news_text) {
-        this.news_text = news_text;
+        this.newsText = news_text;
     }
 
     public Timestamp getPublic_date() {
-        return public_date;
+        return publicDate;
     }
 
     public void setPublic_date(Timestamp public_date) {
-        this.public_date = public_date;
+        this.publicDate = public_date;
     }
 
     @Override
@@ -67,27 +67,27 @@ public class News {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         News aNews = (News) o;
-        return news_id == aNews.news_id &&
-                author_id == aNews.author_id &&
+        return newsId == aNews.newsId &&
+                authorId == aNews.authorId &&
                 Objects.equals(tittle, aNews.tittle) &&
-                Objects.equals(news_text, aNews.news_text) &&
-                Objects.equals(public_date, aNews.public_date);
+                Objects.equals(newsText, aNews.newsText) &&
+                Objects.equals(publicDate, aNews.publicDate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(news_id, author_id, tittle, news_text, public_date);
+        return Objects.hash(newsId, authorId, tittle, newsText, publicDate);
     }
 
     @Override
     public String toString() {
         return "News{" +
-                "news_id=" + news_id +
-                ", author_id=" + author_id +
+                "news_id=" + newsId +
+                ", author_id=" + authorId +
                 ", tittle='" + tittle + '\'' +
-                ", news_text='" + news_text + '\'' +
-                ", public_date=" + public_date +
+                ", news_text='" + newsText + '\'' +
+                ", public_date=" + publicDate +
                 '}';
     }
 }

@@ -9,8 +9,8 @@ public interface UserDAO {
 
     List getAll() throws SQLException;
     void add(User user) throws SQLException;
-    User read(long ID) throws  SQLException;
-    void delete(long ID) throws SQLException;
+    User read(Long ID) throws  SQLException;
+    void delete(Long ID) throws SQLException;
     void update(User user) throws SQLException;
 
 }

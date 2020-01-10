@@ -30,12 +30,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User read(long ID) throws SQLException {
+    public User read(Long ID) throws SQLException {
         return userDAO.read(ID);
     }
 
     @Override
-    public void delete(long ID) throws SQLException {
+    public void delete(Long ID) throws SQLException {
         userDAO.delete(ID);
     }
 

@@ -97,7 +97,7 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
-    public News read(long ID) throws SQLException {
+    public News read(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
@@ -133,7 +133,7 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
-    public void delete(long ID) throws SQLException {
+    public void delete(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 

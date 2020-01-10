@@ -4,22 +4,22 @@ import java.util.Objects;
 
 public class Tag {
 
-    private long news_ID;
+    private Long newsId;
     private String tags;
 
-    public Tag(long news_ID, String tags) {
-        this.news_ID = news_ID;
+    public Tag(Long news_ID, String tags) {
+        this.newsId = news_ID;
         this.tags = tags;
     }
 
     public Tag () {}
 
-    public long getNews_ID() {
-        return news_ID;
+    public Long getNews_ID() {
+        return newsId;
     }
 
-    public void setNews_ID(long news_ID) {
-        this.news_ID = news_ID;
+    public void setNews_ID(Long news_ID) {
+        this.newsId = news_ID;
     }
 
     public String getTags() {
@@ -36,20 +36,20 @@ public class Tag {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Tag tag1 = (Tag) o;
-        return news_ID == tag1.news_ID &&
+        return newsId == tag1.newsId &&
                 Objects.equals(tags, tag1.tags);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(news_ID, tags);
+        return Objects.hash(newsId, tags);
     }
 
     @Override
     public String toString() {
         return "Tag{" +
-                "news_ID=" + news_ID +
+                "news_ID=" + newsId +
                 ", tags='" + tags + '\'' +
                 '}';
     }

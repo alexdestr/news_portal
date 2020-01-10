@@ -92,7 +92,7 @@ public class TagDAOImpl implements TagDAO {
     }
 
     @Override
-    public Tag read(long ID) throws SQLException {
+    public Tag read(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
@@ -125,7 +125,7 @@ public class TagDAOImpl implements TagDAO {
     }
 
     @Override
-    public void delete(long ID) throws SQLException {
+    public void delete(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 

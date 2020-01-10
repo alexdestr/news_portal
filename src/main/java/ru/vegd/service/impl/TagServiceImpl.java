@@ -24,12 +24,12 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag read(long ID) throws SQLException {
+    public Tag read(Long ID) throws SQLException {
         return tagDAO.read(ID);
     }
 
     @Override
-    public void delete(long ID) throws SQLException {
+    public void delete(Long ID) throws SQLException {
         tagDAO.delete(ID);
     }
 

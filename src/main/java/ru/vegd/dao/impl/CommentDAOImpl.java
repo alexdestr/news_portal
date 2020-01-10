@@ -96,7 +96,7 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    public Comment read(long ID) throws SQLException {
+    public Comment read(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
@@ -132,7 +132,7 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    public void delete(long ID) throws SQLException {
+    public void delete(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
