@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.vegd.dao.CommentDAO;
 import ru.vegd.entity.Comment;
+import test.ru.vegd.TestConfig;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("/springTest.xml")
+@ContextConfiguration(classes = TestConfig.class)
 public class CommentDAOImplTest {
 
     @Autowired
