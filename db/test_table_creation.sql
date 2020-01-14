@@ -1,4 +1,4 @@
-CREATE TABLE users
+CREATE TABLE tests.users
 (
     user_id BIGSERIAL NOT NULL PRIMARY KEY,
     login VARCHAR UNIQUE NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE users
     registration_date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE news
+CREATE TABLE tests.news
 (
     news_id BIGSERIAL NOT NULL PRIMARY KEY,
     author_id BIGINT NOT NULL REFERENCES "users"(user_id),
@@ -17,7 +17,7 @@ CREATE TABLE news
     creation_date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE comments
+CREATE TABLE tests.comments
 (
     comments_id BIGSERIAL NOT NULL PRIMARY KEY,
     news_id BIGINT NOT NULL REFERENCES "news"(news_id),
@@ -26,7 +26,7 @@ CREATE TABLE comments
     creation_date TIMESTAMP NOT NULL
 );
 
-CREATE TABLE tags
+CREATE TABLE tests.tags
 (
     news_id BIGINT NOT NULL REFERENCES "news"(news_id),
     tag_name VARCHAR  NOT NULL

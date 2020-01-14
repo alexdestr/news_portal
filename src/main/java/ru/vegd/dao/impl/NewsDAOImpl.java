@@ -19,11 +19,11 @@ public class NewsDAOImpl implements NewsDAO {
     DataSource dataSource;
 
 
-    private static final String SQL_GETALL = "SELECT * FROM \"News\"";
-    private static final String SQL_ADD = "INSERT INTO \"News\" (author_id, tittle, news_text, creation_date) VALUES ( ?, ?, ?, ?)";
-    private static final String SQL_READ = "SELECT * FROM \"News\" WHERE news_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"News\" WHERE \"News\".\"news_id\" = ?";
-    private static final String SQL_UPDATE = "UPDATE \"News\" SET author_id = ?, tittle = ?, news_text = ? WHERE news_id = ?";
+    private static final String SQL_GETALL = "SELECT * FROM \"news\"";
+    private static final String SQL_ADD = "INSERT INTO \"news\" (author_id, tittle, news_text, creation_date) VALUES ( ?, ?, ?, ?)";
+    private static final String SQL_READ = "SELECT * FROM \"news\" WHERE news_id = ?";
+    private static final String SQL_DELETE = "DELETE FROM \"news\" WHERE \"News\".\"news_id\" = ?";
+    private static final String SQL_UPDATE = "UPDATE \"news\" SET author_id = ?, tittle = ?, news_text = ? WHERE news_id = ?";
 
     @Override
     public List getAll() throws SQLException {

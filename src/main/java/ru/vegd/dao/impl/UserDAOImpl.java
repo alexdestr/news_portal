@@ -18,11 +18,11 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * FROM \"Users\"";
-    private static final String SQL_ADD = "INSERT INTO \"Users\" (login, hash_password, user_name, user_last_name, registration_date) VALUES (?, ?, ?, ?, ? )";
-    private static final String SQL_READ = "SELECT * FROM \"Users\" WHERE user_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"Users\" WHERE user_id = ?";
-    private static final String SQL_UPDATE = "UPDATE \"Users\" SET login = ?, hash_password = ?, user_name = ?, user_last_name = ? WHERE user_id = ?";
+    private static final String SQL_GETALL = "SELECT * FROM \"users\"";
+    private static final String SQL_ADD = "INSERT INTO \"users\" (login, hash_password, user_name, user_last_name, registration_date) VALUES (?, ?, ?, ?, ? )";
+    private static final String SQL_READ = "SELECT * FROM \"users\" WHERE user_id = ?";
+    private static final String SQL_DELETE = "DELETE FROM \"users\" WHERE user_id = ?";
+    private static final String SQL_UPDATE = "UPDATE \"users\" SET login = ?, hash_password = ?, user_name = ?, user_last_name = ? WHERE user_id = ?";
 
     @Override
     public List getAll() throws SQLException {

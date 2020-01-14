@@ -18,11 +18,11 @@ public class CommentDAOImpl implements CommentDAO {
     private DataSource dataSource;
 
 
-    private static final String SQL_GETALL = "SELECT * FROM \"Comments\"";
-    private static final String SQL_ADD = "INSERT INTO \"Comments\" (news_id, author_id, comment_text, creation_date) VALUES (?, ?, ?, ?)";
-    private static final String SQL_READ = "SELECT * FROM \"Comments\" WHERE comments_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"Comments\" WHERE \"Comments\".\"comment_id\" = ?";
-    private static final String SQL_UPDATE = "UPDATE \"Comments\" SET news_id = ?, author_id = ?, comment_text = ? WHERE comments_id = ?";
+    private static final String SQL_GETALL = "SELECT * FROM \"comments\"";
+    private static final String SQL_ADD = "INSERT INTO \"comments\" (news_id, author_id, comment_text, creation_date) VALUES (?, ?, ?, ?)";
+    private static final String SQL_READ = "SELECT * FROM \"comments\" WHERE comments_id = ?";
+    private static final String SQL_DELETE = "DELETE FROM \"comments\" WHERE \"Comments\".\"comment_id\" = ?";
+    private static final String SQL_UPDATE = "UPDATE \"comments\" SET news_id = ?, author_id = ?, comment_text = ? WHERE comments_id = ?";
 
     @Override
     public List getAll() throws SQLException {

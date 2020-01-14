@@ -21,11 +21,11 @@ public class TagDAOImpl implements TagDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * FROM \"Tags\"";
-    private static final String SQL_ADD = "INSERT INTO \"Tags\" (news_id, tags) VALUES ( ?, ?)";
-    private static final String SQL_READ = "SELECT * FROM \"Tags\" WHERE news_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"Tags\" WHERE \"Tags\".\"news_id\" = ?";
-    private static final String SQL_UPDATE = "UPDATE \"Tags\" SET tags = ? WHERE news_id = ?";
+    private static final String SQL_GETALL = "SELECT * FROM \"tags\"";
+    private static final String SQL_ADD = "INSERT INTO \"tags\" (news_id, tags) VALUES ( ?, ?)";
+    private static final String SQL_READ = "SELECT * FROM \"tags\" WHERE news_id = ?";
+    private static final String SQL_DELETE = "DELETE FROM \"tags\" WHERE \"Tags\".\"news_id\" = ?";
+    private static final String SQL_UPDATE = "UPDATE \"tags\" SET tags = ? WHERE news_id = ?";
 
     @Override
     public List getAll() throws SQLException {
