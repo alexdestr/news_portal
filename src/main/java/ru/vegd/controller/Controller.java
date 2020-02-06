@@ -7,26 +7,21 @@ import ru.vegd.dao.CommentDAO;
 import ru.vegd.entity.Comment;
 import ru.vegd.service.CommentService;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 @org.springframework.stereotype.Controller
 public class Controller {
-    @Autowired
-    CommentService commentService;
 
     @RequestMapping(value = "/h", method = RequestMethod.GET)
-    public void showRegister(HttpServletRequest request, HttpServletResponse response) {
-        try {
-            Comment comment = new Comment();
-            comment.setNews_id(1L);
-            comment.setAuthor_id(4L);
-            comment.setComment_text("nice");
-            commentService.add(comment);
-            System.out.println(commentService.getAll());
-        } catch (SQLException e) {
-            System.out.println("Osujdayu");
-        }
+    public void showRegister(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.sendRedirect("https://www.google.ru/");
+        Cookie cookie = new Cookie("test", "value");
+        response.addCookie(cookie);
     }
+
 }

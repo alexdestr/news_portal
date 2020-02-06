@@ -55,6 +55,7 @@ public class TestConfig {
         return dataSource;
     }
 
+    @Bean
     public PlatformTransactionManager txManager() {
         return new DataSourceTransactionManager(dataSource());
     }
