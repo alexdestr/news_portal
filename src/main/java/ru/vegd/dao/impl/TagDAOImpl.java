@@ -21,11 +21,11 @@ public class TagDAOImpl implements TagDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * FROM \"tags\"";
-    private static final String SQL_ADD = "INSERT INTO \"tags\" (news_id, tags) VALUES ( ?, ?)";
-    private static final String SQL_READ = "SELECT * FROM \"tags\" WHERE news_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"tags\" WHERE \"Tags\".\"news_id\" = ?";
-    private static final String SQL_UPDATE = "UPDATE \"tags\" SET tags = ? WHERE news_id = ?";
+    private static final String SQL_GETALL = "SELECT * FROM tags";
+    private static final String SQL_ADD = "INSERT INTO tags (news_id, tag_name) VALUES ( ?, ?)";
+    private static final String SQL_READ = "SELECT * FROM tags WHERE news_id = ?";
+    private static final String SQL_DELETE = "DELETE FROM tags WHERE tags.\"news_id\" = ?";
+    private static final String SQL_UPDATE = "UPDATE tags SET tag_name = ? WHERE news_id = ?";
 
     @Override
     public List getAll() throws SQLException {
@@ -46,7 +46,7 @@ public class TagDAOImpl implements TagDAO {
                 Tag tag = new Tag();
 
                 tag.setNews_ID(resultSet.getLong("news_ID"));
-                tag.setTags(resultSet.getString("tag"));
+                tag.setTags(resultSet.getString("tag_name"));
 
                 tagList.add(tag);
             }
@@ -108,7 +108,7 @@ public class TagDAOImpl implements TagDAO {
 
             if (resultSet.next()) {
                 tag.setNews_ID(resultSet.getLong("news_id"));
-                tag.setTags(resultSet.getString("tag"));
+                tag.setTags(resultSet.getString("tag_name"));
             }
 
         } catch (SQLException e) {

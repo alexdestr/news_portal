@@ -10,24 +10,21 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
 import ru.vegd.dao.UserDAO;
 import ru.vegd.entity.User;
+import test.ru.vegd.util.SequenceReseter;
 import test.ru.vegd.TestConfig;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 /*TODO: Repair @Transactional*/
 
@@ -44,12 +41,14 @@ public class UserDAOImplTest{
     private UserDAO userDAO;
 
     @Autowired
-    private DataSource dataSource;
+    private SequenceReseter seqReseter;
+
+    private static final Integer flag = 3;
 
     User user;
 
     @Before
-    public void before() throws SQLException, DatabaseUnitException {
+    public void before() {
         user = new User();
     }
 
@@ -57,45 +56,18 @@ public class UserDAOImplTest{
     @DatabaseSetup(value = "/user-data.xml")
     public void getAll() throws Exception {
 
-        System.out.println(userDAO.getAll());
+        Integer expectedNum = 2;
+        Integer num = userDAO.getAll().size();
 
-        /*User user1 = new User();
-        User user2 = new User();
-
-        user1.setLogin("Zaza");
-        user2.setLogin("Alex");
-        user1.setHash_password("smthHash1");
-        user2.setHash_password("smthHash2");
-        user1.setUser_name("Jaja");
-        user2.setUser_name("Alexey");
-        user1.setUser_last_name("Kril");
-        user2.setUser_last_name("Barchuk");
-        user1.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
-        user2.setDate_of_registration(Timestamp.valueOf("2019-01-07 19:10:56.00"));
-
-        List<User> expectedPersons = new ArrayList<>();
-        expectedPersons.add(user1);
-        expectedPersons.add(user2);
-
-        System.out.println(userDAO.getAll());
-        List<User> persons = userDAO.getAll();*/
-
-        /*Assert.assertEquals(expectedPersons.get(0).getLogin(), persons.get(0).getLogin());
-        Assert.assertEquals(expectedPersons.get(1).getLogin(), persons.get(1).getLogin());
-        Assert.assertEquals(expectedPersons.get(0).getHash_password(), persons.get(0).getHash_password());
-        Assert.assertEquals(expectedPersons.get(1).getHash_password(), persons.get(1).getHash_password());
-        Assert.assertEquals(expectedPersons.get(0).getUser_name(), persons.get(0).getUser_name());
-        Assert.assertEquals(expectedPersons.get(1).getUser_name(), persons.get(1).getUser_name());
-        Assert.assertEquals(expectedPersons.get(0).getUser_last_name(), persons.get(0).getUser_last_name());
-        Assert.assertEquals(expectedPersons.get(1).getUser_last_name(), persons.get(1).getUser_last_name());
-        Assert.assertEquals(expectedPersons.get(0).getDate_of_registration(), persons.get(0).getDate_of_registration());
-        Assert.assertEquals(expectedPersons.get(1).getDate_of_registration(), persons.get(1).getDate_of_registration());*/
+        Assert.assertEquals(expectedNum, num);
 
     }
 
     @Test
-    @Rollback()
+    @DatabaseSetup(value = "/user-data.xml")
     public void add() throws SQLException {
+
+        Integer expectedNum = 3;
 
         user.setLogin("AlexandrOchka1999");
         user.setUser_name("A?");
@@ -104,37 +76,56 @@ public class UserDAOImplTest{
         user.setDate_of_registration(Timestamp.valueOf("2019-05-05 16:10:56.00"));
         userDAO.add(user);
 
-        User expectedUser;
-        Long deleteId;
-        expectedUser = (User) userDAO.getAll().get(2);
-        deleteId = expectedUser.getUser_id();
-        expectedUser.setUser_id(null);
+        Integer num = userDAO.getAll().size();
 
-        Assert.assertEquals(user, expectedUser);
-        userDAO.delete(deleteId);
+        userDAO.delete(5L);
+
+        Assert.assertEquals(expectedNum, num);
 
     }
 
     @Test
     @DatabaseSetup(value = "/user-data.xml")
-    public void read() {
+    public void read() throws SQLException {
 
+    User user1 = (User) userDAO.getAll().get(0);
+    User user2 = userDAO.read(3L);
 
+    Assert.assertEquals(user1, user2);
 
     }
 
     @Test
+    @DatabaseSetup(value = "/user-data.xml")
     public void delete() throws SQLException {
 
-        Integer size = userDAO.getAll().size();
-        Integer exceptedSize = size - 1;
+        Integer expectedNum = 1;
 
-        userDAO.delete(11L);
+        userDAO.delete(4L);
+
+        Integer num = userDAO.getAll().size();
+
+        Assert.assertEquals(expectedNum, num);
 
     }
 
     @Test
-    public void update() {
+    @DatabaseSetup(value = "/user-data.xml")
+    public void update() throws SQLException {
+        user.setUser_id(3L);
+        user.setLogin("Zaza");
+        user.setUser_name("testUpdateName");
+        user.setUser_last_name("testUpdateLastName");
+        user.setHash_password("testUpdateHashPass");
+        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        userDAO.update(user);
+
+        Assert.assertEquals(userDAO.getAll().get(1), user);
+    }
+
+    @After
+    public void reseter() {
+        seqReseter.userSeqReset();
     }
 
 }

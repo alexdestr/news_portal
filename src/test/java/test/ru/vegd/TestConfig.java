@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 
 @TestConfiguration
-@ComponentScan(basePackages = { "ru.vegd.dao" })
+@ComponentScan(basePackages = { "ru.vegd.dao", "test.ru.vegd.util" })
 @PropertySource("database.properties")
 @EnableTransactionManagement
 public class TestConfig {

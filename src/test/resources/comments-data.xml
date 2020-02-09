@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <comments news_id="3" author_id="3" comment_text="TestComment1" creation_date="2020-01-08 15:29:03.18"/>
+    <comments news_id="4" author_id="3" comment_text="TestComment2" creation_date="2020-01-09 17:46:14.12"/>
+</dataset>

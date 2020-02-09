@@ -18,11 +18,10 @@ public class NewsDAOImpl implements NewsDAO {
     @Autowired
     DataSource dataSource;
 
-
     private static final String SQL_GETALL = "SELECT * FROM \"news\"";
     private static final String SQL_ADD = "INSERT INTO \"news\" (author_id, tittle, news_text, creation_date) VALUES ( ?, ?, ?, ?)";
     private static final String SQL_READ = "SELECT * FROM \"news\" WHERE news_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"news\" WHERE \"News\".\"news_id\" = ?";
+    private static final String SQL_DELETE = "DELETE FROM \"news\" WHERE news.\"news_id\" = ?";
     private static final String SQL_UPDATE = "UPDATE \"news\" SET author_id = ?, tittle = ?, news_text = ? WHERE news_id = ?";
 
     @Override
@@ -47,7 +46,7 @@ public class NewsDAOImpl implements NewsDAO {
                 aNews.setAuthor_id(resultSet.getLong("author_id"));
                 aNews.setTittle(resultSet.getString("tittle"));
                 aNews.setNews_text(resultSet.getString("news_text"));
-                aNews.setPublic_date(resultSet.getTimestamp("public_date"));
+                aNews.setPublic_date(resultSet.getTimestamp("creation_date"));
 
                 newsList.add(aNews);
             }
@@ -116,7 +115,7 @@ public class NewsDAOImpl implements NewsDAO {
                 aNews.setAuthor_id(resultSet.getLong("author_id"));
                 aNews.setTittle(resultSet.getString("tittle"));
                 aNews.setNews_text(resultSet.getString("news_text"));
-                aNews.setPublic_date(resultSet.getTimestamp("public_date"));
+                aNews.setPublic_date(resultSet.getTimestamp("creation_date"));
             }
 
         } catch (SQLException e) {

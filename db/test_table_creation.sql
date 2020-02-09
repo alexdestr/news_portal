@@ -11,7 +11,7 @@ CREATE TABLE tests.users
 CREATE TABLE tests.news
 (
     news_id BIGSERIAL NOT NULL PRIMARY KEY,
-    author_id BIGINT NOT NULL REFERENCES "users"(user_id),
+    author_id BIGINT NOT NULL REFERENCES tests."users"(user_id),
     tittle VARCHAR  NOT NULL,
     news_text TEXT NOT NULL,
     creation_date TIMESTAMP NOT NULL
@@ -20,15 +20,15 @@ CREATE TABLE tests.news
 CREATE TABLE tests.comments
 (
     comments_id BIGSERIAL NOT NULL PRIMARY KEY,
-    news_id BIGINT NOT NULL REFERENCES "news"(news_id),
-    author_id BIGINT NOT NULL REFERENCES "users"(user_id),
+    news_id BIGINT NOT NULL REFERENCES tests."news"(news_id),
+    author_id BIGINT NOT NULL REFERENCES tests."users"(user_id),
     comment_text TEXT NOT NULL,
     creation_date TIMESTAMP NOT NULL
 );
 
 CREATE TABLE tests.tags
 (
-    news_id BIGINT NOT NULL REFERENCES "news"(news_id),
+    news_id BIGINT NOT NULL REFERENCES tests."news"(news_id),
     tag_name VARCHAR  NOT NULL
 );
 
