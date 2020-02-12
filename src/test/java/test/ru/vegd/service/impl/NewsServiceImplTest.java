@@ -64,4 +64,5 @@ public class NewsServiceImplTest {
 
         verify(newsDAO).update(news);
     }
+
 }

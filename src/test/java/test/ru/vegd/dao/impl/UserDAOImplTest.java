@@ -2,7 +2,10 @@ package test.ru.vegd.dao.impl;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import com.github.springtestdbunit.annotation.DatabaseTearDown;
+import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import org.dbunit.DatabaseUnitException;
 import org.junit.After;
 import org.junit.Assert;
@@ -43,29 +46,21 @@ public class UserDAOImplTest{
     @Autowired
     private SequenceReseter seqReseter;
 
-    private static final Integer flag = 3;
-
-    User user;
-
-    @Before
-    public void before() {
-        user = new User();
-    }
-
     @Test
-    @DatabaseSetup(value = "/user-data.xml")
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void getAll() throws Exception {
 
-        Integer expectedNum = 2;
-        Integer num = userDAO.getAll().size();
+        Integer expectedSize = 2;
+        Integer size = userDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = "/user-data.xml")
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void add() throws SQLException {
+        User user = new User();
 
         Integer expectedNum = 3;
 
@@ -78,40 +73,40 @@ public class UserDAOImplTest{
 
         Integer num = userDAO.getAll().size();
 
-        userDAO.delete(5L);
-
         Assert.assertEquals(expectedNum, num);
 
     }
 
     @Test
-    @DatabaseSetup(value = "/user-data.xml")
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void read() throws SQLException {
 
-    User user1 = (User) userDAO.getAll().get(0);
-    User user2 = userDAO.read(3L);
+        User user1 = (User) userDAO.getAll().get(0);
+        User user2 = userDAO.read(3L);
 
-    Assert.assertEquals(user1, user2);
+        Assert.assertEquals(user1, user2);
 
     }
 
     @Test
-    @DatabaseSetup(value = "/user-data.xml")
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void delete() throws SQLException {
 
-        Integer expectedNum = 1;
+        Integer expectedSize = 1;
 
         userDAO.delete(4L);
 
-        Integer num = userDAO.getAll().size();
+        Integer size = userDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = "/user-data.xml")
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void update() throws SQLException {
+        User user = new User();
+
         user.setUser_id(3L);
         user.setLogin("Zaza");
         user.setUser_name("testUpdateName");

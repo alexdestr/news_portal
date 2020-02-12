@@ -2,6 +2,7 @@ package test.ru.vegd.dao.impl;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.After;
 import org.junit.Assert;
@@ -36,48 +37,35 @@ public class TagDAOImplTest {
     @Autowired
     private TagDAO tagDAO;
 
-    @Autowired
-    private SequenceReseter seqReseter;
-
-    private static final Integer flag = 3;
-
-    Tag tag;
-
-    @Before
-    public void before() {
-        tag = new Tag();
-    }
-
     @Test
-    @DatabaseSetup(value = { "/tag-data.xml" })
+    @DatabaseSetup(value = { "/tag-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void getAll() throws SQLException {
 
-        Integer expectedNum = 2;
-        Integer num = tagDAO.getAll().size();
+        Integer expectedSize = 2;
+        Integer size = tagDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/tag-data.xml" })
+    @DatabaseSetup(value = { "/tag-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void add() throws SQLException {
+        Tag tag = new Tag();
 
-        Integer expectedNum = 3;
+        Integer expectedSize = 3;
 
         tag.setNews_ID(3L);
         tag.setTags("[Fun][Animals]");
         tagDAO.add(tag);
 
-        Integer num = tagDAO.getAll().size();
+        Integer size = tagDAO.getAll().size();
 
-        tagDAO.delete(5L);
-
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
     }
 
     @Test
-    @DatabaseSetup(value = { "/tag-data.xml" })
+    @DatabaseSetup(value = { "/tag-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void read() throws SQLException {
 
         Tag tag1 = (Tag) tagDAO.getAll().get(0);
@@ -88,22 +76,23 @@ public class TagDAOImplTest {
     }
 
     @Test
-    @DatabaseSetup(value = { "/tag-data.xml" })
+    @DatabaseSetup(value = { "/tag-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void delete() throws SQLException {
 
-        Integer expectedNum = 1;
+        Integer expectedSize = 1;
 
         tagDAO.delete(4L);
 
-        Integer num = tagDAO.getAll().size();
+        Integer size = tagDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/tag-data.xml" })
+    @DatabaseSetup(value = { "/tag-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void update() throws SQLException {
+        Tag tag = new Tag();
 
         tag.setNews_ID(3L);
         tag.setTags("[Fun][Peoples]");

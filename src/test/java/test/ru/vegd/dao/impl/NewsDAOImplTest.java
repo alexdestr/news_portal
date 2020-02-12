@@ -2,6 +2,7 @@ package test.ru.vegd.dao.impl;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.After;
 import org.junit.Assert;
@@ -37,31 +38,23 @@ public class NewsDAOImplTest {
     @Autowired
     private SequenceReseter seqReseter;
 
-    private static final Integer flag = 3;
-
-    News news;
-
-    @Before
-    public void before() {
-        news = new News();
-    }
-
     @Test
-    @DatabaseSetup(value = { "/news-data.xml" })
+    @DatabaseSetup(value = { "/news-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void getAll() throws SQLException {
 
-        Integer expectedNum = 2;
-        Integer num = newsDAO.getAll().size();
+        Integer expectedSize = 2;
+        Integer size = newsDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/news-data.xml" })
+    @DatabaseSetup(value = { "/news-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void add() throws SQLException {
+        News news = new News();
 
-        Integer expectedNum = 3;
+        Integer expectedSize = 3;
 
         news.setAuthor_id(3L);
         news.setTittle("Test");
@@ -69,16 +62,14 @@ public class NewsDAOImplTest {
         news.setPublic_date(Timestamp.valueOf(LocalDateTime.now()));
         newsDAO.add(news);
 
-        Integer num = newsDAO.getAll().size();
+        Integer size = newsDAO.getAll().size();
 
-        newsDAO.delete(5L);
-
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/news-data.xml" })
+    @DatabaseSetup(value = { "/news-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void read() throws SQLException {
 
         News news1 = (News) newsDAO.getAll().get(0);
@@ -89,22 +80,23 @@ public class NewsDAOImplTest {
     }
 
     @Test
-    @DatabaseSetup(value = { "/news-data.xml" })
+    @DatabaseSetup(value = { "/news-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void delete() throws SQLException {
 
-        Integer expectedNum = 1;
+        Integer expectedSize = 1;
 
         newsDAO.delete(4L);
 
-        Integer num = newsDAO.getAll().size();
+        Integer size = newsDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/news-data.xml" })
+    @DatabaseSetup(value = { "/news-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void update() throws SQLException {
+        News news = new News();
 
         news.setNews_id(3L);
         news.setAuthor_id(3L);

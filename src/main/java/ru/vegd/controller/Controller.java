@@ -20,8 +20,6 @@ public class Controller {
     @RequestMapping(value = "/h", method = RequestMethod.GET)
     public void showRegister(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.sendRedirect("https://www.google.ru/");
-        Cookie cookie = new Cookie("test", "value");
-        response.addCookie(cookie);
     }
 
 }

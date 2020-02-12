@@ -2,6 +2,7 @@ package test.ru.vegd.dao.impl;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
+import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.After;
 import org.junit.Assert;
@@ -37,31 +38,23 @@ public class CommentDAOImplTest {
     @Autowired
     private SequenceReseter seqReseter;
 
-    private static final Integer flag = 3;
-
-    Comment comment;
-
-    @Before
-    public void before() {
-        comment = new Comment();
-    }
-
     @Test
-    @DatabaseSetup(value = { "/comments-data.xml" })
+    @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void getAll() throws SQLException {
 
-        Integer expectedNum = 2;
-        Integer num = commentDAO.getAll().size();
+        Integer expectedSize = 2;
+        Integer size = commentDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/comments-data.xml" })
+    @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void add() throws SQLException {
+        Comment comment = new Comment();
 
-        Integer expectedNum = 3;
+        Integer expectedSize = 3;
 
         comment.setNews_id(3L);
         comment.setAuthor_id(3L);
@@ -69,16 +62,14 @@ public class CommentDAOImplTest {
         comment.setSending_date(Timestamp.valueOf(LocalDateTime.now()));
         commentDAO.add(comment);
 
-        Integer num = commentDAO.getAll().size();
+        Integer size = commentDAO.getAll().size();
 
-        commentDAO.delete(5L);
-
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/comments-data.xml" })
+    @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void read() throws SQLException {
 
         Comment comment1 = (Comment) commentDAO.getAll().get(0);
@@ -89,22 +80,23 @@ public class CommentDAOImplTest {
     }
 
     @Test
-    @DatabaseSetup(value = { "/comments-data.xml" })
+    @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void delete() throws SQLException {
 
-        Integer expectedNum = 1;
+        Integer expectedSize = 1;
 
         commentDAO.delete(4L);
 
-        Integer num = commentDAO.getAll().size();
+        Integer size = commentDAO.getAll().size();
 
-        Assert.assertEquals(expectedNum, num);
+        Assert.assertEquals(expectedSize, size);
 
     }
 
     @Test
-    @DatabaseSetup(value = { "/comments-data.xml" })
+    @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void update() throws SQLException {
+        Comment comment = new Comment();
 
         comment.setComment_id(3L);
         comment.setNews_id(3L);

@@ -11,6 +11,8 @@ import java.sql.SQLException;
 @Component
 public class SequenceReseter {
 
+    private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(SequenceReseter.class.getName());
+
     @Autowired
     DataSource dataSource;
 
@@ -26,7 +28,7 @@ public class SequenceReseter {
             preparedStatement = conn.prepareStatement(SQL_RESET_USERS_SEQ);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Sequence reset eror");
         } finally {
             try {
                 if (preparedStatement != null) {
@@ -36,7 +38,7 @@ public class SequenceReseter {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.warn("Sequence reset eror");
             }
         }
     }
@@ -49,7 +51,7 @@ public class SequenceReseter {
             preparedStatement = conn.prepareStatement(SQL_RESET_NEWS_SEQ);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Sequence reset eror");
         } finally {
             try {
                 if (preparedStatement != null) {
@@ -72,7 +74,7 @@ public class SequenceReseter {
             preparedStatement = conn.prepareStatement(SQL_RESET_COMMENTS_SEQ);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.warn("Sequence reset eror");
         } finally {
             try {
                 if (preparedStatement != null) {
@@ -82,7 +84,7 @@ public class SequenceReseter {
                     conn.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                logger.warn("Sequence reset eror");
             }
         }
     }
