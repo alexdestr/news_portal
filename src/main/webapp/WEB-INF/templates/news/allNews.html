@@ -1,0 +1,69 @@
+<style type="text/css">
+   table {
+    border-spacing: 0 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+th {
+padding: 10px 20px;
+background: #56433D;
+color: #F9C941;
+border-right: 2px solid;
+font-size: 0.9em;
+}
+td {
+vertical-align: middle;
+padding: 10px;
+font-size: 14px;
+text-align: center;
+border-top: 2px solid #56433D;
+border-bottom: 2px solid #56433D;
+border-right: 2px solid #56433D;
+}
+td:first-child {
+border-left: 2px solid #56433D;
+}
+td:nth-child(2){
+text-align: left;
+}
+
+  </style>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>News</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<table>
+    <thead>
+    <tr>
+        <th> ID </th>
+        <th> Author </th>
+        <th> Title </th>
+        <th> Read </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${news.empty}">
+        <td colspan="2"> No News Available </td>
+    </tr>
+    <tr th:each="news : ${news}">
+        <td><span th:text="${news.news_id}"> ID </span></td>
+        <td><span th:text="${news.author_id}"> Author </span></td>
+        <td><span th:text="${news.tittle}"> Tittle </span></td>
+        <td><a href="id.html" th:href="@{http://localhost:8080/news/{id}(id = ${news.news_id})}"> Read </a></td>
+    </tr>
+    </tbody>
+</table>
+<body>
+<b>Add news: </b>
+<br>
+<form>
+Title<input type="text" name="title">
+<br>
+<br>
+Text<input type="text" name="text">
+<br><br>
+Add<input type="submit" value="send">
+</form>
+</body>
+</html>

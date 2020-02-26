@@ -1,0 +1,70 @@
+<style type="text/css">
+   table {
+    border-spacing: 0 10px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: bold;
+}
+th {
+padding: 10px 20px;
+background: #56433D;
+color: #F9C941;
+border-right: 2px solid;
+font-size: 0.9em;
+}
+td {
+vertical-align: middle;
+padding: 10px;
+font-size: 14px;
+text-align: center;
+border-top: 2px solid #56433D;
+border-bottom: 2px solid #56433D;
+border-right: 2px solid #56433D;
+}
+td:first-child {
+border-left: 2px solid #56433D;
+}
+td:nth-child(2){
+text-align: left;
+}
+td:nth-child(4){
+font-size: 20px;
+text-align: left;
+padding: 10px;
+font-size: 14px;
+}
+
+<!DOCTYPE html>
+</style>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>News</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<table>
+    <thead>
+    <tr>
+        <th> ID </th>
+        <th> Author </th>
+        <th> Title </th>
+        <th> Tags </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td><span th:text="${news.news_id}"> ID </span></td>
+        <td><span th:text="${news.author_id}"> Author </span></td>
+        <td><span th:text="${news.tittle}"> Tittle </span></td>
+        <td><span th:text="${news.news_id}"> Tags </span></td>  <!--TODO: make tags in this column-->
+    </tr>
+    </tbody>
+</table>
+<body>
+<font size="6">
+    <p th:text="${news.news_text}"> News </p>
+</font>
+<font size="4">
+    <br>
+    <p>----COMMENTS---- </p> <!--TODO: make comments-->
+</font>
+</body>
+</html>

@@ -1,6 +1,7 @@
 package ru.vegd.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.vegd.dao.TagDAO;
 import ru.vegd.entity.Tag;
 import ru.vegd.service.TagService;
@@ -8,6 +9,7 @@ import ru.vegd.service.TagService;
 import java.sql.SQLException;
 import java.util.List;
 
+@Service
 public class TagServiceImpl implements TagService {
 
     @Autowired
@@ -24,7 +26,7 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Tag read(Long ID) throws SQLException {
+    public List<Tag> read(Long ID) throws SQLException {
         return tagDAO.read(ID);
     }
 

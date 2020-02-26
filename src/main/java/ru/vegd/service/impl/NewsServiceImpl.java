@@ -1,6 +1,7 @@
 package ru.vegd.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.vegd.dao.NewsDAO;
 import ru.vegd.entity.News;
 import ru.vegd.service.NewsService;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
 
+@Service
 public class NewsServiceImpl implements NewsService {
 
     @Autowired

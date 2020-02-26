@@ -132,6 +132,11 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
+    public List readLinkedComments(Long ID) throws SQLException {
+        return null;
+    }
+
+    @Override
     public void delete(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();

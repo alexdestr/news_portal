@@ -69,7 +69,7 @@ public class TagDAOImplTest {
     public void read() throws SQLException {
 
         Tag tag1 = (Tag) tagDAO.getAll().get(0);
-        Tag tag2 = tagDAO.read(3L);
+        Tag tag2 = tagDAO.read(3L).get(0);
 
         Assert.assertEquals(tag1, tag2);
 

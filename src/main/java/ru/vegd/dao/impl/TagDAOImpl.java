@@ -92,13 +92,13 @@ public class TagDAOImpl implements TagDAO {
     }
 
     @Override
-    public Tag read(Long ID) throws SQLException {
+    public List<Tag> read(Long ID) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
         PreparedStatement preparedStatement = null;
 
-        Tag tag = new Tag();
+        List tagList = new ArrayList();
 
         try {
             preparedStatement = connection.prepareStatement(SQL_READ);
@@ -106,9 +106,13 @@ public class TagDAOImpl implements TagDAO {
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
+                Tag tag = new Tag();
+
                 tag.setNews_ID(resultSet.getLong("news_id"));
                 tag.setTags(resultSet.getString("tag_name"));
+
+                tagList.add(tag);
             }
 
         } catch (SQLException e) {
@@ -121,7 +125,7 @@ public class TagDAOImpl implements TagDAO {
                 connection.close();
             }
         }
-        return tag;
+        return tagList;
     }
 
     @Override
