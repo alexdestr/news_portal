@@ -9,8 +9,8 @@ public interface CommentDAO {
 
     List getAll() throws SQLException;
     void add(Comment comment) throws SQLException;
-    Comment read(Long ID) throws  SQLException;
-    List readLinkedComments(Long ID) throws SQLException;
+    Comment read(Long ID) throws SQLException;
+    List<Comment> readLinkedComments(Long ID) throws SQLException;
     void delete(Long ID) throws SQLException;
     void update(Comment comment) throws SQLException;
 

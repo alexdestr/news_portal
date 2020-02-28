@@ -39,6 +39,13 @@ font-size: 14px;
 <head>
     <title>News</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+   body {
+    background: #c7b39b url(https://lh3.googleusercontent.com/proxy/2JCshsdcIBU409WqXo6FWXw0lbNsgaZ_gLm5N5vFarZYN1RbpvhwwpWATub5BcHUyHWKDYCG8BJ-zqUkzzluWKAud4JFSD1iBkXYDUl4-rex3Z-HZP_waQKp) no-repeat;
+    -webkit-background-size: 100%;
+    color: #fff; /* Цвет текста */
+   }
+  </style>
 </head>
 <table>
     <thead>
@@ -46,7 +53,6 @@ font-size: 14px;
         <th> ID </th>
         <th> Author </th>
         <th> Title </th>
-        <th> Tags </th>
     </tr>
     </thead>
     <tbody>
@@ -54,7 +60,21 @@ font-size: 14px;
         <td><span th:text="${news.news_id}"> ID </span></td>
         <td><span th:text="${news.author_id}"> Author </span></td>
         <td><span th:text="${news.tittle}"> Tittle </span></td>
-        <td><span th:text="${news.news_id}"> Tags </span></td>  <!--TODO: make tags in this column-->
+    </tr>
+    </tbody>
+</table>
+<table>
+    <thead>
+    <tr>
+        <th> Tags </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${tags.empty}">
+        <td colspan="2"> No Tags Available </td>
+    </tr>
+    <tr>
+        <td th:each="tags : ${tags}"><span th:text="${tags.tags}"> Tags </span></td>
     </tr>
     </tbody>
 </table>
@@ -64,7 +84,33 @@ font-size: 14px;
 </font>
 <font size="4">
     <br>
-    <p>----COMMENTS---- </p> <!--TODO: make comments-->
+    <p>----COMMENTS---- </p>
+    <table>
+        <thead>
+        <tr>
+            <th> Author </th>
+            <th> Comment </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${comments.empty}">
+            <td colspan="2"> No Comments Available </td>
+        </tr>
+        <tr th:each="comments : ${comments}">
+            <td><span th:text="${comments.author_id}"> Author </span></td>
+            <td><span th:text="${comments.comment_text}"> Comments </span></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <b>Comment: </b>
+    <br><br>
+    <form action="/news/reply" method="post">
+        Text: <input type="text" name="Comment">
+        <br><br>
+        <input type="submit" value="Send">
+    </form>
+
 </font>
 </body>
 </html>

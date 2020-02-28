@@ -24,6 +24,8 @@ VALUES (2, 'Funny');
 INSERT INTO comments (news_id, author_id, comment_text, creation_date)
 VALUES (1, 4, 'nice', '2019-11-11 00:00:09.959');
 INSERT INTO comments (news_id, author_id, comment_text, creation_date)
-VALUES (2, 5, 'Cool story!', '2019-11-11 00:00:09.959');
+VALUES (2, 5, 'Cool!', '2019-11-11 00:00:09.959');
 INSERT INTO comments (news_id, author_id, comment_text, creation_date)
 VALUES (4, 1, 'Hah', '2019-11-11 00:00:09.959');
+INSERT INTO comments (news_id, author_id, comment_text, creation_date)
+VALUES (4, 1, 'qwerty', '2019-11-11 00:00:09.959');

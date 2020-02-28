@@ -21,6 +21,7 @@ public class CommentDAOImpl implements CommentDAO {
     private static final String SQL_GETALL = "SELECT * FROM comments";
     private static final String SQL_ADD = "INSERT INTO comments (news_id, author_id, comment_text, creation_date) VALUES (?, ?, ?, ?)";
     private static final String SQL_READ = "SELECT * FROM comments WHERE comments_id = ?";
+    private static final String SQL_READ_LINKED = "SELECT * FROM comments WHERE news_id = ?";
     private static final String SQL_DELETE = "DELETE FROM comments WHERE comments.\"comments_id\" = ?";
     private static final String SQL_UPDATE = "UPDATE comments SET news_id = ?, author_id = ?, comment_text = ? WHERE comments_id = ?";
 
@@ -132,8 +133,43 @@ public class CommentDAOImpl implements CommentDAO {
     }
 
     @Override
-    public List readLinkedComments(Long ID) throws SQLException {
-        return null;
+    public List<Comment> readLinkedComments(Long ID) throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = null;
+
+        List<Comment> commentList = new ArrayList<>();
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_READ_LINKED);
+            preparedStatement.setLong(1, ID);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Comment comment = new Comment();
+
+                comment.setComment_id(resultSet.getLong("comments_id"));
+                comment.setNews_id(resultSet.getLong("news_id"));
+                comment.setAuthor_id(resultSet.getLong("author_id"));
+                comment.setComment_text(resultSet.getString("comment_text"));
+                comment.setSending_date(resultSet.getTimestamp("creation_date"));
+
+                commentList.add(comment);
+            }
+
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+        return commentList;
     }
 
     @Override

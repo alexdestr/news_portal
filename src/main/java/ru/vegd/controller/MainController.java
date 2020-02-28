@@ -7,7 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.vegd.service.NewsService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+
+import static ru.vegd.controller.PathConstants.ERROR;
+import static ru.vegd.controller.PathConstants.PATH_MAIN;
 
 @Controller
 public class MainController {
@@ -16,9 +20,13 @@ public class MainController {
     NewsService newsService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showNews(Model model) throws SQLException {
-        model.addAttribute("news", newsService.getAll());
-        return "news/allNews";
+    public String showNews(Model model) {
+        try {
+            model.addAttribute("news", newsService.getAll());
+        } catch (Exception e) {
+            return ERROR;
+        }
+        return PATH_MAIN;
     }
 
 }

@@ -43,9 +43,9 @@ text-align: left;
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${news.empty}">
+    <!--<tr th:if="${news.empty}">
         <td colspan="2"> No News Available </td>
-    </tr>
+    </tr>-->
     <tr th:each="news : ${news}">
         <td><span th:text="${news.news_id}"> ID </span></td>
         <td><span th:text="${news.author_id}"> Author </span></td>
@@ -56,14 +56,16 @@ text-align: left;
 </table>
 <body>
 <b>Add news: </b>
-<br>
-<form>
-Title<input type="text" name="title">
-<br>
-<br>
-Text<input type="text" name="text">
 <br><br>
-Add<input type="submit" value="send">
+<form action="news/addNews" method="post">
+Title <input type="text" name="title">
+<br><br>
+Text <input type="text" name="text">
+<br><br>
+<!--Tags <input type="text" name="tags">
+<br><br>-->
+<input type="submit" value="Send">
 </form>
+
 </body>
 </html>

@@ -81,6 +81,17 @@ public class CommentDAOImplTest {
 
     @Test
     @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
+    public void readLinkedComments() throws SQLException {
+
+        Comment comment1 = (Comment) commentDAO.getAll().get(0);
+        Comment comment2 = commentDAO.read(3L);
+
+        Assert.assertEquals(comment1, comment2);
+
+    }
+
+    @Test
+    @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void delete() throws SQLException {
 
         Integer expectedSize = 1;
