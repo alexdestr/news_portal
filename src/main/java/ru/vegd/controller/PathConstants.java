@@ -7,6 +7,6 @@ public class PathConstants {
 
     protected static final String REDIRECT = "redirect:/";
 
-    protected  static final String ERROR = "error/error";
+    protected  static final String ERROR = ""; // error/error
 
 }

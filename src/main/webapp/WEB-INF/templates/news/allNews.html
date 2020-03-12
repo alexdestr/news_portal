@@ -28,7 +28,7 @@ text-align: left;
 }
 
   </style>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>News</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -67,5 +67,18 @@ Text <input type="text" name="text">
 <input type="submit" value="Send">
 </form>
 
+<h2>Welcome</h2>
+<p>Spring Security Thymeleaf tutorial</p>
+<div sec:authorize="hasRole('USER')">Text visible to user.</div>
+<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
+<div sec:authorize="isAuthenticated()">
+    Text visible only to authenticated users.
+</div>
+Authenticated username:
+<div sec:authentication="name"></div>
+Authenticated user roles:
+<div sec:authentication="principal.authorities"></div>
+
+<input type="button" value="Logout" >
 </body>
 </html>

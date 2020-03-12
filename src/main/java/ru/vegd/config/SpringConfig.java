@@ -18,6 +18,7 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import ru.vegd.Application;
 
 import javax.sql.DataSource;
@@ -25,7 +26,6 @@ import javax.sql.DataSource;
 @Configuration
 @PropertySource("database.properties")
 @EnableTransactionManagement
-@EnableWebMvc
 public class SpringConfig {
 
     @Value("${db.url}")
@@ -43,8 +43,6 @@ public class SpringConfig {
 
     @Autowired
     DataSource dataSource;
-
-    private ApplicationContext applicationContext;
 
     @Bean
     public DataSource dataSource () {
@@ -65,34 +63,5 @@ public class SpringConfig {
     public PlatformTransactionManager txManager() {
         return new DataSourceTransactionManager(dataSource());
     }
-
-    @Bean
-    public SpringResourceTemplateResolver templateResolver(){
-        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-        templateResolver.setApplicationContext(this.applicationContext);
-        templateResolver.setPrefix("/WEB-INF/templates/");
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        templateResolver.setCacheable(true);
-        return templateResolver;
-    }
-
-    @Bean
-    public SpringTemplateEngine templateEngine(){
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.setEnableSpringELCompiler(true);
-        return templateEngine;
-    }
-
-    /*@Bean
-    public ThymeleafViewResolver viewResolver(){
-        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-        viewResolver.setTemplateEngine(templateEngine());
-        // NOTE 'order' and 'viewNames' are optional
-        viewResolver.setOrder(1);
-        viewResolver.setViewNames(new String[] {".html", ".xhtml"});
-        return viewResolver;
-    }*/
 
 }

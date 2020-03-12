@@ -31,7 +31,7 @@ public class CommentAddController {
         try {
             commentService.add(comment);
         } catch (Exception e) {
-            return ERROR;
+            /*return ERROR;*/
         }
 
         return REDIRECT + "news/" + id;

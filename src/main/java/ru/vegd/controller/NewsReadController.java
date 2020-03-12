@@ -34,7 +34,7 @@ public class NewsReadController {
             model.addAttribute("comments", commentService.readLinkedComments(id));
             model.addAttribute("tags", tagService.read(id));
         } catch (Exception e) {
-            return ERROR;
+            /*return ERROR;*/
         }
         request.getSession().setAttribute("newsID",id);
         return PATH_NEWS_READ;

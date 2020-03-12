@@ -32,7 +32,7 @@ public class NewsAddController {
         try {
             newsService.add(news);
         } catch (Exception e) {
-            return ERROR;
+            /*return ERROR;*/
         }
 
         return REDIRECT;
