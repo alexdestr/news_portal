@@ -4,8 +4,10 @@ public class PathConstants {
 
     protected static final String PATH_MAIN = "news/allNews";
     protected static final String PATH_NEWS_READ = "news/readOne";
+    protected static final String PATH_NEWS_CREATE = "news/createNews";
 
     protected static final String REDIRECT = "redirect:/";
+    protected static final String BACK = "../";
 
     protected  static final String ERROR = ""; // error/error
 

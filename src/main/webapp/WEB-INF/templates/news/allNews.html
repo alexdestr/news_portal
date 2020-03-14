@@ -26,11 +26,21 @@ border-left: 2px solid #56433D;
 td:nth-child(2){
 text-align: left;
 }
-#button {
+#button_logout {
+    position: fixed;
     margin: 30px 1250px;
-    }
+}
+#button_login {
+    position: fixed;
+    margin: 30px 1250px;
+}
+#button_createNews {
+    position: fixed;
+    margin: 60px 1250px;
+}
+
 table {
-margin-top: -90px;
+
 }
 
   </style>
@@ -39,7 +49,9 @@ margin-top: -90px;
     <title>News</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-<button onclick="location.href = 'logout'" id="button">>Logout</button>
+<button sec:authorize="isAuthenticated()" onclick="location.href = 'logout'" id="button_logout">>Logout</button>
+<button sec:authorize="!isAuthenticated()" onclick="location.href = 'login'" id="button_login">>Login</button>
+<button onclick="location.href = 'news/create'" id="button_createNews">Create News</button>
 <table>
     <thead>
     <tr>
@@ -62,17 +74,6 @@ margin-top: -90px;
     </tbody>
 </table>
 <body>
-<b>Add news: </b>
-<br><br>
-<form action="news/addNews" method="post">
-Title <input type="text" name="title">
-<br><br>
-Text <input type="text" name="text">
-<br><br>
-<!--Tags <input type="text" name="tags">
-<br><br>-->
-<input type="submit" value="Send">
-</form>
 
 <h2>Welcome</h2>
 <p>Spring Security Thymeleaf tutorial</p>

@@ -25,7 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("user").password(passwordEncoder().encode("1234")).roles("USER")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("1234")).roles("USER", "ADMIN");
+                .withUser("admin").password(passwordEncoder().encode("1234")).roles("USER", "ADMIN")
+                .and()
+                .withUser("sa").password(passwordEncoder().encode("1")).roles("SUPER_ADMIN");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
@@ -33,6 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/news/**").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/news/**").hasAuthority("ROLE_SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

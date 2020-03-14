@@ -11,6 +11,7 @@ public class User {
     private String firstName;
     private String lastName;
     private Timestamp dateOfRegistration;
+    private Role role;
 
     public User(Long user_id, String login, String hash_password, String user_name, String user_last_name, Timestamp date_of_registration) {
         this.userId = user_id;
@@ -102,3 +103,14 @@ public class User {
                 '}';
     }
 }
+
+enum Role {
+
+    USER,
+    MOD,
+    ADMIN,
+    SUPER_ADMIN,
+    BANNED
+
+}
+
