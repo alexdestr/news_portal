@@ -35,7 +35,7 @@ font-size: 14px;
 
 <!DOCTYPE html>
 </style>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>News</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -103,13 +103,15 @@ font-size: 14px;
         </tbody>
     </table>
 
-    <b>Comment: </b>
+    <b sec:authorize="hasRole('USER')">Comment: </b>
     <br><br>
-    <form action="/news/reply" method="post">
+    <form sec:authorize="hasRole('USER')" action="/news/reply" method="post">
         Text: <input type="text" name="Comment">
         <br><br>
         <input type="submit" value="Send">
     </form>
+
+    <div sec:authorize="!isAuthenticated()">You must be logged in to post a comment</div>
 
 </font>
 </body>
