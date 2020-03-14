@@ -1,7 +1,6 @@
 package ru.vegd.dao.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 import ru.vegd.dao.UserDAO;
 import ru.vegd.entity.User;
@@ -68,14 +67,16 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public void add(User user) throws SQLException {
+    public Long add(User user) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
         PreparedStatement preparedStatement = null;
 
+        Long lastInsertedUserID = -1L;
+
         try {
-            preparedStatement = connection.prepareStatement(SQL_ADD);
+            preparedStatement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getHash_password());
@@ -84,6 +85,11 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setTimestamp(5, user.getDate_of_registration());
 
             preparedStatement.executeUpdate();
+
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+            if (resultSet.next()) {
+                lastInsertedUserID = resultSet.getLong(1);
+            }
             logger.info("Success adding");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -96,6 +102,7 @@ public class UserDAOImpl implements UserDAO {
                 connection.close();
             }
         }
+        return lastInsertedUserID;
     }
 
     @Override

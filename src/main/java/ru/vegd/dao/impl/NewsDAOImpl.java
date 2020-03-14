@@ -66,14 +66,16 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
-    public void add(News aNews) throws SQLException {
+    public Long add(News aNews) throws SQLException {
 
         Connection connection = dataSource.getConnection();
 
         PreparedStatement preparedStatement = null;
 
+        Long lastInsertedNewsID = -1L;
+
         try {
-            preparedStatement = connection.prepareStatement(SQL_ADD);
+            preparedStatement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setLong(1, aNews.getAuthor_id());
             preparedStatement.setString(2, aNews.getTittle());
@@ -81,6 +83,12 @@ public class NewsDAOImpl implements NewsDAO {
             preparedStatement.setTimestamp(4, aNews.getPublic_date());
 
             preparedStatement.executeUpdate();
+
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
+
+            if (resultSet.next()) {
+                lastInsertedNewsID = resultSet.getLong(1);
+            }
             logger.info("Success adding");
 
         } catch (SQLException e) {
@@ -93,6 +101,7 @@ public class NewsDAOImpl implements NewsDAO {
                 connection.close();
             }
         }
+        return lastInsertedNewsID;
     }
 
     @Override

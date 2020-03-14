@@ -23,10 +23,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void add(User user) throws SQLException {
+    public Long add(User user) throws SQLException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user.setDate_of_registration(timestamp);
-        userDAO.add(user);
+        return userDAO.add(user);
     }
 
     @Override

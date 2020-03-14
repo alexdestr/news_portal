@@ -8,7 +8,7 @@ import java.util.List;
 public interface NewsService {
 
     List getAll() throws SQLException;
-    void add(News aNews) throws SQLException;
+    Long add(News aNews) throws SQLException;
     News read(Long ID) throws SQLException;
     void delete(Long ID) throws SQLException;
     void update(News aNews) throws SQLException;

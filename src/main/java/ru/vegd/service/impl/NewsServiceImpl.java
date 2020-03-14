@@ -22,10 +22,10 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public void add(News aNews) throws SQLException {
+    public Long add(News aNews) throws SQLException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         aNews.setPublic_date(timestamp);
-        newsDAO.add(aNews);
+        return newsDAO.add(aNews);
     }
 
     @Override
