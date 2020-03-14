@@ -1,4 +1,4 @@
-<style type="text/css">
+<style type="text/css" xmlns:th="http://www.thymeleaf.org" >
    table {
     border-spacing: 0 10px;
     font-family: 'Open Sans', sans-serif;
@@ -26,13 +26,20 @@ border-left: 2px solid #56433D;
 td:nth-child(2){
 text-align: left;
 }
+#button {
+    margin: 30px 1250px;
+    }
+table {
+margin-top: -90px;
+}
 
   </style>
-<html xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>News</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
+<button onclick="location.href = 'logout'" id="button">>Logout</button>
 <table>
     <thead>
     <tr>
@@ -74,11 +81,13 @@ Text <input type="text" name="text">
 <div sec:authorize="isAuthenticated()">
     Text visible only to authenticated users.
 </div>
-Authenticated username:
-<div sec:authentication="name"></div>
-Authenticated user roles:
-<div sec:authentication="principal.authorities"></div>
 
-<input type="button" value="Logout" >
+
+<span sec:authorize="isAuthenticated()">
+                | Logged user: <span sec:authentication="name"></span> |
+                Roles: <span sec:authentication="principal.authorities"></span> |
+                <a th:href="@{/logout}">Sign Out</a>
+</span>
+
 </body>
 </html>

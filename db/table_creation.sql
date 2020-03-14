@@ -5,8 +5,15 @@ CREATE TABLE users
     hash_password VARCHAR  NOT NULL,
     user_name VARCHAR  NOT NULL,
     user_last_name VARCHAR  NOT NULL,
-    registration_date TIMESTAMP NOT NULL
+    registration_date TIMESTAMP NOT NULL,
+    role INTEGER NOT NULL REFERENCES public."user_role"(role_id)
 );
+
+CREATE TABLE user_roles
+{
+    role_id BIGINTEGER NOT NULL PRIMARY KEY,
+    role_name TEXT NOT NULL
+};
 
 CREATE TABLE news
 (

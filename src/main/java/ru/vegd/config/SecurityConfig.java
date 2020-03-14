@@ -10,29 +10,42 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    AccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
+                .withUser("user").password(passwordEncoder().encode("1234")).roles("USER")
                 .and()
-                .withUser("admin").password(passwordEncoder().encode("password")).roles("USER", "ADMIN");
+                .withUser("admin").password(passwordEncoder().encode("1234")).roles("USER", "ADMIN");
     }
 
     protected void configure(HttpSecurity http) throws Exception {
+
         http.authorizeRequests()
-                .antMatchers("/**").authenticated()
+                .antMatchers("/").permitAll()
+                .antMatchers("/news/**").hasAuthority("ROLE_ADMIN")
+                .anyRequest().authenticated()
                 .and()
-                .formLogin()
-                .and()
-                .logout().permitAll()
-                .and()
-                .csrf().disable();
+                .csrf().disable()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+
+        http.formLogin()
+                /*.loginPage("/login")*/
+                .permitAll();
+
+        http.logout()
+                .permitAll()
+                .invalidateHttpSession(true);
+
     }
 
     @Bean
