@@ -6,10 +6,10 @@ CREATE TABLE users
     user_name VARCHAR  NOT NULL,
     user_last_name VARCHAR  NOT NULL,
     registration_date TIMESTAMP NOT NULL,
-    role INTEGER NOT NULL REFERENCES public."user_role"(role_id)
+    role_id INTEGER NOT NULL REFERENCES public."roles"(role_id)
 );
 
-CREATE TABLE user_roles
+CREATE TABLE roles
 {
     role_id BIGINTEGER NOT NULL PRIMARY KEY,
     role_name TEXT NOT NULL

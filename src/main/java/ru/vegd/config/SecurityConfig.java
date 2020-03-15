@@ -3,6 +3,7 @@ package ru.vegd.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -34,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/news/**").permitAll()
+                .antMatchers(HttpMethod.GET,"/news/**").permitAll()
                 .antMatchers("/news/create").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/news/addNews").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()

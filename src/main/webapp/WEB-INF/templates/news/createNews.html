@@ -1,12 +1,13 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <b>Add news: </b>
 <br><br>
-<form action="../news/addNews" method="post">
+<form  action="../news/addNews" method="post">
     Title <input type="text" name="title">
     <br><br>
     Text <input type="text" name="text">
     <br><br>
     Tags <input type="text" name="tags">
     <br><br>
-    sec:authentication="name"
     <input type="submit" value="Send">
 </form>
+</html>

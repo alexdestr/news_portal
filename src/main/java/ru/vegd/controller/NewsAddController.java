@@ -43,19 +43,22 @@ public class NewsAddController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String author = auth.getName();
 
+        System.out.println(author);
+        System.out.println(auth.getCredentials());
+        System.out.println(auth.getDetails());
+        System.out.println(auth.getPrincipal());
+        System.out.println(auth.getAuthorities());
+
         news.setAuthor_id(2L);
         news.setTittle(request.getParameter("title"));
         news.setNews_text(request.getParameter("text"));
         tags = request.getParameter("tags");
-
-        System.out.println(tags);
 
         try {
             Long id = newsService.add(news);
             tag.setNews_ID(id);
 
             for (String str : tags.split(", ")) {
-                System.out.println(str);
                 tag.setTags(str);
                 tagService.add(tag);
             }
