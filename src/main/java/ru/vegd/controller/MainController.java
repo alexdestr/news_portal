@@ -28,6 +28,11 @@ public class MainController {
         return PATH_MAIN;
     }
 
+    @GetMapping(value = "/signup")
+    public String signup() {
+        return "signup";
+    }
+
     @GetMapping(value = "/login")
     public String login() {
         return "login";

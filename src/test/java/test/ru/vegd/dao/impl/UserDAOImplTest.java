@@ -20,6 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
 import ru.vegd.dao.UserDAO;
+import ru.vegd.entity.Role;
 import ru.vegd.entity.User;
 import test.ru.vegd.util.SequenceReseter;
 import test.ru.vegd.TestConfig;
@@ -69,6 +70,7 @@ public class UserDAOImplTest{
         user.setUser_last_name("Sasha");
         user.setHash_password("hashPass1");
         user.setDate_of_registration(Timestamp.valueOf("2019-05-05 16:10:56.00"));
+        user.setRole(Role.USER);
         userDAO.add(user);
 
         Integer num = userDAO.getAll().size();
@@ -113,6 +115,7 @@ public class UserDAOImplTest{
         user.setUser_last_name("testUpdateLastName");
         user.setHash_password("testUpdateHashPass");
         user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setRole(Role.USER);
         userDAO.update(user);
 
         Assert.assertEquals(userDAO.getAll().get(1), user);

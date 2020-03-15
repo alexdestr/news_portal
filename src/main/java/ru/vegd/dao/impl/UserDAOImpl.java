@@ -3,6 +3,7 @@ package ru.vegd.dao.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.vegd.dao.UserDAO;
+import ru.vegd.entity.Role;
 import ru.vegd.entity.User;
 
 import javax.sql.DataSource;
@@ -19,10 +20,10 @@ public class UserDAOImpl implements UserDAO {
     DataSource dataSource;
 
     private static final String SQL_GETALL = "SELECT * FROM \"users\"";
-    private static final String SQL_ADD = "INSERT INTO \"users\" (login, hash_password, user_name, user_last_name, registration_date) VALUES (?, ?, ?, ?, ? )";
+    private static final String SQL_ADD = "INSERT INTO \"users\" (login, hash_password, user_name, user_last_name, registration_date, role_id) VALUES (?, ?, ?, ?, ?, ? )";
     private static final String SQL_READ = "SELECT * FROM \"users\" WHERE user_id = ?";
     private static final String SQL_DELETE = "DELETE FROM \"users\" WHERE user_id = ?";
-    private static final String SQL_UPDATE = "UPDATE \"users\" SET login = ?, hash_password = ?, user_name = ?, user_last_name = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE = "UPDATE \"users\" SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? WHERE user_id = ?";
 
     @Override
     public List getAll() throws SQLException {
@@ -48,6 +49,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setUser_name(resultSet.getString("user_name"));
                 user.setUser_last_name(resultSet.getString("user_last_name"));
                 user.setDate_of_registration(resultSet.getTimestamp("registration_date"));
+                user.setRole(Role.getRoleByID(resultSet.getInt("role_id")));
 
                 userList.add(user);
             }
@@ -83,6 +85,7 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(3, user.getUser_name());
             preparedStatement.setString(4, user.getUser_last_name());
             preparedStatement.setTimestamp(5, user.getDate_of_registration());
+            preparedStatement.setInt(6, user.getRole().getRoleID());
 
             preparedStatement.executeUpdate();
 
@@ -126,6 +129,7 @@ public class UserDAOImpl implements UserDAO {
                 user.setUser_name(resultSet.getString("user_name"));
                 user.setUser_last_name(resultSet.getString("user_last_name"));
                 user.setDate_of_registration(resultSet.getTimestamp("registration_date"));
+                user.setRole(Role.getRoleByID(resultSet.getInt("role_id")));
             }
 
 
@@ -183,7 +187,8 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(2, user.getHash_password());
             preparedStatement.setString(3, user.getUser_name());
             preparedStatement.setString(4, user.getUser_last_name());
-            preparedStatement.setLong(5, user.getUser_id());
+            preparedStatement.setInt(5, user.getRole().getRoleID());
+            preparedStatement.setLong(6, user.getUser_id());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");

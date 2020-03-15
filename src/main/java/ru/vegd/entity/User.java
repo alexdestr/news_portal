@@ -13,13 +13,14 @@ public class User {
     private Timestamp dateOfRegistration;
     private Role role;
 
-    public User(Long user_id, String login, String hash_password, String user_name, String user_last_name, Timestamp date_of_registration) {
-        this.userId = user_id;
+    public User(Long userId, String login, String hashPassword, String firstName, String lastName, Timestamp dateOfRegistration, Role role) {
+        this.userId = userId;
         this.login = login;
-        this.hashPassword = hash_password;
-        this.firstName = user_name;
-        this.lastName = user_last_name;
-        this.dateOfRegistration = date_of_registration;
+        this.hashPassword = hashPassword;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfRegistration = dateOfRegistration;
+        this.role = role;
     }
 
     public User() { }
@@ -72,45 +73,47 @@ public class User {
         this.dateOfRegistration = date_of_registration;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return userId == user.userId &&
+        return Objects.equals(userId, user.userId) &&
                 Objects.equals(login, user.login) &&
                 Objects.equals(hashPassword, user.hashPassword) &&
                 Objects.equals(firstName, user.firstName) &&
                 Objects.equals(lastName, user.lastName) &&
-                Objects.equals(dateOfRegistration, user.dateOfRegistration);
+                Objects.equals(dateOfRegistration, user.dateOfRegistration) &&
+                role == user.role;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(userId, login, hashPassword, firstName, lastName, dateOfRegistration);
+        return Objects.hash(userId, login, hashPassword, firstName, lastName, dateOfRegistration, role);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "user_id=" + userId +
+                "userId=" + userId +
                 ", login='" + login + '\'' +
-                ", hash_password='" + hashPassword + '\'' +
-                ", user_name='" + firstName + '\'' +
-                ", user_last_name='" + lastName + '\'' +
-                ", date_of_registration='" + dateOfRegistration + '\'' +
+                ", hashPassword='" + hashPassword + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfRegistration=" + dateOfRegistration +
+                ", role=" + role +
                 '}';
     }
-}
-
-enum Role {
-
-    USER,
-    MOD,
-    ADMIN,
-    SUPER_ADMIN,
-    BANNED
 
 }
+
 

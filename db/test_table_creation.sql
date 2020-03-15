@@ -6,6 +6,13 @@ CREATE TABLE tests.users
     user_name VARCHAR  NOT NULL,
     user_last_name VARCHAR  NOT NULL,
     registration_date TIMESTAMP NOT NULL
+    role_id INTEGER NOT NULL REFERENCES tests."roles"(role_id)
+);
+
+CREATE TABLE tests.roles
+(
+    role_id INTEGER NOT NULL PRIMARY KEY,
+    role_name TEXT NOT NULL
 );
 
 CREATE TABLE tests.news

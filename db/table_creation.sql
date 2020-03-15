@@ -10,10 +10,10 @@ CREATE TABLE users
 );
 
 CREATE TABLE roles
-{
-    role_id BIGINTEGER NOT NULL PRIMARY KEY,
+(
+    role_id INTEGER NOT NULL PRIMARY KEY,
     role_name TEXT NOT NULL
-};
+);
 
 CREATE TABLE news
 (
