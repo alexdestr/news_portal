@@ -29,7 +29,7 @@
       <version>2.2.1.RELEASE</version>
       <scope>test</scope>
     </dependency>
-      <dependency>1
+      <dependency>
           <groupId>org.springframework.boot</groupId>
           <artifactId>spring-boot-starter-thymeleaf</artifactId>
       </dependency>

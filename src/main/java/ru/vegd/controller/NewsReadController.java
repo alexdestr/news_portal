@@ -36,7 +36,7 @@ public class NewsReadController {
         } catch (Exception e) {
             /*return ERROR;*/
         }
-        request.getSession().setAttribute("newsID",id);
+        request.getSession().setAttribute("newsID", id);
         return PATH_NEWS_READ;
     }
 

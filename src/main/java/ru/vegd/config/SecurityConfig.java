@@ -28,7 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("admin").password(passwordEncoder().encode("1234")).roles("USER", "ADMIN")
                 .and()
-                .withUser("sa").password(passwordEncoder().encode("1")).roles("SUPER_ADMIN");
+                .withUser("sa").password(passwordEncoder().encode("1")).roles("USER", "ADMIN", "SUPER_ADMIN");
     }
 
     protected void configure(HttpSecurity http) throws Exception {

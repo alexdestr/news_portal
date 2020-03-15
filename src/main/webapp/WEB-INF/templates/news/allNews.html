@@ -59,6 +59,7 @@ table {
         <th> Author </th>
         <th> Title </th>
         <th> Read </th>
+        <th sec:authorize="hasRole('ADMIN')"> Delete </th>
     </tr>
     </thead>
     <tbody>
@@ -70,6 +71,11 @@ table {
         <td><span th:text="${news.author_id}"> Author </span></td>
         <td><span th:text="${news.tittle}"> Tittle </span></td>
         <td><a href="id.html" th:href="@{http://localhost:8080/news/{id}(id = ${news.news_id})}"> Read </a></td>
+        <td sec:authorize="hasRole('ADMIN')"><form action="news/deleteNews" method="post"> <!--{id}(id = ${news.news_id})-->
+            <input type="hidden" value="${news_id}">
+            <input type="submit" value="DELETE">
+        </form>
+        </td>
     </tr>
     </tbody>
 </table>

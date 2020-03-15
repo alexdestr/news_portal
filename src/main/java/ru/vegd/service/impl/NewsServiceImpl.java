@@ -2,7 +2,9 @@ package ru.vegd.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.vegd.dao.CommentDAO;
 import ru.vegd.dao.NewsDAO;
+import ru.vegd.dao.TagDAO;
 import ru.vegd.entity.News;
 import ru.vegd.service.NewsService;
 
@@ -15,6 +17,12 @@ public class NewsServiceImpl implements NewsService {
 
     @Autowired
     NewsDAO newsDAO;
+
+    @Autowired
+    TagDAO tagDAO;
+
+    @Autowired
+    CommentDAO commentDAO;
 
     @Override
     public List getAll() throws SQLException {
@@ -35,6 +43,8 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void delete(Long ID) throws SQLException {
+        commentDAO.delete(ID);
+        tagDAO.delete(ID);
         newsDAO.delete(ID);
     }
 
