@@ -12,6 +12,7 @@ public interface CommentDAO {
     Comment read(Long ID) throws SQLException;
     List<Comment> readLinkedComments(Long ID) throws SQLException;
     void delete(Long ID) throws SQLException;
+    void deleteLinked(Long ID) throws SQLException;
     void update(Comment comment) throws SQLException;
 
 }

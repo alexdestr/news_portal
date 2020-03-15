@@ -24,8 +24,7 @@ public class NewsDeleteController {
     @PostMapping(value = "news/delete")
     public String doPost(HttpServletRequest request) {
         try {
-            Long id = Long.valueOf(request.getParameter("news_id"));
-            System.out.println(id);
+            Long id = Long.parseLong(request.getParameter("news_id"));
             newsService.delete(id);
         } catch (SQLException e) {
 

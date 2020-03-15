@@ -43,7 +43,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void delete(Long ID) throws SQLException {
-        commentDAO.delete(ID);
+        commentDAO.deleteLinked(ID);
         tagDAO.delete(ID);
         newsDAO.delete(ID);
     }

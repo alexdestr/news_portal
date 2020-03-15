@@ -23,6 +23,7 @@ public class CommentDAOImpl implements CommentDAO {
     private static final String SQL_READ = "SELECT * FROM comments WHERE comments_id = ?";
     private static final String SQL_READ_LINKED = "SELECT * FROM comments WHERE news_id = ?";
     private static final String SQL_DELETE = "DELETE FROM comments WHERE comments.\"comments_id\" = ?";
+    private static final String SQL_DELETE_LINKED = "DELETE FROM comments WHERE comments.\"news_id\" = ?";
     private static final String SQL_UPDATE = "UPDATE comments SET news_id = ?, author_id = ?, comment_text = ? WHERE comments_id = ?";
 
     @Override
@@ -182,6 +183,32 @@ public class CommentDAOImpl implements CommentDAO {
         try {
 
             preparedStatement = connection.prepareStatement(SQL_DELETE);
+            preparedStatement.setLong(1, ID);
+            preparedStatement.executeUpdate();
+            logger.info("Success delete");
+
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+    }
+
+    @Override
+    public void deleteLinked(Long ID) throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+
+            preparedStatement = connection.prepareStatement(SQL_DELETE_LINKED);
             preparedStatement.setLong(1, ID);
             preparedStatement.executeUpdate();
             logger.info("Success delete");

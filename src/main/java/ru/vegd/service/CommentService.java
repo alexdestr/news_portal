@@ -12,6 +12,7 @@ public interface CommentService {
     Comment read(Long ID) throws SQLException;
     List readLinkedComments(Long ID) throws SQLException;
     void delete(Long ID) throws SQLException;
+    void deleteLinked(Long ID) throws SQLException;
     void update(Comment comment) throws SQLException;
 
 }

@@ -44,6 +44,11 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public void deleteLinked(Long ID) throws SQLException {
+        commentDAO.deleteLinked(ID);
+    }
+
+    @Override
     public void update(Comment comment) throws SQLException {
         commentDAO.update(comment);
     }

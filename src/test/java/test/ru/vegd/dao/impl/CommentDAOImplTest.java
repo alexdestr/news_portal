@@ -102,7 +102,7 @@ public class CommentDAOImplTest {
 
         Assert.assertEquals(expectedSize, size);
 
-    }
+    } /*TODO: MAKE TEST FOR DELETE_LINKED()*/
 
     @Test
     @DatabaseSetup(value = { "/comments-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
