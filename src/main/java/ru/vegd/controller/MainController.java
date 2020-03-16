@@ -33,9 +33,9 @@ public class MainController {
         return "signup";
     }
 
-    @GetMapping(value = "/login")
-    public String login() {
-        return "login";
+    @GetMapping(value = "/registration")
+    public String registration() {
+        return "login/registration";
     }
 
     @GetMapping("/403")

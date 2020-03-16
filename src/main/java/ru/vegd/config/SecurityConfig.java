@@ -34,10 +34,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
+                .antMatchers("/registration").permitAll()
+                .antMatchers("/addUser").permitAll()
                 .antMatchers("/").permitAll()
                 .antMatchers(HttpMethod.GET,"/news/**").permitAll()
                 .antMatchers("/news/create").hasAuthority("ROLE_ADMIN")
                 .antMatchers("/news/addNews").hasAuthority("ROLE_ADMIN")
+                .antMatchers("/news/delete").hasAuthority("ROLE_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()
