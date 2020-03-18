@@ -5,8 +5,9 @@ CREATE TABLE tests.users
     hash_password VARCHAR  NOT NULL,
     user_name VARCHAR  NOT NULL,
     user_last_name VARCHAR  NOT NULL,
-    registration_date TIMESTAMP NOT NULL
-    role_id INTEGER NOT NULL REFERENCES tests."roles"(role_id)
+    registration_date TIMESTAMP NOT NULL,
+    role_id INTEGER NOT NULL REFERENCES tests."roles"(role_id),
+    enabled BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE tests.roles

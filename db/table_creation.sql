@@ -6,7 +6,8 @@ CREATE TABLE users
     user_name VARCHAR  NOT NULL,
     user_last_name VARCHAR  NOT NULL,
     registration_date TIMESTAMP NOT NULL,
-    role_id INTEGER NOT NULL REFERENCES public."roles"(role_id)
+    role_id INTEGER NOT NULL REFERENCES public."roles"(role_id),
+    enabled BOOLEAN NOT NULL DEFAULT true
 );
 
 CREATE TABLE roles

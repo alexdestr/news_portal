@@ -2,6 +2,7 @@ package ru.vegd.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,28 +10,42 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.stereotype.Service;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private static final String USERS_BY_USERNAME_QUERY =
+            "SELECT LOGIN AS username, HASH_PASSWORD AS password, enabled " +
+                    "FROM public.users WHERE LOGIN = ?";
+    private static final String AUTHORITIES_BY_USERNAME_QUERY  =
+            "SELECT LOGIN AS username, ROLE_NAME AS authority " +
+                    "FROM public.users u " +
+                    "JOIN public.roles r ON r.ROLE_ID=u.ROLE_ID " +
+                    "WHERE u.LOGIN = ?";
+
     @Autowired
     AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
+    DataSource dataSource;
+
+    @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user").password(passwordEncoder().encode("1234")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder().encode("1234")).roles("USER", "ADMIN")
-                .and()
-                .withUser("sa").password(passwordEncoder().encode("1")).roles("USER", "ADMIN", "SUPER_ADMIN");
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder())
+                .usersByUsernameQuery(USERS_BY_USERNAME_QUERY)
+                .authoritiesByUsernameQuery(AUTHORITIES_BY_USERNAME_QUERY);
     }
 
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         http.authorizeRequests()
@@ -47,7 +62,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         http.formLogin()
-                /*.loginPage("/login")*/
+                .loginPage("/login")
+                /*.defaultSuccessUrl("/")*/
                 .permitAll();
 
         http.logout()

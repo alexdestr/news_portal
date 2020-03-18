@@ -28,9 +28,9 @@ public class MainController {
         return PATH_MAIN;
     }
 
-    @GetMapping(value = "/signup")
+    @GetMapping(value = "/login")
     public String signup() {
-        return "signup";
+        return "login/login";
     }
 
     @GetMapping(value = "/registration")

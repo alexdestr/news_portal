@@ -101,7 +101,7 @@ input {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration Form</title>
+    <title>Log In</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
 </head>
 <body>
@@ -112,31 +112,19 @@ input {
     </div>
 
 
-    <div class="form"> <form action="../addUser" method="post">
+    <div class="form"> <form action="/login" method="post">
         <div class="input_field">
-            <input name="login" type="text" placeholder="Login" class="input">
+            <input name="username" type="text" placeholder="Login" class="input">
             <i class="fas fa-user"></i>
-        </div>
-        <div class="input_field">
-            <input name="name" type="text" placeholder="Name" class="input">
-            <i class="fas fa-user"></i>
-        </div>
-        <div class="input_field">
-            <input name="last_name" type="text" placeholder="Last Name" class="input">
-            <i class="fas fa-user"></i>
-        </div>
-        <div class="input_field">
-            <input name="email" type="text" placeholder="Email" class="input">
-            <i class="far fa-envelope"></i>
         </div>
         <div class="input_field">
             <input name="password" type="password" placeholder="Password" class="input">
             <i class="fas fa-lock"></i>
         </div>
-            <input type="submit" class="btn" id="btn_reg" value="Register">
-</form>
+        <input type="submit" class="btn" id="btn_reg" value="Log In">
+    </form>
         <div class="log">
-            <a href="/login">To Login Page</a>
+            <a href="/registration">To Registration Page</a>
         </div>
     </div>
 
