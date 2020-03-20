@@ -2,11 +2,11 @@ package ru.vegd.entity;
 
 public enum Role {
 
-    USER(1),
-    MOD(2),
-    ADMIN(3),
-    SUPER_ADMIN(4),
-    BANNED(0);
+    ROLE_USER(1),
+    ROLE_MOD(2),
+    ROLE_ADMIN(3),
+    ROLE_SUPER_ADMIN(4),
+    ROLE_BANNED(0);
 
     Role(Integer roleId) {
         this.roleID = roleId;
@@ -22,22 +22,22 @@ public enum Role {
         Role role;
         switch (id) {
             case 1:
-                role = Role.USER;
+                role = Role.ROLE_USER;
                 break;
             case 2:
-                role = Role.MOD;
+                role = Role.ROLE_MOD;
                 break;
             case 3:
-                role = Role.ADMIN;
+                role = Role.ROLE_ADMIN;
                 break;
             case 4:
-                role = Role.SUPER_ADMIN;
+                role = Role.ROLE_SUPER_ADMIN;
                 break;
             case 0:
-                role = Role.BANNED;
+                role = Role.ROLE_BANNED;
                 break;
                 default:
-                    role = Role.USER;
+                    role = Role.ROLE_USER;
         }
         return role;
     }

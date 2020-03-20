@@ -34,7 +34,7 @@ public class UserAddController {
         user.setUser_name(httpServletRequest.getParameter("name"));
         user.setUser_last_name(httpServletRequest.getParameter("last_name"));
         user.setHash_password(passwordEncoder.encode(httpServletRequest.getParameter("password")));
-        user.setRole(Role.USER);
+        user.setRole(Role.ROLE_USER);
 
         try {
             userService.add(user);

@@ -103,9 +103,9 @@ font-size: 14px;
         </tbody>
     </table>
 
-    <b sec:authorize="hasRole('USER')">Comment: </b>
+    <b sec:authorize="hasAnyRole('USER', 'MOD', 'ADMIN', 'SUPER_ADMIN')">Comment: </b>
     <br><br>
-    <form sec:authorize="hasRole('USER')" action="/news/reply" method="post">
+    <form sec:authorize="hasAnyRole('USER', 'MOD', 'ADMIN', 'SUPER_ADMIN')" action="/news/reply" method="post">
         Text: <input type="text" name="Comment">
         <br><br>
         <input type="submit" value="Send">
