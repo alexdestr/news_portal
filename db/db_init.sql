@@ -1,13 +1,13 @@
 INSERT INTO roles (role_id, role_name)
-VALUES (1, 'USER');
+VALUES (1, 'ROLE_USER');
 INSERT INTO roles (role_id, role_name)
-VALUES (2, 'MOD');
+VALUES (2, 'ROLE_MOD');
 INSERT INTO roles (role_id, role_name)
-VALUES (3, 'ADMIN');
+VALUES (3, 'ROLE_ADMIN');
 INSERT INTO roles (role_id, role_name)
-VALUES (4, 'SUPER_ADMIN');
+VALUES (4, 'ROLE_SUPER_ADMIN');
 INSERT INTO roles (role_id, role_name)
-VALUES (0, 'BANNED');
+VALUES (0, 'ROLE_BANNED');
 
 
 INSERT INTO users (login, hash_password, user_name, user_last_name, registration_date, role_id)

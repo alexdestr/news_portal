@@ -1,0 +1,149 @@
+[33mcommit 40dffa775a9d5b79ddadc1a98f7a8b91405f3566[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m)[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Wed Mar 18 14:13:17 2020 +0300
+
+    login data takes from db
+
+[33mcommit 91dac6c1c193b79fd27dd7f29324e746657d00b8[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Tue Mar 17 02:21:47 2020 +0300
+
+    registration done
+
+[33mcommit 1161055587a017d7553e5446a68536df16c7a7b1[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sun Mar 15 23:35:30 2020 +0300
+
+    added deleting news
+
+[33mcommit 3c5b85d90ee02750d09adeb05bdd858e0b418ccf[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sun Mar 15 22:09:03 2020 +0300
+
+    fixed some bugs
+
+[33mcommit 27a11fad46c5079302d1324e79bbe5d101777452[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sun Mar 15 16:46:06 2020 +0300
+
+    changed user entity(added roles)
+
+[33mcommit 9adf4ee3de239320ca2c4b5873678cd9345b30ae[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sun Mar 15 14:15:36 2020 +0300
+
+    small changes
+
+[33mcommit 57b23ce26007114e42c6275efe13f51aecb2f596[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sat Mar 14 23:22:58 2020 +0300
+
+    need auth to post a comment
+
+[33mcommit 4d1f00837a9e166c491382e644751224141cf2eb[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sat Mar 14 23:08:09 2020 +0300
+
+    rework news creation (news creation with tags)
+
+[33mcommit ee6fe03030062fb46e1b1a730d89f08aabfdc742[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sat Mar 14 19:45:49 2020 +0300
+
+    reworks in site stucture
+
+[33mcommit 2ddd535fd16a4adf0e60dccf08d0919e28e4067d[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sat Mar 14 18:41:03 2020 +0300
+
+    taglibs security configured & some bugs fixed
+
+[33mcommit ace3df2f717a2e028d488888c5064c35bf0b1214[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Thu Mar 12 21:18:42 2020 +0300
+
+    basic authorisation complete
+
+[33mcommit d6e25961fc194938a093f8ab82780bb6072f2c8e[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Fri Feb 28 23:53:06 2020 +0300
+
+    error message done & makу уÑexception handling in controller
+
+[33mcommit 9ea9732bb9678879dbdcbeb777c6747dde266d31[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Fri Feb 28 00:05:49 2020 +0300
+
+    Adding comment&news done
+
+[33mcommit 0a44442628289e1241a1ede34c37a32bf8ddddae[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Thu Feb 27 00:23:33 2020 +0300
+
+    base controller example
+
+[33mcommit 6d51978043031a644d774e01e78bfb6b6d2f6b3b[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Wed Feb 12 19:20:19 2020 +0300
+
+    smth bugs in tests fixed
+
+[33mcommit 6a4a53736f7b4e08f2e3c0662898c6091e25458a[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Mon Feb 10 19:02:10 2020 +0300
+
+    jUnit tests for Service done
+
+[33mcommit 9b84a55068f307b277177a0dbea7ad5f264c4be1[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Mon Feb 10 02:28:36 2020 +0300
+
+    jUnit test complete
+
+[33mcommit 84c7de002448abe106f8be7497a62343856c9097[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Thu Feb 6 14:12:11 2020 +0300
+
+    remove @Transactional in tests
+
+[33mcommit ac566fd2757f73e4e596e75a2f7d4c1c0e81a4f7[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Tue Jan 14 18:53:48 2020 +0300
+
+    changed sql tables
+
+[33mcommit 48a97af7843f0848596bc3647eedec4483725791[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Tue Jan 14 02:37:15 2020 +0300
+
+    fixed bug with dbUnit
+
+[33mcommit be0b81b523594781e305bab250e4f03e7011200e[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Fri Jan 10 17:00:07 2020 +0300
+
+    changed var names(in entity)
+
+[33mcommit cf357002b4fa6427122c58e0c7dad5d02b70285d[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Fri Jan 10 16:10:10 2020 +0300
+
+    changed structure
+
+[33mcommit 98fbbd7565a29e167ab931965f7d0e04f056e7ff[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Thu Dec 26 17:47:09 2019 +0300
+
+    clear test code
+
+[33mcommit 8289cee2f3282ab36f6d4c3ebd99ddce3b84c30d[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sat Dec 7 16:39:55 2019 +0300
+
+    package renaming
+
+[33mcommit a3bf5c96016b6f43036db86102e49d8c942586bb[m
+Author: VincentVega <alexdestr@gmail.com>
+Date:   Sat Dec 7 16:24:22 2019 +0300
+
+    Initiall commit
