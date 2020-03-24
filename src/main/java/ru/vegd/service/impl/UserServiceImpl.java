@@ -3,6 +3,7 @@ package ru.vegd.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vegd.dao.UserDAO;
+import ru.vegd.entity.Role;
 import ru.vegd.entity.User;
 import ru.vegd.service.UserService;
 
@@ -20,6 +21,16 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getAll() throws SQLException {
         return userDAO.getAll();
+    }
+
+    @Override
+    public List getAuthorNames() throws SQLException {
+        return userDAO.getAuthorNames();
+    }
+
+    @Override
+    public Long getUserIdByLogin(String login) throws SQLException {
+        return userDAO.getUserIdByLogin(login);
     }
 
     @Override
@@ -42,5 +53,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public void update(User user) throws SQLException {
         userDAO.update(user);
+    }
+
+    @Override
+    public void updateRole(Long ID, Integer roleId) throws SQLException {
+        userDAO.updateRole(ID, roleId);
     }
 }

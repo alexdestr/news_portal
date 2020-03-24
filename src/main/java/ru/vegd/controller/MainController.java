@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.vegd.service.NewsService;
+import ru.vegd.service.UserService;
 
 import static ru.vegd.controller.PathConstants.ERROR;
 import static ru.vegd.controller.PathConstants.PATH_MAIN;
@@ -18,10 +19,14 @@ public class MainController {
     @Autowired
     NewsService newsService;
 
+    @Autowired
+    UserService userService;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showNews(Model model) {
         try {
             model.addAttribute("news", newsService.getAll());
+            model.addAttribute("authors", userService.getAuthorNames());
         } catch (Exception e) {
             /*return ERROR;*/
         }

@@ -58,6 +58,9 @@ public class UserDAOImplTest{
 
     }
 
+    /*TODO: Add GetAuthorNames test*/
+    /*TODO: Add getUserIdByLogin test*/
+
     @Test
     @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void add() throws SQLException {
@@ -120,6 +123,8 @@ public class UserDAOImplTest{
 
         Assert.assertEquals(userDAO.getAll().get(1), user);
     }
+
+    /*TODO: Add updateRole test*/
 
     @After
     public void reseter() {

@@ -33,32 +33,46 @@ public class PanelsController {
         return PathConstants.PATH_ADMIN_PANEL;
     }
 
-    /*TODO: MAKE BAN / UNBAN SYSTEM*/
-    @PostMapping("/action")
-    public String adminAction(HttpServletRequest request) {
-
-        /*----------------------------BAN / UNBAN------------------------------*/
+    @PostMapping("/actionEditStatus")
+    public String adminActionEditStatus(HttpServletRequest request) {
 
         User user1 = new User();
         user1.setLogin(request.getParameter("userSelect1"));
-        String action = request.getParameter("action");
+        String action1 = request.getParameter("action1");
 
-        if (action.equals("Ban")) {
-            System.out.println(user1 + "was banned");
+        if (action1.equals("Ban")) {
+            try {
+                userService.updateRole(userService.getUserIdByLogin(user1.getLogin()), Role.ROLE_BANNED.getRoleID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
-        if (action.equals("Unban")) {
-            System.out.println(user1 + "was unbanned");
+        if (action1.equals("Unban")) {
+            try {
+                userService.updateRole(userService.getUserIdByLogin(user1.getLogin()), Role.ROLE_USER.getRoleID());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
-        /*---------------------------SET ROLE---------------------------------*/
+        return PathConstants.REDIRECT + "admin";
+    }
 
+    @PostMapping("/actionEditRole")
+    public String adminActionEditRole(HttpServletRequest request) {
         User user2 = new User();
         user2.setLogin(request.getParameter("userSelect2"));
         user2.setRole(Role.valueOf("ROLE_" + request.getParameter("newRole")));
 
+        try {
+            userService.updateRole(userService.getUserIdByLogin(user2.getLogin()), user2.getRole().getRoleID());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
-        return PathConstants.REDIRECT;
+
+        return PathConstants.REDIRECT + "admin";
     }
 
 }

@@ -12,6 +12,7 @@ import ru.vegd.entity.News;
 import ru.vegd.entity.Tag;
 import ru.vegd.service.NewsService;
 import ru.vegd.service.TagService;
+import ru.vegd.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
@@ -23,6 +24,9 @@ public class NewsAddController {
 
     @Autowired
     NewsService newsService;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     TagService tagService;
@@ -43,12 +47,12 @@ public class NewsAddController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String author = auth.getName();
 
-        news.setAuthor_id(2L);
         news.setTittle(request.getParameter("title"));
         news.setNews_text(request.getParameter("text"));
         tags = request.getParameter("tags");
 
         try {
+            news.setAuthor_id(userService.getUserIdByLogin(author));
             Long id = newsService.add(news);
             tag.setNews_ID(id);
 

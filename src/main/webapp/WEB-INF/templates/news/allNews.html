@@ -74,7 +74,7 @@ table {
     </tr>-->
     <tr th:each="news : ${news}">
         <td><span th:text="${news.news_id}"> ID </span></td>
-        <td><span th:text="${news.author_id}"> Author </span></td>
+        <td><span th:text="${news.author_id}"> Author </span></td> <!--TODO: Display author login-->
         <td><span th:text="${news.tittle}"> Tittle </span></td>
         <td><a href="id.html" th:href="@{http://localhost:8080/news/{id}(id = ${news.news_id})}"> Read </a></td>
         <td sec:authorize="hasAnyRole('MOD', 'ADMIN', 'SUPER_ADMIN')"><form action="news/delete" method="post"> <!--{id}(id = ${news.news_id})-->

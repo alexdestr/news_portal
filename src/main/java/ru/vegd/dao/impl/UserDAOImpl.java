@@ -19,11 +19,14 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * FROM \"users\"";
-    private static final String SQL_ADD = "INSERT INTO \"users\" (login, hash_password, user_name, user_last_name, registration_date, role_id) VALUES (?, ?, ?, ?, ?, ? )";
-    private static final String SQL_READ = "SELECT * FROM \"users\" WHERE user_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"users\" WHERE user_id = ?";
-    private static final String SQL_UPDATE = "UPDATE \"users\" SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? WHERE user_id = ?";
+    private static final String SQL_GETALL = "SELECT * FROM public.users";
+    private static final String SQL_GET_AUTHOR_NAMES = "SELECT login FROM public.users u JOIN public.news n ON u.user_id = n.author_id";
+    private static final String SQL_GET_USER_ID_BY_LOGIN = "SELECT user_id FROM public.users WHERE login = ?";
+    private static final String SQL_ADD = "INSERT INTO public.users (login, hash_password, user_name, user_last_name, registration_date, role_id) VALUES (?, ?, ?, ?, ?, ? )";
+    private static final String SQL_READ = "SELECT * FROM public.users WHERE user_id = ?";
+    private static final String SQL_DELETE = "DELETE FROM public.users WHERE user_id = ?";
+    private static final String SQL_UPDATE = "UPDATE public.users SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_ROLE = "UPDATE public.users SET role_id = ? WHERE user_id = ?";
 
     @Override
     public List getAll() throws SQLException {
@@ -66,6 +69,75 @@ public class UserDAOImpl implements UserDAO {
         }
 
         return userList;
+    }
+
+    @Override
+    public List getAuthorNames() throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        List<User> authorList = new ArrayList<>();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_GET_AUTHOR_NAMES);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                User user = new User();
+
+                user.setLogin(resultSet.getString("login"));
+
+                authorList.add(user);
+            }
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+
+        return authorList;
+    }
+
+    @Override
+    public Long getUserIdByLogin(String login) throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = null;
+
+        Long userId = -1L;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_GET_USER_ID_BY_LOGIN);
+
+            preparedStatement.setString(1, login);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                userId = resultSet.getLong("user_id");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+        return userId;
     }
 
     @Override
@@ -204,5 +276,32 @@ public class UserDAOImpl implements UserDAO {
         }
 
 
+    }
+
+    @Override
+    public void updateRole(Long ID, Integer roleId) throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_UPDATE_ROLE);
+
+            preparedStatement.setInt(1, roleId);
+            preparedStatement.setLong(2, ID);
+
+            preparedStatement.executeUpdate();
+            logger.info("Success update");
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
     }
 }
