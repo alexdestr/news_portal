@@ -15,6 +15,9 @@ public interface UserDAO {
     User read(Long ID) throws  SQLException;
     void delete(Long ID) throws SQLException;
     void update(User user) throws SQLException;
+    void updateData(User user) throws SQLException;
+    void updatePassword(User user) throws SQLException;
     void updateRole(Long ID, Integer roleId) throws SQLException;
+    void deactivateAccount(Long ID, Boolean status) throws SQLException;
 
 }

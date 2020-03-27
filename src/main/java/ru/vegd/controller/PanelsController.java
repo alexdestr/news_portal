@@ -1,6 +1,9 @@
 package ru.vegd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +21,85 @@ public class PanelsController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @GetMapping("/user")
     public String user(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = auth.getName();
+        try {
+            model.addAttribute("userInfo", userService.read(userService.getUserIdByLogin(currentUser)));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return PathConstants.PATH_USER_PANEL;
+    }
+
+    @GetMapping("user/change")
+    public String userChangeData() {
+        return PathConstants.PATH_CHANGE_USER_DATA;
+    }
+
+    @PostMapping("user/changeData")
+    public String userChangeMainData(Model model, HttpServletRequest request) {
+        String newName = request.getParameter("name");
+        String newLastName = request.getParameter("lastName");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = auth.getName();
+
+        User user = new User();
+        user.setUser_name(newName);
+        user.setUser_last_name(newLastName);
+
+        try {
+            Long userId = userService.getUserIdByLogin(currentUser);
+            user.setUser_id(userId);
+            userService.updateData(user);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return PathConstants.PATH_CHANGE_USER_DATA;
+    }
+
+    @PostMapping("user/changePassword")
+    public String userChangePassword(Model model, HttpServletRequest request) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = auth.getName();
+        try {
+            Long userId = userService.getUserIdByLogin(currentUser);
+            String currentPassword = request.getParameter("currentPassword");
+            String newPassword = request.getParameter("newPassword");
+            String repeatPassword = request.getParameter("repeatPassword");
+
+            if (newPassword.equals(repeatPassword) && passwordEncoder.matches(currentPassword, userService.read(userId).getHash_password())) {
+                currentPassword = passwordEncoder.encode(currentPassword);
+                newPassword = passwordEncoder.encode(newPassword);
+                User user = new User();
+                user.setUser_id(userId);
+                user.setHash_password(newPassword);
+                user.setUser_id(userId);
+                userService.updatePassword(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return PathConstants.PATH_CHANGE_USER_DATA;
+    }
+
+    @PostMapping("user/deleteAccount")
+    public String userDeleteAccount() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String currentUser = auth.getName();
+        try {
+            Long userId = userService.getUserIdByLogin(currentUser);
+            userService.deactivateAccount(userId, false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return PathConstants.PATH_CHANGE_USER_DATA;
     }
 
     @GetMapping("/admin")

@@ -124,7 +124,28 @@ public class UserDAOImplTest{
         Assert.assertEquals(userDAO.getAll().get(1), user);
     }
 
-    /*TODO: Add updateRole test*/
+    @Test
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
+    public void updateRole() throws SQLException {
+        User user = new User();
+
+        user.setUser_id(3L);
+        user.setLogin("Zaza");
+        user.setUser_name("testUpdateName");
+        user.setUser_last_name("testUpdateLastName");
+        user.setHash_password("testUpdateHashPass");
+        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setRole(Role.ROLE_ADMIN);
+        userDAO.update(user);
+
+        Assert.assertEquals(userDAO.getAll().get(1), user);
+    }
+
+    /*TODO: Add updateRole test /
+    void updateData(User user) throws SQLException;
+    void updatePassword(User user) throws SQLException;
+    void deactivate
+     */
 
     @After
     public void reseter() {

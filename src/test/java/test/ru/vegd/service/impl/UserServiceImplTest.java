@@ -12,6 +12,7 @@ import ru.vegd.service.impl.UserServiceImpl;
 import java.sql.SQLException;
 
 import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -39,6 +40,22 @@ public class UserServiceImplTest {
     }
 
     @Test
+    public void getAuthorName() throws SQLException {
+        userService.getAuthorNames();
+
+        verify(userDAO).getAuthorNames();
+    }
+
+    @Test
+    public void getUserIdByLogin() throws SQLException {
+        String string = anyString();
+
+        userService.getUserIdByLogin(string);
+
+        verify(userDAO).getUserIdByLogin(string);
+    }
+
+    @Test
     public void read() throws SQLException {
         Long userId = anyLong();
 
@@ -58,6 +75,15 @@ public class UserServiceImplTest {
 
     @Test
     public void update() throws SQLException {
+        User user = mock(User.class);
+
+        userService.update(user);
+
+        verify(userDAO).update(user);
+    }
+
+    @Test
+    public void updateRole() throws SQLException {
         User user = mock(User.class);
 
         userService.update(user);

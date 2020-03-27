@@ -56,7 +56,22 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public void updateData(User user) throws SQLException {
+        userDAO.updateData(user);
+    }
+
+    @Override
+    public void updatePassword(User user) throws SQLException {
+        userDAO.updatePassword(user);
+    }
+
+    @Override
     public void updateRole(Long ID, Integer roleId) throws SQLException {
         userDAO.updateRole(ID, roleId);
+    }
+
+    @Override
+    public void deactivateAccount(Long ID, Boolean status) throws SQLException {
+        userDAO.deactivateAccount(ID, status);
     }
 }

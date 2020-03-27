@@ -26,7 +26,10 @@ public class UserDAOImpl implements UserDAO {
     private static final String SQL_READ = "SELECT * FROM public.users WHERE user_id = ?";
     private static final String SQL_DELETE = "DELETE FROM public.users WHERE user_id = ?";
     private static final String SQL_UPDATE = "UPDATE public.users SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_DATA = "UPDATE public.users SET user_name = ?, user_last_name = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_PASSWORD = "UPDATE public.users SET hash_password = ? WHERE user_id = ?";
     private static final String SQL_UPDATE_ROLE = "UPDATE public.users SET role_id = ? WHERE user_id = ?";
+    private static final String SQL_DEACTIVATE_ACCOUNT = "UPDATE public.users SET enabled = ? WHERE user_id = ?";
 
     @Override
     public List getAll() throws SQLException {
@@ -279,6 +282,61 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public void updateData(User user) throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_UPDATE_DATA);
+
+            preparedStatement.setString(1, user.getUser_name());
+            preparedStatement.setString(2, user.getUser_last_name());
+            preparedStatement.setLong(3, user.getUser_id());
+
+            preparedStatement.executeUpdate();
+            logger.info("Success update");
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+    }
+
+    @Override
+    public void updatePassword(User user) throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_UPDATE_PASSWORD);
+
+            preparedStatement.setString(1, user.getHash_password());
+            preparedStatement.setLong(2, user.getUser_id());
+
+            preparedStatement.executeUpdate();
+            logger.info("Success update");
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+    }
+
+    @Override
     public void updateRole(Long ID, Integer roleId) throws SQLException {
 
         Connection connection = dataSource.getConnection();
@@ -289,6 +347,33 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement = connection.prepareStatement(SQL_UPDATE_ROLE);
 
             preparedStatement.setInt(1, roleId);
+            preparedStatement.setLong(2, ID);
+
+            preparedStatement.executeUpdate();
+            logger.info("Success update");
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+    }
+
+    @Override
+    public void deactivateAccount(Long ID, Boolean status) throws SQLException {
+
+        Connection connection = dataSource.getConnection();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_DEACTIVATE_ACCOUNT);
+
+            preparedStatement.setBoolean(1, status);
             preparedStatement.setLong(2, ID);
 
             preparedStatement.executeUpdate();

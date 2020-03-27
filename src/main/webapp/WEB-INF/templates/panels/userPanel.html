@@ -1,0 +1,16 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<span sec:authorize="isAuthenticated()">
+
+    Login: <span sec:authentication="name"></span>
+    <br>
+    Roles: <span sec:authentication="principal.authorities"></span>
+    <br>
+    Name: <span th:text="${userInfo.user_name}"></span>
+    <br>
+    Last Name: <span th:text="${userInfo.user_last_name}"></span>
+    <br>
+    <a th:href="@{user/change}">Change User Data</a>
+    <br>
+    <a th:href="@{/logout}">Sign Out</a>
+</span>
+</html>
