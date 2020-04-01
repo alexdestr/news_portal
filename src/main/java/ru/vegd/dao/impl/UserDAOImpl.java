@@ -19,17 +19,17 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * FROM public.users";
-    private static final String SQL_GET_AUTHOR_NAMES = "SELECT login FROM public.users u JOIN public.news n ON u.user_id = n.author_id";
-    private static final String SQL_GET_USER_ID_BY_LOGIN = "SELECT user_id FROM public.users WHERE login = ?";
-    private static final String SQL_ADD = "INSERT INTO public.users (login, hash_password, user_name, user_last_name, registration_date, role_id) VALUES (?, ?, ?, ?, ?, ? )";
-    private static final String SQL_READ = "SELECT * FROM public.users WHERE user_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM public.users WHERE user_id = ?";
-    private static final String SQL_UPDATE = "UPDATE public.users SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? WHERE user_id = ?";
-    private static final String SQL_UPDATE_DATA = "UPDATE public.users SET user_name = ?, user_last_name = ? WHERE user_id = ?";
-    private static final String SQL_UPDATE_PASSWORD = "UPDATE public.users SET hash_password = ? WHERE user_id = ?";
-    private static final String SQL_UPDATE_ROLE = "UPDATE public.users SET role_id = ? WHERE user_id = ?";
-    private static final String SQL_DEACTIVATE_ACCOUNT = "UPDATE public.users SET enabled = ? WHERE user_id = ?";
+    private static final String SQL_GET_ALL = "SELECT * FROM users";
+    private static final String SQL_GET_AUTHOR_NAMES = "SELECT login FROM users u JOIN news n ON u.user_id = n.author_id";
+    private static final String SQL_GET_USER_ID_BY_LOGIN = "SELECT user_id FROM users WHERE login = ?";
+    private static final String SQL_ADD = "INSERT INTO users (login, hash_password, user_name, user_last_name, registration_date, role_id) VALUES (?, ?, ?, ?, ?, ? )";
+    private static final String SQL_READ = "SELECT * FROM users WHERE user_id = ?";
+    private static final String SQL_DELETE = "DELETE FROM users WHERE user_id = ?";
+    private static final String SQL_UPDATE = "UPDATE users SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_DATA = "UPDATE users SET user_name = ?, user_last_name = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_PASSWORD = "UPDATE users SET hash_password = ? WHERE user_id = ?";
+    private static final String SQL_UPDATE_ROLE = "UPDATE users SET role_id = ? WHERE user_id = ?";
+    private static final String SQL_DEACTIVATE_ACCOUNT = "UPDATE users SET enabled = ? WHERE user_id = ?";
 
     @Override
     public List getAll() throws SQLException {
@@ -41,7 +41,7 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement preparedStatement = null;
 
         try {
-          preparedStatement = connection.prepareStatement(SQL_GETALL);
+          preparedStatement = connection.prepareStatement(SQL_GET_ALL);
 
 
             ResultSet resultSet = preparedStatement.executeQuery();

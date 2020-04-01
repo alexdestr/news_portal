@@ -58,8 +58,27 @@ public class UserDAOImplTest{
 
     }
 
-    /*TODO: Add GetAuthorNames test*/
-    /*TODO: Add getUserIdByLogin test*/
+    @Test
+    @DatabaseSetup(value = { "/user-data.xml", "/news-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
+    public void getAuthorNames() throws Exception {  // TODO: FIX TEST
+
+        Integer expectedSize = 2;
+        Integer size = userDAO.getAuthorNames().size();
+
+        Assert.assertEquals(expectedSize, size);
+
+    }
+
+    @Test
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
+    public void getUserIdByLogin() throws Exception {
+
+        Long expectedId = 4L;
+        Long id = userDAO.getUserIdByLogin("Alex");
+
+        Assert.assertEquals(expectedId, id);
+
+    }
 
     @Test
     @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
@@ -131,20 +150,52 @@ public class UserDAOImplTest{
 
         user.setUser_id(3L);
         user.setLogin("Zaza");
-        user.setUser_name("testUpdateName");
-        user.setUser_last_name("testUpdateLastName");
-        user.setHash_password("testUpdateHashPass");
+        user.setUser_name("Jaja");
+        user.setUser_last_name("Kril");
+        user.setHash_password("smthHash1");
         user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_ADMIN);
-        userDAO.update(user);
+        userDAO.updateRole(3L, 3);
 
         Assert.assertEquals(userDAO.getAll().get(1), user);
     }
 
-    /*TODO: Add updateRole test /
-    void updateData(User user) throws SQLException;
-    void updatePassword(User user) throws SQLException;
-    void deactivate
+    @Test
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
+    public void updateData() throws SQLException {
+        User user = new User();
+
+        user.setUser_id(3L);
+        user.setLogin("Zaza");
+        user.setUser_name("qwe");
+        user.setUser_last_name("asd");
+        user.setHash_password("smthHash1");
+        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setRole(Role.ROLE_USER);
+        userDAO.updateData(user);
+
+        Assert.assertEquals(userDAO.getAll().get(1), user);
+    }
+
+    @Test
+    @DatabaseSetup(value = "/user-data.xml", type = DatabaseOperation.CLEAN_INSERT)
+    public void updatePassword() throws SQLException {
+        User user = new User();
+
+        user.setUser_id(3L);
+        user.setLogin("Zaza");
+        user.setUser_name("Jaja");
+        user.setUser_last_name("Kril");
+        user.setHash_password("qwerty");
+        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setRole(Role.ROLE_USER);
+        userDAO.updatePassword(user);
+
+        Assert.assertEquals(userDAO.getAll().get(1), user);
+    }
+
+    /*
+    TODO: void deactivate add test
      */
 
     @After

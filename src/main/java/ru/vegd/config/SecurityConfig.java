@@ -56,6 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/news/create").hasAnyAuthority("ROLE_MOD", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                 .antMatchers("/news/addNews").hasAnyAuthority("ROLE_MOD", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                 .antMatchers("/news/delete").hasAnyAuthority("ROLE_MOD", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
+                .antMatchers("/admin/**").hasAnyAuthority("ROLE_MOD", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
+                .antMatchers("user/**").authenticated()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

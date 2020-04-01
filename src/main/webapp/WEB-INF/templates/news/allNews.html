@@ -54,6 +54,13 @@ table {
 }
 
   </style>
+<style>
+    body {
+    background: #c7b39b url(https://memepedia.ru/wp-content/uploads/2018/06/zhmyshenko-glad.jpg) no-repeat;
+    -webkit-background-size: 100%;
+    color: #fff; /* Цвет текста */
+   }
+</style>
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>News</title>
@@ -82,7 +89,7 @@ table {
         <td><span th:text="${news.news_id}"> ID </span></td>
         <td><span th:text="${news.author_id}"> Author </span></td> <!--TODO: Display author login-->
         <td><span th:text="${news.tittle}"> Tittle </span></td>
-        <td><a href="id.html" th:href="@{http://localhost:8080/news/{id}(id = ${news.news_id})}"> Read </a></td>
+        <td><a href="id.html" th:href="@{/news/{id}(id = ${news.news_id})}"> Read </a></td>
         <td sec:authorize="hasAnyRole('MOD', 'ADMIN', 'SUPER_ADMIN')"><form action="news/delete" method="post"> <!--{id}(id = ${news.news_id})-->
             <input type="hidden" name="news_id" th:value="${news.news_id}" />
             <input type="submit" value="DELETE">
