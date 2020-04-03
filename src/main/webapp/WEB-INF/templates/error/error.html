@@ -68,9 +68,10 @@ body {
   color: #0414a7;
 }
 </style>
-
+<html>
 <main class="bsod container">
     <h1 class="neg title"><span class="bg">Error - 404</span></h1>
+    <p th:text="${errorMsg}"></p>
     <p>An error has occured, to continue:</p>
     <p>* Return to our homepage.<br />
         * Send us an e-mail about this error and try later.</p>
@@ -78,3 +79,4 @@ body {
         <a href="/" class="link">To main page</a>
     </nav>
 </main>
+</html>

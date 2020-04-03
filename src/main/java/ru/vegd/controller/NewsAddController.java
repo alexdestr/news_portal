@@ -56,8 +56,8 @@ public class NewsAddController {
             Long id = newsService.add(news);
             tag.setNews_ID(id);
 
-            for (String str : tags.split(", ")) {
-                tag.setTags(str);
+            for (String str : tags.split(",")) {
+                tag.setTags(str.trim());
                 tagService.add(tag);
             }
 

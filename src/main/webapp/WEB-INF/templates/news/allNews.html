@@ -53,14 +53,18 @@ table {
 
 }
 
+a {
+    text-decoration: none;
+   }
+
   </style>
-<style>
-    body {
+<!--<style>
+    &lt;!&ndash;&lt;!&ndash;body {
     background: #c7b39b url(https://memepedia.ru/wp-content/uploads/2018/06/zhmyshenko-glad.jpg) no-repeat;
     -webkit-background-size: 100%;
     color: #fff; /* Цвет текста */
-   }
-</style>
+   }&ndash;&gt;&ndash;&gt;
+</style>-->
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>News</title>
@@ -99,6 +103,11 @@ table {
     </tbody>
 </table>
 <body>
+
+<a th:each="prevList : ${prevList}" href="page.html" th:href="@{/?page={page}(page = ${prevList})}" th:text="|${prevList} |"></a>
+<a th:text="${page}">asd</a>
+<a th:each="nextList : ${nextList}" href="page.html" th:href="@{/?page={page}(page = ${nextList})}" th:text="|${nextList} |"></a>
+
 
 <h2>Welcome</h2>
 <p>Spring Security Thymeleaf tutorial</p>

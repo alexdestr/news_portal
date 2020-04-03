@@ -19,6 +19,7 @@ public class NewsDAOImpl implements NewsDAO {
     DataSource dataSource;
 
     private static final String SQL_GETALL = "SELECT * FROM \"news\"";
+    private static final String SQL_GET_TEN_NEWS = "WITH news AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) AS row_id, news_id, author_id, tittle, news_text, creation_date FROM news) SELECT * FROM news WHERE row_id BETWEEN ? AND ?";
     private static final String SQL_ADD = "INSERT INTO \"news\" (author_id, tittle, news_text, creation_date) VALUES ( ?, ?, ?, ?)";
     private static final String SQL_READ = "SELECT * FROM \"news\" WHERE news_id = ?";
     private static final String SQL_DELETE = "DELETE FROM \"news\" WHERE news.\"news_id\" = ?";
@@ -26,6 +27,42 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public List getAll() throws SQLException {
+        List<News> newsList = new ArrayList<>();
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_GETALL);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                News aNews = new News();
+
+                aNews.setNews_id(resultSet.getLong("news_id"));
+                aNews.setAuthor_id(resultSet.getLong("author_id"));
+                aNews.setTittle(resultSet.getString("tittle"));
+                aNews.setNews_text(resultSet.getString("news_text"));
+                aNews.setPublic_date(resultSet.getTimestamp("creation_date"));
+
+                newsList.add(aNews);
+            }
+
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+
+        return newsList;
+    }
+
+    @Override
+    public List getPaginatedNews(Long ID) throws SQLException {
 
         List<News> newsList = new ArrayList<>();
 
@@ -34,8 +71,10 @@ public class NewsDAOImpl implements NewsDAO {
         PreparedStatement preparedStatement = null;
 
         try {
-            preparedStatement = connection.prepareStatement(SQL_GETALL);
+            preparedStatement = connection.prepareStatement(SQL_GET_TEN_NEWS);
 
+            preparedStatement.setLong(1, ID * 10 - 10);
+            preparedStatement.setLong(2, ID * 10);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

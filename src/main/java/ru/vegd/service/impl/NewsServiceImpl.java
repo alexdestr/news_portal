@@ -37,6 +37,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public List getTenNews(Long ID) throws SQLException {
+        return newsDAO.getTenNews(ID);
+    }
+
+    @Override
     public News read(Long ID) throws SQLException {
         return newsDAO.read(ID);
     }

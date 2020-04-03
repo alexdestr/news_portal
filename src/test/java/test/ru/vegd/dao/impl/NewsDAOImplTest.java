@@ -49,6 +49,8 @@ public class NewsDAOImplTest {
 
     }
 
+    /*TODO: Make test for getTenNews*/
+
     @Test
     @DatabaseSetup(value = { "/news-data.xml" }, type = DatabaseOperation.CLEAN_INSERT)
     public void add() throws SQLException {

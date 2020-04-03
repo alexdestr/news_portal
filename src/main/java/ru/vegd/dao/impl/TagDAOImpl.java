@@ -32,14 +32,10 @@ public class TagDAOImpl implements TagDAO {
 
         Connection connection = dataSource.getConnection();
         List<Tag> tagList = new ArrayList<>();
-
-
         PreparedStatement preparedStatement = null;
 
         try  {
             preparedStatement = connection.prepareStatement(SQL_GETALL);
-
-
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

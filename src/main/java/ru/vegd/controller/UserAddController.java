@@ -27,7 +27,7 @@ public class UserAddController {
     PasswordEncoder passwordEncoder;
 
     @PostMapping("/addUser")
-    public String doPost(HttpServletRequest httpServletRequest) {
+    public String addUser(HttpServletRequest httpServletRequest) {
 
         User user = new User();
         user.setLogin(httpServletRequest.getParameter("login"));
