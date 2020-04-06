@@ -3,7 +3,6 @@ package ru.vegd.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.vegd.dao.UserDAO;
-import ru.vegd.entity.Role;
 import ru.vegd.entity.User;
 import ru.vegd.service.UserService;
 
@@ -36,7 +35,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public Long add(User user) throws SQLException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        user.setDate_of_registration(timestamp);
+        user.setDateOfRegistration(timestamp);
         return userDAO.add(user);
     }
 

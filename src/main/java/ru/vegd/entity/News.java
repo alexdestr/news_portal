@@ -21,19 +21,19 @@ public class News {
 
     public News() {}
 
-    public Long getNews_id() {
+    public Long getNewsId() {
         return newsId;
     }
 
-    public void setNews_id(Long news_id) {
+    public void setNewsId(Long news_id) {
         this.newsId = news_id;
     }
 
-    public Long getAuthor_id() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthor_id(Long author_id) {
+    public void setAuthorId(Long author_id) {
         this.authorId = author_id;
     }
 
@@ -45,19 +45,19 @@ public class News {
         this.tittle = tittle;
     }
 
-    public String getNews_text() {
+    public String getNewsText() {
         return newsText;
     }
 
-    public void setNews_text(String news_text) {
+    public void setNewsText(String news_text) {
         this.newsText = news_text;
     }
 
-    public Timestamp getPublic_date() {
+    public Timestamp getPublicDate() {
         return publicDate;
     }
 
-    public void setPublic_date(Timestamp public_date) {
+    public void setPublicDate(Timestamp public_date) {
         this.publicDate = public_date;
     }
 

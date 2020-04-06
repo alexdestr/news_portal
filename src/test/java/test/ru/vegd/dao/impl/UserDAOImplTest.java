@@ -4,16 +4,11 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.github.springtestdbunit.annotation.DatabaseTearDown;
-import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import org.dbunit.DatabaseUnitException;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,10 +20,8 @@ import ru.vegd.entity.User;
 import test.ru.vegd.util.SequenceReseter;
 import test.ru.vegd.TestConfig;
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 /*TODO: Repair @Transactional*/
 
@@ -88,10 +81,10 @@ public class UserDAOImplTest{
         Integer expectedNum = 3;
 
         user.setLogin("AlexandrOchka1999");
-        user.setUser_name("A?");
-        user.setUser_last_name("Sasha");
-        user.setHash_password("hashPass1");
-        user.setDate_of_registration(Timestamp.valueOf("2019-05-05 16:10:56.00"));
+        user.setUserName("A?");
+        user.setUserLastName("Sasha");
+        user.setHashPassword("hashPass1");
+        user.setDateOfRegistration(Timestamp.valueOf("2019-05-05 16:10:56.00"));
         user.setRole(Role.ROLE_USER);
         userDAO.add(user);
 
@@ -131,12 +124,12 @@ public class UserDAOImplTest{
     public void update() throws SQLException {
         User user = new User();
 
-        user.setUser_id(3L);
+        user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUser_name("testUpdateName");
-        user.setUser_last_name("testUpdateLastName");
-        user.setHash_password("testUpdateHashPass");
-        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setUserName("testUpdateName");
+        user.setUserLastName("testUpdateLastName");
+        user.setHashPassword("testUpdateHashPass");
+        user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_USER);
         userDAO.update(user);
 
@@ -148,12 +141,12 @@ public class UserDAOImplTest{
     public void updateRole() throws SQLException {
         User user = new User();
 
-        user.setUser_id(3L);
+        user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUser_name("Jaja");
-        user.setUser_last_name("Kril");
-        user.setHash_password("smthHash1");
-        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setUserName("Jaja");
+        user.setUserLastName("Kril");
+        user.setHashPassword("smthHash1");
+        user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_ADMIN);
         userDAO.updateRole(3L, 3);
 
@@ -165,12 +158,12 @@ public class UserDAOImplTest{
     public void updateData() throws SQLException {
         User user = new User();
 
-        user.setUser_id(3L);
+        user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUser_name("qwe");
-        user.setUser_last_name("asd");
-        user.setHash_password("smthHash1");
-        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setUserName("qwe");
+        user.setUserLastName("asd");
+        user.setHashPassword("smthHash1");
+        user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_USER);
         userDAO.updateData(user);
 
@@ -182,12 +175,12 @@ public class UserDAOImplTest{
     public void updatePassword() throws SQLException {
         User user = new User();
 
-        user.setUser_id(3L);
+        user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUser_name("Jaja");
-        user.setUser_last_name("Kril");
-        user.setHash_password("qwerty");
-        user.setDate_of_registration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
+        user.setUserName("Jaja");
+        user.setUserLastName("Kril");
+        user.setHashPassword("qwerty");
+        user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_USER);
         userDAO.updatePassword(user);
 

@@ -32,13 +32,13 @@ public class NewsServiceImpl implements NewsService {
     @Override
     public Long add(News aNews) throws SQLException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        aNews.setPublic_date(timestamp);
+        aNews.setPublicDate(timestamp);
         return newsDAO.add(aNews);
     }
 
     @Override
     public List getTenNews(Long ID) throws SQLException {
-        return newsDAO.getTenNews(ID);
+        return newsDAO.getPaginatedNews(ID);
     }
 
     @Override

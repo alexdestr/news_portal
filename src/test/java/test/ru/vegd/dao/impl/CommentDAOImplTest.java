@@ -6,7 +6,6 @@ import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,10 +55,10 @@ public class CommentDAOImplTest {
 
         Integer expectedSize = 3;
 
-        comment.setNews_id(3L);
-        comment.setAuthor_id(3L);
-        comment.setComment_text("CommentTestText");
-        comment.setSending_date(Timestamp.valueOf(LocalDateTime.now()));
+        comment.setNewsId(3L);
+        comment.setAuthorId(3L);
+        comment.setCommentText("CommentTestText");
+        comment.setSendingDate(Timestamp.valueOf(LocalDateTime.now()));
         commentDAO.add(comment);
 
         Integer size = commentDAO.getAll().size();
@@ -109,11 +108,11 @@ public class CommentDAOImplTest {
     public void update() throws SQLException {
         Comment comment = new Comment();
 
-        comment.setComment_id(3L);
-        comment.setNews_id(3L);
-        comment.setAuthor_id(3L);
-        comment.setComment_text("TestCommentUpdate");
-        comment.setSending_date(Timestamp.valueOf("2020-01-08 15:29:03.18"));
+        comment.setCommentId(3L);
+        comment.setNewsId(3L);
+        comment.setAuthorId(3L);
+        comment.setCommentText("TestCommentUpdate");
+        comment.setSendingDate(Timestamp.valueOf("2020-01-08 15:29:03.18"));
 
         commentDAO.update(comment);
 

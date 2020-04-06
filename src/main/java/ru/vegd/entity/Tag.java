@@ -14,11 +14,11 @@ public class Tag {
 
     public Tag () {}
 
-    public Long getNews_ID() {
+    public Long getNewsID() {
         return newsId;
     }
 
-    public void setNews_ID(Long news_ID) {
+    public void setNewsID(Long news_ID) {
         this.newsId = news_ID;
     }
 

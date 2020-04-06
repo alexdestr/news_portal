@@ -24,7 +24,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void add(Comment comment) throws SQLException {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        comment.setSending_date(timestamp);
+        comment.setSendingDate(timestamp);
         commentDAO.add(comment);
     }
 

@@ -21,43 +21,43 @@ public class Comment {
 
     public Comment() {}
 
-    public Long getComment_id() {
+    public Long getCommentId() {
         return commentId;
     }
 
-    public void setComment_id(Long comment_id) {
+    public void setCommentId(Long comment_id) {
         this.commentId = comment_id;
     }
 
-    public Long getNews_id() {
+    public Long getNewsId() {
         return newsId;
     }
 
-    public void setNews_id(Long news_id) {
+    public void setNewsId(Long news_id) {
         this.newsId = news_id;
     }
 
-    public Long getAuthor_id() {
+    public Long getAuthorId() {
         return authorId;
     }
 
-    public void setAuthor_id(Long author_id) {
+    public void setAuthorId(Long author_id) {
         this.authorId = author_id;
     }
 
-    public String getComment_text() {
+    public String getCommentText() {
         return commentText;
     }
 
-    public void setComment_text(String comment_text) {
+    public void setCommentText(String comment_text) {
         this.commentText = comment_text;
     }
 
-    public Timestamp getSending_date() {
+    public Timestamp getSendingDate() {
         return sendingDate;
     }
 
-    public void setSending_date(Timestamp sending_date) {
+    public void setSendingDate(Timestamp sending_date) {
         this.sendingDate = sending_date;
     }
 

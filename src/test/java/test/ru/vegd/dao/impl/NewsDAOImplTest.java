@@ -6,7 +6,6 @@ import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,10 +57,10 @@ public class NewsDAOImplTest {
 
         Integer expectedSize = 3;
 
-        news.setAuthor_id(3L);
+        news.setAuthorId(3L);
         news.setTittle("Test");
-        news.setNews_text("SmthText1234");
-        news.setPublic_date(Timestamp.valueOf(LocalDateTime.now()));
+        news.setNewsText("SmthText1234");
+        news.setPublicDate(Timestamp.valueOf(LocalDateTime.now()));
         newsDAO.add(news);
 
         Integer size = newsDAO.getAll().size();
@@ -100,11 +99,11 @@ public class NewsDAOImplTest {
     public void update() throws SQLException {
         News news = new News();
 
-        news.setNews_id(3L);
-        news.setAuthor_id(3L);
+        news.setNewsId(3L);
+        news.setAuthorId(3L);
         news.setTittle("TestUpdate");
-        news.setNews_text("Test Update Successful Done");
-        news.setPublic_date(Timestamp.valueOf("2020-01-01 11:02:22.12"));
+        news.setNewsText("Test Update Successful Done");
+        news.setPublicDate(Timestamp.valueOf("2020-01-01 11:02:22.12"));
         newsDAO.update(news);
 
         Assert.assertEquals(newsDAO.getAll().get(1), news);

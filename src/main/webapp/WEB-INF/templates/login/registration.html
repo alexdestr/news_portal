@@ -114,26 +114,26 @@ input {
 
     <div class="form"> <form action="../addUser" method="post">
         <div class="input_field">
-            <input name="login" type="text" placeholder="Login" class="input">
+            <input name="login" type="text" placeholder="Login" class="input" required minlength="3" maxlength="25">
             <i class="fas fa-user"></i>
         </div>
         <div class="input_field">
-            <input name="name" type="text" placeholder="Name" class="input">
+            <input name="name" type="text" placeholder="Name" class="input" required minlength="2">
             <i class="fas fa-user"></i>
         </div>
         <div class="input_field">
-            <input name="last_name" type="text" placeholder="Last Name" class="input">
+            <input name="last_name" type="text" placeholder="Last Name" class="input" required minlength="2">
             <i class="fas fa-user"></i>
         </div>
         <div class="input_field">
-            <input name="email" type="text" placeholder="Email" class="input">
+            <input name="email" type="email" placeholder="Email" class="input" required minlength="2">
             <i class="far fa-envelope"></i>
         </div>
         <div class="input_field">
-            <input name="password" type="password" placeholder="Password" class="input">
+            <input name="password" type="password" placeholder="Password" class="input" required minlength="6" maxlength="24">
             <i class="fas fa-lock"></i>
         </div>
-            <input type="submit" class="btn" id="btn_reg" value="Register">
+            <input type="submit" class="btn" id="btn_reg" value="Register" required>
 </form>
         <div class="log">
             <a href="/login">To Login Page</a>

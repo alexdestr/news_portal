@@ -19,47 +19,63 @@ public class UserDAOImpl implements UserDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GET_ALL = "SELECT * FROM users";
-    private static final String SQL_GET_AUTHOR_NAMES = "SELECT login FROM users u JOIN news n ON u.user_id = n.author_id";
-    private static final String SQL_GET_USER_ID_BY_LOGIN = "SELECT user_id FROM users WHERE login = ?";
-    private static final String SQL_ADD = "INSERT INTO users (login, hash_password, user_name, user_last_name, registration_date, role_id) VALUES (?, ?, ?, ?, ?, ? )";
-    private static final String SQL_READ = "SELECT * FROM users WHERE user_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM users WHERE user_id = ?";
-    private static final String SQL_UPDATE = "UPDATE users SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? WHERE user_id = ?";
-    private static final String SQL_UPDATE_DATA = "UPDATE users SET user_name = ?, user_last_name = ? WHERE user_id = ?";
-    private static final String SQL_UPDATE_PASSWORD = "UPDATE users SET hash_password = ? WHERE user_id = ?";
-    private static final String SQL_UPDATE_ROLE = "UPDATE users SET role_id = ? WHERE user_id = ?";
-    private static final String SQL_DEACTIVATE_ACCOUNT = "UPDATE users SET enabled = ? WHERE user_id = ?";
+    private static final String SQL_GET_ALL = "SELECT * " +
+            "FROM users";
+    private static final String SQL_GET_AUTHOR_NAMES = "SELECT login " +
+            "FROM users u JOIN news n " +
+            "ON u.user_id = n.author_id";
+    private static final String SQL_GET_USER_ID_BY_LOGIN = "SELECT user_id " +
+            "FROM users " +
+            "WHERE login = ?";
+    private static final String SQL_ADD = "INSERT " +
+            "INTO users (login, hash_password, user_name, user_last_name, registration_date, role_id) " +
+            "VALUES (?, ?, ?, ?, ?, ? )";
+    private static final String SQL_READ = "SELECT * " +
+            "FROM users " +
+            "WHERE user_id = ?";
+    private static final String SQL_DELETE = "DELETE " +
+            "FROM users " +
+            "WHERE user_id = ?";
+    private static final String SQL_UPDATE = "UPDATE users " +
+            "SET login = ?, hash_password = ?, user_name = ?, user_last_name = ?, role_id = ? " +
+            "WHERE user_id = ?";
+    private static final String SQL_UPDATE_DATA = "UPDATE users " +
+            "SET user_name = ?, user_last_name = ? " +
+            "WHERE user_id = ?";
+    private static final String SQL_UPDATE_PASSWORD = "UPDATE users " +
+            "SET hash_password = ? " +
+            "WHERE user_id = ?";
+    private static final String SQL_UPDATE_ROLE = "UPDATE users " +
+            "SET role_id = ? " +
+            "WHERE user_id = ?";
+    private static final String SQL_DEACTIVATE_ACCOUNT = "UPDATE users " +
+            "SET enabled = ? " +
+            "WHERE user_id = ?";
 
     @Override
     public List getAll() throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         List<User> userList = new ArrayList<>();
-
         PreparedStatement preparedStatement = null;
 
         try {
           preparedStatement = connection.prepareStatement(SQL_GET_ALL);
-
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 User user = new User();
 
-                user.setUser_id(resultSet.getLong("user_id"));
+                user.setUserId(resultSet.getLong("user_id"));
                 user.setLogin(resultSet.getString("login"));
-                user.setHash_password(resultSet.getString("hash_password"));
-                user.setUser_name(resultSet.getString("user_name"));
-                user.setUser_last_name(resultSet.getString("user_last_name"));
-                user.setDate_of_registration(resultSet.getTimestamp("registration_date"));
+                user.setHashPassword(resultSet.getString("hash_password"));
+                user.setUserName(resultSet.getString("user_name"));
+                user.setUserLastName(resultSet.getString("user_last_name"));
+                user.setDateOfRegistration(resultSet.getTimestamp("registration_date"));
                 user.setRole(Role.getRoleByID(resultSet.getInt("role_id")));
 
                 userList.add(user);
             }
-
         } catch (SQLException e) {
             logger.warn("Request eror");
         } finally {
@@ -70,17 +86,13 @@ public class UserDAOImpl implements UserDAO {
                 connection.close();
             }
         }
-
         return userList;
     }
 
     @Override
     public List getAuthorNames() throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         List<User> authorList = new ArrayList<>();
-
         PreparedStatement preparedStatement = null;
 
         try {
@@ -105,17 +117,13 @@ public class UserDAOImpl implements UserDAO {
                 connection.close();
             }
         }
-
         return authorList;
     }
 
     @Override
     public Long getUserIdByLogin(String login) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
-
         Long userId = -1L;
 
         try {
@@ -128,7 +136,6 @@ public class UserDAOImpl implements UserDAO {
             if (resultSet.next()) {
                 userId = resultSet.getLong("user_id");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
             logger.warn("Request eror");
@@ -145,21 +152,18 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public Long add(User user) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
-
         Long lastInsertedUserID = -1L;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getHash_password());
-            preparedStatement.setString(3, user.getUser_name());
-            preparedStatement.setString(4, user.getUser_last_name());
-            preparedStatement.setTimestamp(5, user.getDate_of_registration());
+            preparedStatement.setString(2, user.getHashPassword());
+            preparedStatement.setString(3, user.getUserName());
+            preparedStatement.setString(4, user.getUserLastName());
+            preparedStatement.setTimestamp(5, user.getDateOfRegistration());
             preparedStatement.setInt(6, user.getRole().getRoleID());
 
             preparedStatement.executeUpdate();
@@ -185,12 +189,10 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public User read(Long ID) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
-
         User user = new User();
+
         try {
             preparedStatement = connection.prepareStatement(SQL_READ);
             preparedStatement.setLong(1, ID);
@@ -198,16 +200,14 @@ public class UserDAOImpl implements UserDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                user.setUser_id(resultSet.getLong("user_id"));
+                user.setUserId(resultSet.getLong("user_id"));
                 user.setLogin(resultSet.getString("login"));
-                user.setHash_password(resultSet.getString("hash_password"));
-                user.setUser_name(resultSet.getString("user_name"));
-                user.setUser_last_name(resultSet.getString("user_last_name"));
-                user.setDate_of_registration(resultSet.getTimestamp("registration_date"));
+                user.setHashPassword(resultSet.getString("hash_password"));
+                user.setUserName(resultSet.getString("user_name"));
+                user.setUserLastName(resultSet.getString("user_last_name"));
+                user.setDateOfRegistration(resultSet.getTimestamp("registration_date"));
                 user.setRole(Role.getRoleByID(resultSet.getInt("role_id")));
             }
-
-
         } catch (SQLException e) {
             logger.warn("Request eror");
         } finally {
@@ -223,9 +223,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void delete(Long ID) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
@@ -245,25 +243,22 @@ public class UserDAOImpl implements UserDAO {
                 connection.close();
             }
         }
-
     }
 
     @Override
     public void update(User user) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE);
 
             preparedStatement.setString(1, user.getLogin());
-            preparedStatement.setString(2, user.getHash_password());
-            preparedStatement.setString(3, user.getUser_name());
-            preparedStatement.setString(4, user.getUser_last_name());
+            preparedStatement.setString(2, user.getHashPassword());
+            preparedStatement.setString(3, user.getUserName());
+            preparedStatement.setString(4, user.getUserLastName());
             preparedStatement.setInt(5, user.getRole().getRoleID());
-            preparedStatement.setLong(6, user.getUser_id());
+            preparedStatement.setLong(6, user.getUserId());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");
@@ -277,23 +272,19 @@ public class UserDAOImpl implements UserDAO {
                 connection.close();
             }
         }
-
-
     }
 
     @Override
     public void updateData(User user) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE_DATA);
 
-            preparedStatement.setString(1, user.getUser_name());
-            preparedStatement.setString(2, user.getUser_last_name());
-            preparedStatement.setLong(3, user.getUser_id());
+            preparedStatement.setString(1, user.getUserName());
+            preparedStatement.setString(2, user.getUserLastName());
+            preparedStatement.setLong(3, user.getUserId());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");
@@ -311,16 +302,14 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void updatePassword(User user) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE_PASSWORD);
 
-            preparedStatement.setString(1, user.getHash_password());
-            preparedStatement.setLong(2, user.getUser_id());
+            preparedStatement.setString(1, user.getHashPassword());
+            preparedStatement.setLong(2, user.getUserId());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");
@@ -338,9 +327,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void updateRole(Long ID, Integer roleId) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
@@ -365,9 +352,7 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deactivateAccount(Long ID, Boolean status) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {

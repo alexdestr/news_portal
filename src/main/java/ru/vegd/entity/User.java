@@ -25,11 +25,11 @@ public class User {
 
     public User() { }
 
-    public Long getUser_id() {
+    public Long getUserId() {
         return userId;
     }
 
-    public void setUser_id(Long user_id) {
+    public void setUserId(Long user_id) {
         this.userId = user_id;
     }
 
@@ -41,35 +41,35 @@ public class User {
         this.login = login;
     }
 
-    public String getHash_password() {
+    public String getHashPassword() {
         return hashPassword;
     }
 
-    public void setHash_password(String hash_password) {
+    public void setHashPassword(String hash_password) {
         this.hashPassword = hash_password;
     }
 
-    public String getUser_name() {
+    public String getUserName() {
         return firstName;
     }
 
-    public void setUser_name(String user_name) {
+    public void setUserName(String user_name) {
         this.firstName = user_name;
     }
 
-    public String getUser_last_name() {
+    public String getUserLastName() {
         return lastName;
     }
 
-    public void setUser_last_name(String user_last_name) {
+    public void setUserLastName(String user_last_name) {
         this.lastName = user_last_name;
     }
 
-    public Timestamp getDate_of_registration() {
+    public Timestamp getDateOfRegistration() {
         return dateOfRegistration;
     }
 
-    public void setDate_of_registration(Timestamp date_of_registration) {
+    public void setDateOfRegistration(Timestamp date_of_registration) {
         this.dateOfRegistration = date_of_registration;
     }
 

@@ -114,14 +114,14 @@ input {
 
     <div class="form"> <form action="/login" method="post">
         <div class="input_field">
-            <input name="username" type="text" placeholder="Login" class="input">
+            <input name="username" type="text" placeholder="Login" class="input" required>
             <i class="fas fa-user"></i>
         </div>
         <div class="input_field">
-            <input name="password" type="password" placeholder="Password" class="input">
+            <input name="password" type="password" placeholder="Password" class="input" required>
             <i class="fas fa-lock"></i>
         </div>
-        <input type="submit" class="btn" id="btn_reg" value="Log In">
+        <input type="submit" class="btn" id="btn_reg" value="Log In" required>
     </form>
         <div class="log">
             <a href="/registration">To Registration Page</a>

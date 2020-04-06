@@ -4,9 +4,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.TransactionDbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseOperation;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +13,11 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.support.DirtiesContextTestExecutionListener;
-import ru.vegd.dao.NewsDAO;
 import ru.vegd.dao.TagDAO;
-import ru.vegd.entity.News;
 import ru.vegd.entity.Tag;
 import test.ru.vegd.TestConfig;
-import test.ru.vegd.util.SequenceReseter;
 
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = TestConfig.class)
@@ -55,7 +48,7 @@ public class TagDAOImplTest {
 
         Integer expectedSize = 3;
 
-        tag.setNews_ID(3L);
+        tag.setNewsID(3L);
         tag.setTags("[Fun][Animals]");
         tagDAO.add(tag);
 
@@ -94,7 +87,7 @@ public class TagDAOImplTest {
     public void update() throws SQLException {
         Tag tag = new Tag();
 
-        tag.setNews_ID(3L);
+        tag.setNewsID(3L);
         tag.setTags("[Fun][Peoples]");
         tagDAO.update(tag);
 

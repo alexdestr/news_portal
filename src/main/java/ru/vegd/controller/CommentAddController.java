@@ -10,9 +10,7 @@ import ru.vegd.service.CommentService;
 import ru.vegd.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
 
-import static ru.vegd.controller.PathConstants.ERROR;
 import static ru.vegd.controller.PathConstants.REDIRECT;
 
 @Controller
@@ -33,11 +31,11 @@ public class CommentAddController {
         String author = auth.getName();
 
         Comment comment = new Comment();
-        comment.setNews_id(id);
-        comment.setComment_text(request.getParameter("Comment"));
+        comment.setNewsId(id);
+        comment.setCommentText(request.getParameter("Comment"));
 
         try {
-            comment.setAuthor_id(userService.getUserIdByLogin(author));
+            comment.setAuthorId(userService.getUserIdByLogin(author));
             commentService.add(comment);
         } catch (Exception e) {
             /*return ERROR;*/

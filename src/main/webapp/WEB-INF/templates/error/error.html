@@ -68,7 +68,7 @@ body {
   color: #0414a7;
 }
 </style>
-<html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <main class="bsod container">
     <h1 class="neg title"><span class="bg">Error - 404</span></h1>
     <p th:text="${errorMsg}"></p>

@@ -21,15 +21,23 @@ public class TagDAOImpl implements TagDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * FROM tags";
-    private static final String SQL_ADD = "INSERT INTO tags (news_id, tag_name) VALUES ( ?, ?)";
-    private static final String SQL_READ = "SELECT * FROM tags WHERE news_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM tags WHERE tags.\"news_id\" = ?";
-    private static final String SQL_UPDATE = "UPDATE tags SET tag_name = ? WHERE news_id = ?";
+    private static final String SQL_GETALL = "SELECT * " +
+            "FROM tags";
+    private static final String SQL_ADD = "INSERT " +
+            "INTO tags (news_id, tag_name) " +
+            "VALUES ( ?, ? )";
+    private static final String SQL_READ = "SELECT * " +
+            "FROM tags " +
+            "WHERE news_id = ?";
+    private static final String SQL_DELETE = "DELETE " +
+            "FROM tags " +
+            "WHERE tags.\"news_id\" = ?";
+    private static final String SQL_UPDATE = "UPDATE tags " +
+            "SET tag_name = ? " +
+            "WHERE news_id = ?";
 
     @Override
     public List getAll() throws SQLException {
-
         Connection connection = dataSource.getConnection();
         List<Tag> tagList = new ArrayList<>();
         PreparedStatement preparedStatement = null;
@@ -41,12 +49,11 @@ public class TagDAOImpl implements TagDAO {
             while (resultSet.next()) {
                 Tag tag = new Tag();
 
-                tag.setNews_ID(resultSet.getLong("news_ID"));
+                tag.setNewsID(resultSet.getLong("news_ID"));
                 tag.setTags(resultSet.getString("tag_name"));
 
                 tagList.add(tag);
             }
-
         } catch (SQLException e) {
             logger.warn("Request eror");
         } finally {
@@ -62,15 +69,13 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void add(Tag tag) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_ADD);
 
-            preparedStatement.setLong(1, tag.getNews_ID());
+            preparedStatement.setLong(1, tag.getNewsID());
             preparedStatement.setString(2, tag.getTags());
 
             preparedStatement.executeUpdate();
@@ -89,11 +94,8 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public List<Tag> read(Long ID) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
-
         List tagList = new ArrayList();
 
         try {
@@ -105,12 +107,11 @@ public class TagDAOImpl implements TagDAO {
             while (resultSet.next()) {
                 Tag tag = new Tag();
 
-                tag.setNews_ID(resultSet.getLong("news_id"));
+                tag.setNewsID(resultSet.getLong("news_id"));
                 tag.setTags(resultSet.getString("tag_name"));
 
                 tagList.add(tag);
             }
-
         } catch (SQLException e) {
             logger.warn("Request eror");
         } finally {
@@ -126,13 +127,10 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void delete(Long ID) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
-
             preparedStatement = connection.prepareStatement(SQL_DELETE);
             preparedStatement.setLong(1, ID);
             preparedStatement.executeUpdate();
@@ -152,16 +150,14 @@ public class TagDAOImpl implements TagDAO {
 
     @Override
     public void update(Tag tag) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE);
 
             preparedStatement.setString(1, tag.getTags());
-            preparedStatement.setLong(2, tag.getNews_ID());
+            preparedStatement.setLong(2, tag.getNewsID());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");

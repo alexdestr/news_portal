@@ -18,12 +18,27 @@ public class NewsDAOImpl implements NewsDAO {
     @Autowired
     DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * FROM \"news\"";
-    private static final String SQL_GET_TEN_NEWS = "WITH news AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) AS row_id, news_id, author_id, tittle, news_text, creation_date FROM news) SELECT * FROM news WHERE row_id BETWEEN ? AND ?";
-    private static final String SQL_ADD = "INSERT INTO \"news\" (author_id, tittle, news_text, creation_date) VALUES ( ?, ?, ?, ?)";
-    private static final String SQL_READ = "SELECT * FROM \"news\" WHERE news_id = ?";
-    private static final String SQL_DELETE = "DELETE FROM \"news\" WHERE news.\"news_id\" = ?";
-    private static final String SQL_UPDATE = "UPDATE \"news\" SET author_id = ?, tittle = ?, news_text = ? WHERE news_id = ?";
+    private static final String SQL_GETALL = "SELECT * " +
+            "FROM \"news\"";
+    private static final String SQL_GET_TEN_NEWS = "WITH news " +
+            "AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) " +
+            "AS row_id, news_id, author_id, tittle, news_text, creation_date FROM news) " +
+            "SELECT * " +
+            "FROM news " +
+            "WHERE row_id " +
+            "BETWEEN ? AND ?";
+    private static final String SQL_ADD = "INSERT " +
+            "INTO \"news\" (author_id, tittle, news_text, creation_date) " +
+            "VALUES ( ?, ?, ?, ?)";
+    private static final String SQL_READ = "SELECT * " +
+            "FROM \"news\" " +
+            "WHERE news_id = ?";
+    private static final String SQL_DELETE = "DELETE " +
+            "FROM \"news\" " +
+            "WHERE news.\"news_id\" = ?";
+    private static final String SQL_UPDATE = "UPDATE \"news\" " +
+            "SET author_id = ?, tittle = ?, news_text = ? " +
+            "WHERE news_id = ?";
 
     @Override
     public List getAll() throws SQLException {
@@ -38,11 +53,11 @@ public class NewsDAOImpl implements NewsDAO {
             while (resultSet.next()) {
                 News aNews = new News();
 
-                aNews.setNews_id(resultSet.getLong("news_id"));
-                aNews.setAuthor_id(resultSet.getLong("author_id"));
+                aNews.setNewsId(resultSet.getLong("news_id"));
+                aNews.setAuthorId(resultSet.getLong("author_id"));
                 aNews.setTittle(resultSet.getString("tittle"));
-                aNews.setNews_text(resultSet.getString("news_text"));
-                aNews.setPublic_date(resultSet.getTimestamp("creation_date"));
+                aNews.setNewsText(resultSet.getString("news_text"));
+                aNews.setPublicDate(resultSet.getTimestamp("creation_date"));
 
                 newsList.add(aNews);
             }
@@ -63,11 +78,8 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public List getPaginatedNews(Long ID) throws SQLException {
-
         List<News> newsList = new ArrayList<>();
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
@@ -81,15 +93,14 @@ public class NewsDAOImpl implements NewsDAO {
             while (resultSet.next()) {
                 News aNews = new News();
 
-                aNews.setNews_id(resultSet.getLong("news_id"));
-                aNews.setAuthor_id(resultSet.getLong("author_id"));
+                aNews.setNewsId(resultSet.getLong("news_id"));
+                aNews.setAuthorId(resultSet.getLong("author_id"));
                 aNews.setTittle(resultSet.getString("tittle"));
-                aNews.setNews_text(resultSet.getString("news_text"));
-                aNews.setPublic_date(resultSet.getTimestamp("creation_date"));
+                aNews.setNewsText(resultSet.getString("news_text"));
+                aNews.setPublicDate(resultSet.getTimestamp("creation_date"));
 
                 newsList.add(aNews);
             }
-
         } catch (SQLException e) {
             logger.warn("Request eror");
         } finally {
@@ -100,26 +111,22 @@ public class NewsDAOImpl implements NewsDAO {
                 connection.close();
             }
         }
-
         return newsList;
     }
 
     @Override
     public Long add(News aNews) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
-
         Long lastInsertedNewsID = -1L;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setLong(1, aNews.getAuthor_id());
+            preparedStatement.setLong(1, aNews.getAuthorId());
             preparedStatement.setString(2, aNews.getTittle());
-            preparedStatement.setString(3, aNews.getNews_text());
-            preparedStatement.setTimestamp(4, aNews.getPublic_date());
+            preparedStatement.setString(3, aNews.getNewsText());
+            preparedStatement.setTimestamp(4, aNews.getPublicDate());
 
             preparedStatement.executeUpdate();
 
@@ -145,12 +152,9 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public News read(Long ID) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
-
-        News aNews = new News();
+        News news = new News();
 
         try {
             preparedStatement = connection.prepareStatement(SQL_READ);
@@ -159,11 +163,11 @@ public class NewsDAOImpl implements NewsDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
-                aNews.setNews_id(resultSet.getLong("news_id"));
-                aNews.setAuthor_id(resultSet.getLong("author_id"));
-                aNews.setTittle(resultSet.getString("tittle"));
-                aNews.setNews_text(resultSet.getString("news_text"));
-                aNews.setPublic_date(resultSet.getTimestamp("creation_date"));
+                news.setNewsId(resultSet.getLong("news_id"));
+                news.setAuthorId(resultSet.getLong("author_id"));
+                news.setTittle(resultSet.getString("tittle"));
+                news.setNewsText(resultSet.getString("news_text"));
+                news.setPublicDate(resultSet.getTimestamp("creation_date"));
             }
 
         } catch (SQLException e) {
@@ -176,18 +180,15 @@ public class NewsDAOImpl implements NewsDAO {
                 connection.close();
             }
         }
-        return aNews;
+        return news;
     }
 
     @Override
     public void delete(Long ID) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
-
             preparedStatement = connection.prepareStatement(SQL_DELETE);
             preparedStatement.setLong(1, ID);
             preparedStatement.executeUpdate();
@@ -203,23 +204,20 @@ public class NewsDAOImpl implements NewsDAO {
                 connection.close();
             }
         }
-
     }
 
     @Override
     public void update(News aNews) throws SQLException {
-
         Connection connection = dataSource.getConnection();
-
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE);
 
-            preparedStatement.setLong(1, aNews.getAuthor_id());
+            preparedStatement.setLong(1, aNews.getAuthorId());
             preparedStatement.setString(2, aNews.getTittle());
-            preparedStatement.setString(3, aNews.getNews_text());
-            preparedStatement.setLong(4, aNews.getNews_id());
+            preparedStatement.setString(3, aNews.getNewsText());
+            preparedStatement.setLong(4, aNews.getNewsId());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");
@@ -235,6 +233,5 @@ public class NewsDAOImpl implements NewsDAO {
             }
         }
     }
-
 
 }

@@ -49,12 +49,12 @@ public class PanelsController {
         String currentUser = auth.getName();
 
         User user = new User();
-        user.setUser_name(newName);
-        user.setUser_last_name(newLastName);
+        user.setUserName(newName);
+        user.setUserLastName(newLastName);
 
         try {
             Long userId = userService.getUserIdByLogin(currentUser);
-            user.setUser_id(userId);
+            user.setUserId(userId);
             userService.updateData(user);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,13 +73,13 @@ public class PanelsController {
             String newPassword = request.getParameter("newPassword");
             String repeatPassword = request.getParameter("repeatPassword");
 
-            if (newPassword.equals(repeatPassword) && passwordEncoder.matches(currentPassword, userService.read(userId).getHash_password())) {
+            if (newPassword.equals(repeatPassword) && passwordEncoder.matches(currentPassword, userService.read(userId).getHashPassword())) {
                 currentPassword = passwordEncoder.encode(currentPassword);
                 newPassword = passwordEncoder.encode(newPassword);
                 User user = new User();
-                user.setUser_id(userId);
-                user.setHash_password(newPassword);
-                user.setUser_id(userId);
+                user.setUserId(userId);
+                user.setHashPassword(newPassword);
+                user.setUserId(userId);
                 userService.updatePassword(user);
             }
         } catch (SQLException e) {
