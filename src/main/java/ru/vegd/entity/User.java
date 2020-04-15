@@ -29,8 +29,8 @@ public class User {
         return userId;
     }
 
-    public void setUserId(Long user_id) {
-        this.userId = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getLogin() {
@@ -45,32 +45,32 @@ public class User {
         return hashPassword;
     }
 
-    public void setHashPassword(String hash_password) {
-        this.hashPassword = hash_password;
+    public void setHashPassword(String hashPassword) {
+        this.hashPassword = hashPassword;
     }
 
-    public String getUserName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setUserName(String user_name) {
-        this.firstName = user_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getUserLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setUserLastName(String user_last_name) {
-        this.lastName = user_last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Timestamp getDateOfRegistration() {
         return dateOfRegistration;
     }
 
-    public void setDateOfRegistration(Timestamp date_of_registration) {
-        this.dateOfRegistration = date_of_registration;
+    public void setDateOfRegistration(Timestamp dateOfRegistration) {
+        this.dateOfRegistration = dateOfRegistration;
     }
 
     public Role getRole() {

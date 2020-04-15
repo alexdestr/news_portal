@@ -17,10 +17,10 @@ import static ru.vegd.controller.PathConstants.REDIRECT;
 public class CommentAddController {
 
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @PostMapping(value = "news/reply")
     public String doPost(HttpServletRequest request) {

@@ -19,7 +19,7 @@ public class TagDAOImpl implements TagDAO {
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(TagDAOImpl.class.getName());
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     private static final String SQL_GETALL = "SELECT * " +
             "FROM tags";

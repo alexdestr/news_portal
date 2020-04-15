@@ -17,7 +17,7 @@ public class UserDAOImpl implements UserDAO {
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserDAOImpl.class.getName());
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     private static final String SQL_GET_ALL = "SELECT * " +
             "FROM users";
@@ -69,8 +69,8 @@ public class UserDAOImpl implements UserDAO {
                 user.setUserId(resultSet.getLong("user_id"));
                 user.setLogin(resultSet.getString("login"));
                 user.setHashPassword(resultSet.getString("hash_password"));
-                user.setUserName(resultSet.getString("user_name"));
-                user.setUserLastName(resultSet.getString("user_last_name"));
+                user.setFirstName(resultSet.getString("user_name"));
+                user.setLastName(resultSet.getString("user_last_name"));
                 user.setDateOfRegistration(resultSet.getTimestamp("registration_date"));
                 user.setRole(Role.getRoleByID(resultSet.getInt("role_id")));
 
@@ -161,8 +161,8 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getHashPassword());
-            preparedStatement.setString(3, user.getUserName());
-            preparedStatement.setString(4, user.getUserLastName());
+            preparedStatement.setString(3, user.getFirstName());
+            preparedStatement.setString(4, user.getLastName());
             preparedStatement.setTimestamp(5, user.getDateOfRegistration());
             preparedStatement.setInt(6, user.getRole().getRoleID());
 
@@ -203,8 +203,8 @@ public class UserDAOImpl implements UserDAO {
                 user.setUserId(resultSet.getLong("user_id"));
                 user.setLogin(resultSet.getString("login"));
                 user.setHashPassword(resultSet.getString("hash_password"));
-                user.setUserName(resultSet.getString("user_name"));
-                user.setUserLastName(resultSet.getString("user_last_name"));
+                user.setFirstName(resultSet.getString("user_name"));
+                user.setLastName(resultSet.getString("user_last_name"));
                 user.setDateOfRegistration(resultSet.getTimestamp("registration_date"));
                 user.setRole(Role.getRoleByID(resultSet.getInt("role_id")));
             }
@@ -255,8 +255,8 @@ public class UserDAOImpl implements UserDAO {
 
             preparedStatement.setString(1, user.getLogin());
             preparedStatement.setString(2, user.getHashPassword());
-            preparedStatement.setString(3, user.getUserName());
-            preparedStatement.setString(4, user.getUserLastName());
+            preparedStatement.setString(3, user.getFirstName());
+            preparedStatement.setString(4, user.getLastName());
             preparedStatement.setInt(5, user.getRole().getRoleID());
             preparedStatement.setLong(6, user.getUserId());
 
@@ -282,8 +282,8 @@ public class UserDAOImpl implements UserDAO {
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE_DATA);
 
-            preparedStatement.setString(1, user.getUserName());
-            preparedStatement.setString(2, user.getUserLastName());
+            preparedStatement.setString(1, user.getFirstName());
+            preparedStatement.setString(2, user.getLastName());
             preparedStatement.setLong(3, user.getUserId());
 
             preparedStatement.executeUpdate();

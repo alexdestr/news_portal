@@ -8,7 +8,7 @@ import java.util.List;
 public interface NewsDAO {
 
     List getAll() throws SQLException;
-    List getPaginatedNews(Long ID) throws SQLException;
+    List getPaginatedNews(Long beginIndex, Long endIndex) throws SQLException;
     Long add(News aNews) throws SQLException;
     News read(Long ID) throws  SQLException;
     void delete(Long ID) throws SQLException;

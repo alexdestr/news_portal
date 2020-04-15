@@ -14,7 +14,7 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
     @Autowired
-    CommentDAO commentDAO;
+    private CommentDAO commentDAO;
 
     @Override
     public List getAll() throws SQLException {

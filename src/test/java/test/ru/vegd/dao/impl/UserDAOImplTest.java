@@ -81,8 +81,8 @@ public class UserDAOImplTest{
         Integer expectedNum = 3;
 
         user.setLogin("AlexandrOchka1999");
-        user.setUserName("A?");
-        user.setUserLastName("Sasha");
+        user.setFirstName("A?");
+        user.setLastName("Sasha");
         user.setHashPassword("hashPass1");
         user.setDateOfRegistration(Timestamp.valueOf("2019-05-05 16:10:56.00"));
         user.setRole(Role.ROLE_USER);
@@ -126,8 +126,8 @@ public class UserDAOImplTest{
 
         user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUserName("testUpdateName");
-        user.setUserLastName("testUpdateLastName");
+        user.setFirstName("testUpdateName");
+        user.setLastName("testUpdateLastName");
         user.setHashPassword("testUpdateHashPass");
         user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_USER);
@@ -143,8 +143,8 @@ public class UserDAOImplTest{
 
         user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUserName("Jaja");
-        user.setUserLastName("Kril");
+        user.setFirstName("Jaja");
+        user.setLastName("Kril");
         user.setHashPassword("smthHash1");
         user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_ADMIN);
@@ -160,8 +160,8 @@ public class UserDAOImplTest{
 
         user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUserName("qwe");
-        user.setUserLastName("asd");
+        user.setFirstName("qwe");
+        user.setLastName("asd");
         user.setHashPassword("smthHash1");
         user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_USER);
@@ -177,8 +177,8 @@ public class UserDAOImplTest{
 
         user.setUserId(3L);
         user.setLogin("Zaza");
-        user.setUserName("Jaja");
-        user.setUserLastName("Kril");
+        user.setFirstName("Jaja");
+        user.setLastName("Kril");
         user.setHashPassword("qwerty");
         user.setDateOfRegistration(Timestamp.valueOf("2019-11-19 15:03:56.52"));
         user.setRole(Role.ROLE_USER);

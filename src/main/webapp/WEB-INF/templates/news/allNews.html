@@ -91,12 +91,12 @@ a {
         <td colspan="2"> No News Available </td>
     </tr>-->
     <tr th:each="news : ${news}">
-        <td><span th:text="${news.news_id}"> ID </span></td>
-        <td><span th:text="${news.author_id}"> Author </span></td> <!--TODO: Display author login-->
+        <td><span th:text="${news.newsId}"> ID </span></td>
+        <td><span th:text="${news.authorId}"> Author </span></td> <!--TODO: Display author login-->
         <td><span th:text="${news.tittle}"> Tittle </span></td>
-        <td><a href="id.html" th:href="@{/news/{id}(id = ${news.news_id})}"> Read </a></td>
+        <td><a href="id.html" th:href="@{/news/{id}(id = ${news.newsId})}"> Read </a></td>
         <td sec:authorize="hasAnyRole('MOD', 'ADMIN', 'SUPER_ADMIN')"><form onSubmit='return confirm("To confirm delete all data - press ok");' action="news/delete" method="post"> <!--{id}(id = ${news.news_id})-->
-            <input type="hidden" name="news_id" th:value="${news.news_id}"/>
+            <input type="hidden" name="news_id" th:value="${news.newsId}"/>
             <input type="submit" value="DELETE">
         </form>
         </td>

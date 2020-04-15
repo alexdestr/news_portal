@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vegd.entity.News;
 import ru.vegd.entity.Tag;
@@ -20,23 +22,23 @@ import static ru.vegd.controller.PathConstants.*;
 public class NewsAddController {
 
     @Autowired
-    NewsService newsService;
+    private NewsService newsService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    TagService tagService;
+    private TagService tagService;
 
     @GetMapping(value = "news/create")
-    public String doGet(HttpServletRequest request) {
+    public String doGet(HttpServletRequest request, Model model) {
+        model.addAttribute("news", new News());
         return PATH_NEWS_CREATE;
     }
 
     @PostMapping(value = "news/addNews")
-    public String doPost(HttpServletRequest request) {
+    public String doPost(HttpServletRequest request, @ModelAttribute("news") News news) {
 
-        News news = new News();
         Tag tag = new Tag();
 
         String tags;
@@ -44,8 +46,6 @@ public class NewsAddController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String author = auth.getName();
 
-        news.setTittle(request.getParameter("title"));
-        news.setNewsText(request.getParameter("text"));
         tags = request.getParameter("tags");
 
         try {

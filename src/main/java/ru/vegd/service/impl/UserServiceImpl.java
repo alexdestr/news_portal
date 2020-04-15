@@ -1,6 +1,7 @@
 package ru.vegd.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.vegd.dao.UserDAO;
 import ru.vegd.entity.User;
@@ -14,8 +15,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> getAll() throws SQLException {
@@ -34,6 +37,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Long add(User user) throws SQLException {
+        user.setHashPassword(passwordEncoder.encode(user.getHashPassword()));
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         user.setDateOfRegistration(timestamp);
         return userDAO.add(user);

@@ -16,13 +16,13 @@ import java.util.List;
 public class NewsServiceImpl implements NewsService {
 
     @Autowired
-    NewsDAO newsDAO;
+    private NewsDAO newsDAO;
 
     @Autowired
-    TagDAO tagDAO;
+    private TagDAO tagDAO;
 
     @Autowired
-    CommentDAO commentDAO;
+    private CommentDAO commentDAO;
 
     @Override
     public List getAll() throws SQLException {
@@ -37,8 +37,15 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public List getTenNews(Long ID) throws SQLException {
-        return newsDAO.getPaginatedNews(ID);
+    public List getPaginatedNews(Long ID, Long numberNews) throws SQLException {
+        Long beginIndex = (ID - 1) * numberNews;
+        Long endIndex = ID * numberNews;
+
+        if (beginIndex != 0) {
+            beginIndex += 1;
+        }
+
+        return newsDAO.getPaginatedNews(beginIndex, endIndex);
     }
 
     @Override

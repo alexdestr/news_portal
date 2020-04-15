@@ -19,7 +19,7 @@ import static ru.vegd.controller.PathConstants.REDIRECT;
 public class NewsDeleteController {
 
     @Autowired
-    NewsService newsService;
+    private NewsService newsService;
 
     @PostMapping(value = "news/delete")
     public String doPost(HttpServletRequest request) {

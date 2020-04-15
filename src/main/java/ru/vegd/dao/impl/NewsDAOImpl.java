@@ -16,11 +16,11 @@ public class NewsDAOImpl implements NewsDAO {
     private final static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(NewsDAOImpl.class.getName());
 
     @Autowired
-    DataSource dataSource;
+    private DataSource dataSource;
 
     private static final String SQL_GETALL = "SELECT * " +
             "FROM \"news\"";
-    private static final String SQL_GET_TEN_NEWS = "WITH news " +
+    private static final String SQL_GET_PAGINATED_NEWS = "WITH news " +
             "AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) " +
             "AS row_id, news_id, author_id, tittle, news_text, creation_date FROM news) " +
             "SELECT * " +
@@ -77,16 +77,16 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
-    public List getPaginatedNews(Long ID) throws SQLException {
+    public List getPaginatedNews(Long beginIndex, Long endIndex) throws SQLException {
         List<News> newsList = new ArrayList<>();
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = null;
 
         try {
-            preparedStatement = connection.prepareStatement(SQL_GET_TEN_NEWS);
+            preparedStatement = connection.prepareStatement(SQL_GET_PAGINATED_NEWS);
 
-            preparedStatement.setLong(1, ID * 10 - 10);
-            preparedStatement.setLong(2, ID * 10);
+            preparedStatement.setLong(1, beginIndex);
+            preparedStatement.setLong(2, endIndex);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

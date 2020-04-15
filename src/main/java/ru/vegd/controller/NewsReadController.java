@@ -19,13 +19,13 @@ import static ru.vegd.controller.PathConstants.PATH_NEWS_READ;
 public class NewsReadController {
 
     @Autowired
-    NewsService newsService;
+    private NewsService newsService;
 
     @Autowired
-    CommentService commentService;
+    private CommentService commentService;
 
     @Autowired
-    TagService tagService;
+    private TagService tagService;
 
     @GetMapping(value = "/news/{id}")
     public String singleNews(@PathVariable Long id, Model model, HttpServletRequest request) {

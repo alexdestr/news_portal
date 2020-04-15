@@ -13,7 +13,7 @@ import java.util.List;
 public class TagServiceImpl implements TagService {
 
     @Autowired
-    TagDAO tagDAO;
+    private TagDAO tagDAO;
 
     @Override
     public List getAll() throws SQLException {

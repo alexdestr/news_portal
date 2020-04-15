@@ -19,10 +19,10 @@ import java.sql.SQLException;
 public class PanelsController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/user")
     public String user(Model model) {
@@ -49,8 +49,8 @@ public class PanelsController {
         String currentUser = auth.getName();
 
         User user = new User();
-        user.setUserName(newName);
-        user.setUserLastName(newLastName);
+        user.setFirstName(newName);
+        user.setLastName(newLastName);
 
         try {
             Long userId = userService.getUserIdByLogin(currentUser);

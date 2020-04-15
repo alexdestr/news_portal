@@ -3,11 +3,14 @@ package ru.vegd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import ru.vegd.entity.Role;
 import ru.vegd.entity.User;
 import ru.vegd.service.UserService;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 
 import java.sql.SQLException;
@@ -18,19 +21,14 @@ import static ru.vegd.controller.PathConstants.REDIRECT;
 public class UserAddController {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @PostMapping("/addUser")
-    public String addUser(HttpServletRequest httpServletRequest) {
+    public String addUser(Model model, HttpServletRequest request, @ModelAttribute("user") User user) {
 
-        User user = new User();
-        user.setLogin(httpServletRequest.getParameter("login"));
-        user.setUserName(httpServletRequest.getParameter("name"));
-        user.setUserLastName(httpServletRequest.getParameter("last_name"));
-        user.setHashPassword(passwordEncoder.encode(httpServletRequest.getParameter("password")));
         user.setRole(Role.ROLE_USER);
 
         try {
