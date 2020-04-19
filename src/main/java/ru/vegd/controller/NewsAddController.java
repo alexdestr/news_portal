@@ -31,13 +31,13 @@ public class NewsAddController {
     private TagService tagService;
 
     @GetMapping(value = "news/create")
-    public String doGet(HttpServletRequest request, Model model) {
+    public String getNews(HttpServletRequest request, Model model) {
         model.addAttribute("news", new News());
         return PATH_NEWS_CREATE;
     }
 
     @PostMapping(value = "news/addNews")
-    public String doPost(HttpServletRequest request, @ModelAttribute("news") News news) {
+    public String addNews(HttpServletRequest request, @ModelAttribute("news") News news) {
 
         Tag tag = new Tag();
 

@@ -1,16 +1,16 @@
 package ru.vegd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.vegd.entity.User;
 import ru.vegd.service.NewsService;
 import ru.vegd.service.UserService;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +26,9 @@ public class MainController {
     private UserService userService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showNews(Model model, @RequestParam(value = "page", defaultValue = "1") Long ID) {
+    public String showNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long ID) {
+        Long numberNewsOnPage = 10L;
+
         try {
             List<Long> prevList = new ArrayList<>();
             List<Long> nextList = new ArrayList<>();
@@ -40,10 +42,15 @@ public class MainController {
                     nextList.add(i);
                 }
             }
+
+            if (Long.parseLong((String)request.getSession().getAttribute("numberNewsOnPage")) > 0) {
+                numberNewsOnPage = Long.parseLong((String) request.getSession().getAttribute("numberNewsOnPage"));
+            }
+
             model.addAttribute("page", ID);
             model.addAttribute("prevList", prevList);
             model.addAttribute("nextList", nextList);
-            model.addAttribute("news", newsService.getPaginatedNews(ID, 10L));
+            model.addAttribute("news", newsService.getPaginatedNews(ID, numberNewsOnPage));
             model.addAttribute("authors", userService.getAuthorNames());
         } catch (Exception e) {
             /*return ERROR;*/

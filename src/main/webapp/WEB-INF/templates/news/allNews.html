@@ -50,6 +50,11 @@ text-align: left;
     margin: 150px 1250px;
 }
 
+#button_settings {
+    position: fixed;
+    margin: 195px 1250px;
+}
+
 table {
 
 }
@@ -76,6 +81,7 @@ a {
 <button sec:authorize="hasAnyRole('MOD', 'ADMIN', 'SUPER_ADMIN')" onclick="location.href = 'news/create'" id="button_createNews">Create News</button>
 <button sec:authorize="isAuthenticated()" onclick="location.href = 'user'" id="button_userPanel">User Panel</button>
 <button sec:authorize="hasAnyRole('MOD', 'ADMIN', 'SUPER_ADMIN')" onclick="location.href = 'admin'" id="button_adminPanel">Admin Panel</button>
+<button onclick="location.href = 'settings'" id="button_settings">Settings</button>
 <table>
     <thead>
     <tr>

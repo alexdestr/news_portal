@@ -22,7 +22,7 @@ public class NewsDeleteController {
     private NewsService newsService;
 
     @PostMapping(value = "news/delete")
-    public String doPost(HttpServletRequest request) {
+    public String deleteNews(HttpServletRequest request) {
         try {
             Long id = Long.parseLong(request.getParameter("news_id"));
             newsService.delete(id);
