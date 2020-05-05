@@ -28,8 +28,21 @@ public class MainController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long ID) {
         Long numberNewsOnPage = 10L;
+        Long maxNews;
+        Long numPages;
+        String searchText = (String) request.getSession().getAttribute("searchText");
 
         try {
+            if (request.getSession().getAttribute("numberNewsOnPage") != null) {
+                numberNewsOnPage = Long.parseLong((String) request.getSession().getAttribute("numberNewsOnPage"));
+            }
+            maxNews = newsService.getNumberNews();
+            if (maxNews % numberNewsOnPage > 0) {
+                numPages = maxNews / numberNewsOnPage + 1;
+            } else {
+                numPages = maxNews / numberNewsOnPage;
+            }
+
             List<Long> prevList = new ArrayList<>();
             List<Long> nextList = new ArrayList<>();
             for (Long i = ID - 1, z = ID - 4L; z <= i; z++) {
@@ -38,13 +51,9 @@ public class MainController {
                 }
             }
             for (Long i = ID, z = ID + 4L; i <= z; i++) {
-                if (i > 0 && i != ID) {
+                if (i > 0 && i != ID && i <= numPages) {
                     nextList.add(i);
                 }
-            }
-
-            if (Long.parseLong((String)request.getSession().getAttribute("numberNewsOnPage")) > 0) {
-                numberNewsOnPage = Long.parseLong((String) request.getSession().getAttribute("numberNewsOnPage"));
             }
 
             model.addAttribute("page", ID);

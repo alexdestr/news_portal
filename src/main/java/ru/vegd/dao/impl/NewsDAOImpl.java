@@ -27,6 +27,16 @@ public class NewsDAOImpl implements NewsDAO {
             "FROM news " +
             "WHERE row_id " +
             "BETWEEN ? AND ?";
+    private static final String SQL_GET_PAGINATED_NEWS_BY_SEARCH = "WITH news " +
+            "AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) " +
+            "AS row_id, news_id, author_id, tittle, news_text, creation_date FROM news) " +
+            "SELECT * " +
+            "FROM news " +
+            "WHERE (row_id BETWEEN ? AND ?)" +
+            "AND to_tsvector(tittle) @@ to_tsquery(?)";
+    private static final String SQL_GET_NUMBER_NEWS = "SELECT COUNT(*)" +
+            "FROM news " +
+            "WHERE news_id > 0";
     private static final String SQL_ADD = "INSERT " +
             "INTO \"news\" (author_id, tittle, news_text, creation_date) " +
             "VALUES ( ?, ?, ?, ?)";
@@ -112,6 +122,70 @@ public class NewsDAOImpl implements NewsDAO {
             }
         }
         return newsList;
+    }
+
+    @Override
+    public List getPaginatedNewsBySearch(Long beginIndex, Long endIndex, String searchText) throws SQLException {
+        List<News> newsList = new ArrayList<>();
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_GET_PAGINATED_NEWS_BY_SEARCH);
+
+            preparedStatement.setLong(1, beginIndex);
+            preparedStatement.setLong(2, endIndex);
+            preparedStatement.setString(3, "'" + searchText + "'");
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                News aNews = new News();
+
+                aNews.setNewsId(resultSet.getLong("news_id"));
+                aNews.setAuthorId(resultSet.getLong("author_id"));
+                aNews.setTittle(resultSet.getString("tittle"));
+                aNews.setNewsText(resultSet.getString("news_text"));
+                aNews.setPublicDate(resultSet.getTimestamp("creation_date"));
+
+                newsList.add(aNews);
+            }
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+        return newsList;
+    }
+
+    @Override
+    public Long getNumberNews() throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_GET_NUMBER_NEWS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+        return 0L;
     }
 
     @Override
