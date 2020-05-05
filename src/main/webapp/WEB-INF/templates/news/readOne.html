@@ -58,8 +58,8 @@ font-size: 14px;
     <tbody>
     <tr>
         <td><span th:text="${news.newsId}"> ID </span></td>
-        <td><span th:text="${news.authorId}"> Author </span></td>
-        <td><span th:text="${news.tittle}"> Tittle </span></td>
+        <td><span th:text="${news.authorName}"> Author </span></td>
+        <td><span th:text="${news.title}"> Title </span></td>
     </tr>
     </tbody>
 </table>
@@ -97,7 +97,7 @@ font-size: 14px;
             <td colspan="2"> No Comments Available </td>
         </tr>
         <tr th:each="comments : ${comments}">
-            <td><span th:text="${comments.authorId}"> Author </span></td>
+            <td><span th:text="${comments.authorName}"> Author </span></td>
             <td><span th:text="${comments.commentText}"> Comments </span></td>
         </tr>
         </tbody>

@@ -8,15 +8,17 @@ public class Comment {
     private Long commentId;
     private Long newsId;
     private Long authorId;
+    private String authorName;
     private String commentText;
     private Timestamp sendingDate;
 
-    public Comment(Long commentId, Long news_id, Long author_id, String comment_text, Timestamp sending_date) {
+    public Comment(Long commentId, Long newsId, Long authorId, String authorName, String commentText, Timestamp sendingDate) {
         this.commentId = commentId;
-        this.newsId = news_id;
-        this.authorId = author_id;
-        this.commentText = comment_text;
-        this.sendingDate = sending_date;
+        this.newsId = newsId;
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.commentText = commentText;
+        this.sendingDate = sendingDate;
     }
 
     public Comment() {}
@@ -45,6 +47,14 @@ public class Comment {
         this.authorId = author_id;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
     public String getCommentText() {
         return commentText;
     }
@@ -63,13 +73,13 @@ public class Comment {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Comment comment = (Comment) o;
-        return commentId == comment.commentId &&
-                newsId == comment.newsId &&
+        return Objects.equals(commentId, comment.commentId) &&
+                Objects.equals(newsId, comment.newsId) &&
                 Objects.equals(authorId, comment.authorId) &&
+                Objects.equals(authorName, comment.authorName) &&
                 Objects.equals(commentText, comment.commentText) &&
                 Objects.equals(sendingDate, comment.sendingDate);
     }
@@ -77,17 +87,18 @@ public class Comment {
     @Override
     public int hashCode() {
 
-        return Objects.hash(commentId, newsId, authorId, commentText, sendingDate);
+        return Objects.hash(commentId, newsId, authorId, authorName, commentText, sendingDate);
     }
 
     @Override
     public String toString() {
         return "Comment{" +
-                "comment_id=" + commentId +
-                ", news_id=" + newsId +
-                ", author_id='" + authorId + '\'' +
-                ", comment_text='" + commentText + '\'' +
-                ", sending_date=" + sendingDate +
+                "commentId=" + commentId +
+                ", newsId=" + newsId +
+                ", authorId=" + authorId +
+                ", authorName='" + authorName + '\'' +
+                ", commentText='" + commentText + '\'' +
+                ", sendingDate=" + sendingDate +
                 '}';
     }
 }

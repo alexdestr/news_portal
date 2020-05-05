@@ -20,7 +20,8 @@ CREATE TABLE news
 (
     news_id BIGSERIAL NOT NULL PRIMARY KEY,
     author_id BIGINT NOT NULL REFERENCES "users"(user_id),
-    tittle VARCHAR  NOT NULL,
+    author_name TEXT NOT NULL,
+    title VARCHAR  NOT NULL,
     news_text TEXT NOT NULL,
     creation_date TIMESTAMP NOT NULL
 );
@@ -30,6 +31,7 @@ CREATE TABLE comments
     comments_id BIGSERIAL NOT NULL PRIMARY KEY,
     news_id BIGINT NOT NULL REFERENCES "news"(news_id),
     author_id BIGINT NOT NULL REFERENCES "users"(user_id),
+    author_name TEXT NOT NULL,
     comment_text TEXT NOT NULL,
     creation_date TIMESTAMP NOT NULL
 );

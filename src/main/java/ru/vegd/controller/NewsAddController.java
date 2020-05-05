@@ -50,6 +50,7 @@ public class NewsAddController {
 
         try {
             news.setAuthorId(userService.getUserIdByLogin(author));
+            news.setAuthorName(author);
             Long id = newsService.add(news);
             tag.setNewsID(id);
 

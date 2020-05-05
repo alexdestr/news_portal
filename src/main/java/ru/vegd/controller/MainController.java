@@ -60,7 +60,6 @@ public class MainController {
             model.addAttribute("prevList", prevList);
             model.addAttribute("nextList", nextList);
             model.addAttribute("news", newsService.getPaginatedNews(ID, numberNewsOnPage));
-            model.addAttribute("authors", userService.getAuthorNames());
         } catch (Exception e) {
             /*return ERROR;*/
         }

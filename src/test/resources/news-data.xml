@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-<news author_id="3" tittle="Test1" news_text="1234" creation_date="2020-01-01 11:02:22.12"/>
-<news author_id="4" tittle="Test2" news_text="3456" creation_date="2020-02-02 09:42:52.12"/>
+<news author_id="3" title="Test1" news_text="1234" creation_date="2020-01-01 11:02:22.12"/>
+<news author_id="4" title="Test2" news_text="3456" creation_date="2020-02-02 09:42:52.12"/>
 </dataset>

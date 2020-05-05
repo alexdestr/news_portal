@@ -7,16 +7,18 @@ public class News {
 
     private Long newsId;
     private Long authorId;
-    private String tittle;
+    private String authorName;
+    private String title;
     private String newsText;
     private Timestamp publicDate;
 
-    public News(Long news_id, Long author_id, String tittle, String news_text, Timestamp public_date) {
-        this.newsId = news_id;
-        this.authorId = author_id;
-        this.tittle = tittle;
-        this.newsText = news_text;
-        this.publicDate = public_date;
+    public News(Long newsId, Long authorId, String authorName, String title, String newsText, Timestamp publicDate) {
+        this.newsId = newsId;
+        this.authorId = authorId;
+        this.authorName = authorName;
+        this.title = title;
+        this.newsText = newsText;
+        this.publicDate = publicDate;
     }
 
     public News() {}
@@ -37,12 +39,20 @@ public class News {
         this.authorId = author_id;
     }
 
-    public String getTittle() {
-        return tittle;
+    public String getAuthorName() {
+        return authorName;
     }
 
-    public void setTittle(String tittle) {
-        this.tittle = tittle;
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getNewsText() {
@@ -63,31 +73,32 @@ public class News {
 
     @Override
     public boolean equals(Object o) {
-
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        News aNews = (News) o;
-        return newsId == aNews.newsId &&
-                authorId == aNews.authorId &&
-                Objects.equals(tittle, aNews.tittle) &&
-                Objects.equals(newsText, aNews.newsText) &&
-                Objects.equals(publicDate, aNews.publicDate);
+        News news = (News) o;
+        return Objects.equals(newsId, news.newsId) &&
+                Objects.equals(authorId, news.authorId) &&
+                Objects.equals(authorName, news.authorName) &&
+                Objects.equals(title, news.title) &&
+                Objects.equals(newsText, news.newsText) &&
+                Objects.equals(publicDate, news.publicDate);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(newsId, authorId, tittle, newsText, publicDate);
+        return Objects.hash(newsId, authorId, authorName, title, newsText, publicDate);
     }
 
     @Override
     public String toString() {
         return "News{" +
-                "news_id=" + newsId +
-                ", author_id=" + authorId +
-                ", tittle='" + tittle + '\'' +
-                ", news_text='" + newsText + '\'' +
-                ", public_date=" + publicDate +
+                "newsId=" + newsId +
+                ", authorId=" + authorId +
+                ", authorName='" + authorName + '\'' +
+                ", title='" + title + '\'' +
+                ", newsText='" + newsText + '\'' +
+                ", publicDate=" + publicDate +
                 '}';
     }
 }

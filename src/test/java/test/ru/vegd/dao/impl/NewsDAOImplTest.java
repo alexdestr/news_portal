@@ -58,7 +58,7 @@ public class NewsDAOImplTest {
         Integer expectedSize = 3;
 
         news.setAuthorId(3L);
-        news.setTittle("Test");
+        news.setTitle("Test");
         news.setNewsText("SmthText1234");
         news.setPublicDate(Timestamp.valueOf(LocalDateTime.now()));
         newsDAO.add(news);
@@ -101,7 +101,7 @@ public class NewsDAOImplTest {
 
         news.setNewsId(3L);
         news.setAuthorId(3L);
-        news.setTittle("TestUpdate");
+        news.setTitle("TestUpdate");
         news.setNewsText("Test Update Successful Done");
         news.setPublicDate(Timestamp.valueOf("2020-01-01 11:02:22.12"));
         newsDAO.update(news);

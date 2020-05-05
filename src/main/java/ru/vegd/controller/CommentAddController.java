@@ -32,6 +32,7 @@ public class CommentAddController {
 
         Comment comment = new Comment();
         comment.setNewsId(id);
+        comment.setAuthorName(author);
         comment.setCommentText(request.getParameter("Comment"));
 
         try {

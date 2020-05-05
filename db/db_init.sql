@@ -15,12 +15,12 @@ VALUES ('Test1', 'smthhashpass1', 'ab', 'abc', '2019-11-11 00:00:09.959', '1');
 INSERT INTO users (login, hash_password, user_name, user_last_name, registration_date, role_id)
 VALUES ('Test2', 'smthhashpass2', 'dca', 'qvbasdasd', '2019-11-11 00:00:09.959', '1');
 
-INSERT INTO news (author_id, tittle, news_text, creation_date)
-VALUES (1, 'news_tittle1', 'smthtext1', '2019-11-11 00:00:09.959');
-INSERT INTO news (author_id, tittle, news_text, creation_date)
-VALUES (1, 'news_tittle2', 'smthtext2', '2019-11-11 00:00:09.959');
-INSERT INTO news (author_id, tittle, news_text, creation_date)
-VALUES (2, 'news_tittle1', 'smthtext1', '2019-11-11 00:00:09.959');
+INSERT INTO news (author_id, title, news_text, creation_date)
+VALUES (1, 'news_title1', 'smthtext1', '2019-11-11 00:00:09.959');
+INSERT INTO news (author_id, title, news_text, creation_date)
+VALUES (1, 'news_title2', 'smthtext2', '2019-11-11 00:00:09.959');
+INSERT INTO news (author_id, title, news_text, creation_date)
+VALUES (2, 'news_title1', 'smthtext1', '2019-11-11 00:00:09.959');
 
 INSERT INTO tags (news_id, tag_name)
 VALUES (1, 'Funny');

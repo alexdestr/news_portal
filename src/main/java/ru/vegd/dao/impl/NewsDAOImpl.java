@@ -18,36 +18,36 @@ public class NewsDAOImpl implements NewsDAO {
     @Autowired
     private DataSource dataSource;
 
-    private static final String SQL_GETALL = "SELECT * " +
+    private static final String SQL_GETALL = "SELECT news_id, author_id, author_name, title, news_text, creation_date " +
             "FROM \"news\"";
     private static final String SQL_GET_PAGINATED_NEWS = "WITH news " +
             "AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) " +
-            "AS row_id, news_id, author_id, tittle, news_text, creation_date FROM news) " +
-            "SELECT * " +
+            "AS row_id, news_id, author_id, author_name, title, news_text, creation_date FROM news) " +
+            "SELECT news_id, author_id, author_name, title, news_text, creation_date " +
             "FROM news " +
             "WHERE row_id " +
             "BETWEEN ? AND ?";
     private static final String SQL_GET_PAGINATED_NEWS_BY_SEARCH = "WITH news " +
             "AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) " +
-            "AS row_id, news_id, author_id, tittle, news_text, creation_date FROM news) " +
-            "SELECT * " +
+            "AS row_id, news_id, author_id, author_name, title, news_text, creation_date FROM news) " +
+            "SELECT news_id, author_id, author_name, title, news_text, creation_date " +
             "FROM news " +
             "WHERE (row_id BETWEEN ? AND ?)" +
-            "AND to_tsvector(tittle) @@ to_tsquery(?)";
+            "AND to_tsvector(title) @@ to_tsquery(?)";
     private static final String SQL_GET_NUMBER_NEWS = "SELECT COUNT(*)" +
             "FROM news " +
             "WHERE news_id > 0";
     private static final String SQL_ADD = "INSERT " +
-            "INTO \"news\" (author_id, tittle, news_text, creation_date) " +
-            "VALUES ( ?, ?, ?, ?)";
-    private static final String SQL_READ = "SELECT * " +
+            "INTO \"news\" (author_id, author_name, title, news_text, creation_date) " +
+            "VALUES ( ?, ?, ?, ?, ?)";
+    private static final String SQL_READ = "SELECT news_id, author_id, author_name, title, news_text, creation_date " +
             "FROM \"news\" " +
             "WHERE news_id = ?";
     private static final String SQL_DELETE = "DELETE " +
             "FROM \"news\" " +
             "WHERE news.\"news_id\" = ?";
     private static final String SQL_UPDATE = "UPDATE \"news\" " +
-            "SET author_id = ?, tittle = ?, news_text = ? " +
+            "SET author_id = ?, title = ?, news_text = ? " +
             "WHERE news_id = ?";
 
     @Override
@@ -65,7 +65,8 @@ public class NewsDAOImpl implements NewsDAO {
 
                 aNews.setNewsId(resultSet.getLong("news_id"));
                 aNews.setAuthorId(resultSet.getLong("author_id"));
-                aNews.setTittle(resultSet.getString("tittle"));
+                aNews.setAuthorName(resultSet.getString("author_name"));
+                aNews.setTitle(resultSet.getString("title"));
                 aNews.setNewsText(resultSet.getString("news_text"));
                 aNews.setPublicDate(resultSet.getTimestamp("creation_date"));
 
@@ -105,7 +106,8 @@ public class NewsDAOImpl implements NewsDAO {
 
                 aNews.setNewsId(resultSet.getLong("news_id"));
                 aNews.setAuthorId(resultSet.getLong("author_id"));
-                aNews.setTittle(resultSet.getString("tittle"));
+                aNews.setAuthorName(resultSet.getString("author_name"));
+                aNews.setTitle(resultSet.getString("title"));
                 aNews.setNewsText(resultSet.getString("news_text"));
                 aNews.setPublicDate(resultSet.getTimestamp("creation_date"));
 
@@ -144,7 +146,8 @@ public class NewsDAOImpl implements NewsDAO {
 
                 aNews.setNewsId(resultSet.getLong("news_id"));
                 aNews.setAuthorId(resultSet.getLong("author_id"));
-                aNews.setTittle(resultSet.getString("tittle"));
+                aNews.setAuthorName(resultSet.getString("author_name"));
+                aNews.setTitle(resultSet.getString("title"));
                 aNews.setNewsText(resultSet.getString("news_text"));
                 aNews.setPublicDate(resultSet.getTimestamp("creation_date"));
 
@@ -198,9 +201,10 @@ public class NewsDAOImpl implements NewsDAO {
             preparedStatement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
 
             preparedStatement.setLong(1, aNews.getAuthorId());
-            preparedStatement.setString(2, aNews.getTittle());
-            preparedStatement.setString(3, aNews.getNewsText());
-            preparedStatement.setTimestamp(4, aNews.getPublicDate());
+            preparedStatement.setString(2, aNews.getAuthorName());
+            preparedStatement.setString(3, aNews.getTitle());
+            preparedStatement.setString(4, aNews.getNewsText());
+            preparedStatement.setTimestamp(5, aNews.getPublicDate());
 
             preparedStatement.executeUpdate();
 
@@ -239,7 +243,8 @@ public class NewsDAOImpl implements NewsDAO {
             if (resultSet.next()) {
                 news.setNewsId(resultSet.getLong("news_id"));
                 news.setAuthorId(resultSet.getLong("author_id"));
-                news.setTittle(resultSet.getString("tittle"));
+                news.setAuthorName(resultSet.getString("author_name"));
+                news.setTitle(resultSet.getString("title"));
                 news.setNewsText(resultSet.getString("news_text"));
                 news.setPublicDate(resultSet.getTimestamp("creation_date"));
             }
@@ -289,7 +294,7 @@ public class NewsDAOImpl implements NewsDAO {
             preparedStatement = connection.prepareStatement(SQL_UPDATE);
 
             preparedStatement.setLong(1, aNews.getAuthorId());
-            preparedStatement.setString(2, aNews.getTittle());
+            preparedStatement.setString(2, aNews.getTitle());
             preparedStatement.setString(3, aNews.getNewsText());
             preparedStatement.setLong(4, aNews.getNewsId());
 

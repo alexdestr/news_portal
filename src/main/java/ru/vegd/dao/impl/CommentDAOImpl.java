@@ -18,15 +18,15 @@ public class CommentDAOImpl implements CommentDAO {
     private DataSource dataSource;
 
 
-    private static final String SQL_GETALL = "SELECT * " +
+    private static final String SQL_GETALL = "SELECT comments_id, news_id, author_id, author_name, comment_text, creation_date " +
             "FROM comments";
     private static final String SQL_ADD = "INSERT " +
-            "INTO comments (news_id, author_id, comment_text, creation_date) " +
-            "VALUES (?, ?, ?, ?)";
-    private static final String SQL_READ = "SELECT * " +
+            "INTO comments (news_id, author_id, author_name, comment_text, creation_date) " +
+            "VALUES (?, ?, ?, ?, ?)";
+    private static final String SQL_READ = "SELECT comments_id, news_id, author_id, author_name, comment_text, creation_date " +
             "FROM comments " +
             "WHERE comments_id = ?";
-    private static final String SQL_READ_LINKED = "SELECT * " +
+    private static final String SQL_READ_LINKED = "SELECT comments_id, news_id, author_id, author_name, comment_text, creation_date " +
             "FROM comments " +
             "WHERE news_id = ?";
     private static final String SQL_DELETE = "DELETE " +
@@ -55,6 +55,7 @@ public class CommentDAOImpl implements CommentDAO {
                 comment.setCommentId(resultSet.getLong("comments_id"));
                 comment.setNewsId(resultSet.getLong("news_id"));
                 comment.setAuthorId(resultSet.getLong("author_id"));
+                comment.setAuthorName(resultSet.getString("author_name"));
                 comment.setCommentText(resultSet.getString("comment_text"));
                 comment.setSendingDate(resultSet.getTimestamp("creation_date"));
 
@@ -85,8 +86,9 @@ public class CommentDAOImpl implements CommentDAO {
 
             preparedStatement.setLong(1, comment.getNewsId());
             preparedStatement.setLong(2, comment.getAuthorId());
-            preparedStatement.setString(3, comment.getCommentText());
-            preparedStatement.setTimestamp(4, comment.getSendingDate());
+            preparedStatement.setString(3, comment.getAuthorName());
+            preparedStatement.setString(4, comment.getCommentText());
+            preparedStatement.setTimestamp(5, comment.getSendingDate());
 
             preparedStatement.executeUpdate();
             logger.info("Success adding");
@@ -119,6 +121,7 @@ public class CommentDAOImpl implements CommentDAO {
                 comment.setCommentId(resultSet.getLong("comments_id"));
                 comment.setNewsId(resultSet.getLong("news_id"));
                 comment.setAuthorId(resultSet.getLong("author_id"));
+                comment.setAuthorName(resultSet.getString("author_name"));
                 comment.setCommentText(resultSet.getString("comment_text"));
                 comment.setSendingDate(resultSet.getTimestamp("creation_date"));
             }
@@ -154,6 +157,7 @@ public class CommentDAOImpl implements CommentDAO {
                 comment.setCommentId(resultSet.getLong("comments_id"));
                 comment.setNewsId(resultSet.getLong("news_id"));
                 comment.setAuthorId(resultSet.getLong("author_id"));
+                comment.setAuthorName(resultSet.getString("author_name"));
                 comment.setCommentText(resultSet.getString("comment_text"));
                 comment.setSendingDate(resultSet.getTimestamp("creation_date"));
 
@@ -229,8 +233,9 @@ public class CommentDAOImpl implements CommentDAO {
 
             preparedStatement.setLong(1, comment.getNewsId());
             preparedStatement.setLong(2, comment.getAuthorId());
-            preparedStatement.setString(3, comment.getCommentText());
-            preparedStatement.setLong(4, comment.getCommentId());
+            preparedStatement.setString(3, comment.getAuthorName());
+            preparedStatement.setString(4, comment.getCommentText());
+            preparedStatement.setLong(5, comment.getCommentId());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");
