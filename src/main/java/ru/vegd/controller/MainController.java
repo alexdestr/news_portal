@@ -30,7 +30,6 @@ public class MainController {
         Long numberNewsOnPage = 10L;
         Long maxNews;
         Long numPages;
-        String searchText = (String) request.getSession().getAttribute("searchText");
 
         try {
             if (request.getSession().getAttribute("numberNewsOnPage") != null) {
@@ -63,6 +62,12 @@ public class MainController {
         } catch (Exception e) {
             /*return ERROR;*/
         }
+        return PATH_MAIN;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String showSearchedNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long ID, @RequestParam(value = "searchText", required = false) {
+
         return PATH_MAIN;
     }
 

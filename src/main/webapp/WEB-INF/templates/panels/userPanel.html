@@ -5,9 +5,9 @@
     <br>
     Roles: <span sec:authentication="principal.authorities"></span>
     <br>
-    Name: <span th:text="${userInfo.user_name}"></span>
+    Name: <span th:text="${userInfo.firstName}"></span>
     <br>
-    Last Name: <span th:text="${userInfo.user_last_name}"></span>
+    Last Name: <span th:text="${userInfo.lastName}"></span>
     <br>
     <a th:href="@{user/change}">Change User Data</a>
     <br>

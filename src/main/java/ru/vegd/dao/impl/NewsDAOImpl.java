@@ -27,13 +27,27 @@ public class NewsDAOImpl implements NewsDAO {
             "FROM news " +
             "WHERE row_id " +
             "BETWEEN ? AND ?";
-    private static final String SQL_GET_PAGINATED_NEWS_BY_SEARCH = "WITH news " +
-            "AS (SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) " +
-            "AS row_id, news_id, author_id, author_name, title, news_text, creation_date FROM news) " +
-            "SELECT news_id, author_id, author_name, title, news_text, creation_date " +
-            "FROM news " +
-            "WHERE (row_id BETWEEN ? AND ?)" +
-            "AND to_tsvector(title) @@ to_tsquery(?)";
+    private static final String SQL_GET_PAGINATED_NEWS_BY_SEARCH = "WITH temp_news AS\n" +
+            "(\n" +
+            "    SELECT * FROM news\n" +
+            "    WHERE to_tsvector(title) @@ to_tsquery(?) OR title LIKE ? \n" +
+            "),\n" +
+            "\n" +
+            "result_news AS \n" +
+            "(\n" +
+            "    SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) AS row_id, \n" +
+            "    news_id, \n" +
+            "    author_id,\n" +
+            "    author_name, \n" +
+            "    title, \n" +
+            "    news_text, \n" +
+            "    creation_date \n" +
+            "    FROM temp_news\n" +
+            ")\n" +
+            "\n" +
+            "SELECT * \n" +
+            "FROM result_news \n" +
+            "WHERE (row_id BETWEEN ? AND ?)";
     private static final String SQL_GET_NUMBER_NEWS = "SELECT COUNT(*)" +
             "FROM news " +
             "WHERE news_id > 0";
@@ -135,9 +149,10 @@ public class NewsDAOImpl implements NewsDAO {
         try {
             preparedStatement = connection.prepareStatement(SQL_GET_PAGINATED_NEWS_BY_SEARCH);
 
-            preparedStatement.setLong(1, beginIndex);
-            preparedStatement.setLong(2, endIndex);
-            preparedStatement.setString(3, "'" + searchText + "'");
+            preparedStatement.setString(1,searchText);
+            preparedStatement.setString(2, "%" + searchText + "%");
+            preparedStatement.setLong(3, beginIndex);
+            preparedStatement.setLong(4, endIndex);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 

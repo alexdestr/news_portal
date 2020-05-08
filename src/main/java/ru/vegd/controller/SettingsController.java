@@ -20,6 +20,7 @@ public class SettingsController {
     @PostMapping("settings/set")
     public String setSettings(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().setAttribute("numberNewsOnPage", request.getParameter("numberNews"));
+        request.getSession().setAttribute("searchType", request.getParameter("searchType"));
         return PathConstants.REDIRECT;
     }
 
