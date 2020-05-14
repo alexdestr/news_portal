@@ -3,33 +3,32 @@ package ru.vegd.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.vegd.service.NewsService;
-import ru.vegd.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.vegd.controller.PathConstants.PATH_MAIN;
+import static ru.vegd.controller.PathConstants.PATH_SEARCH;
 
 @Controller
-public class MainController {
+public class SearchController {
 
     @Autowired
     private NewsService newsService;
 
-    @Autowired
-    private UserService userService;
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long ID) {
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String searchNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long ID, @RequestParam(value = "searchText") String searchText) {
         Long numberNewsOnPage = 10L;
         Long maxNews;
         Long numPages;
+        String searchType = "searchByTitle";
+        if (request.getSession().getAttribute("searchType") != null) {
+            searchType = (String) request.getSession().getAttribute("searchType");
+        }
 
         try {
             if (request.getSession().getAttribute("numberNewsOnPage") != null) {
@@ -58,17 +57,18 @@ public class MainController {
             model.addAttribute("page", ID);
             model.addAttribute("prevList", prevList);
             model.addAttribute("nextList", nextList);
-            model.addAttribute("news", newsService.getPaginatedNews(ID, numberNewsOnPage));
+            model.addAttribute("searchText", searchText);
+
+            if (searchType.equals("searchByTitle")) {
+                model.addAttribute("news", newsService.getPaginatedNewsBySearch(ID, numberNewsOnPage, searchText));
+            }
+            if (searchType.equals("searchByAuthor")) {
+                model.addAttribute("news", newsService.getPaginatedNewsByAuthor(ID, numberNewsOnPage, searchText));
+            }
+
         } catch (Exception e) {
             /*return ERROR;*/
         }
-        return PATH_MAIN;
+        return PATH_SEARCH;
     }
-
-    @GetMapping("/403")
-    public String error403() {
-        return "/error/error";
-    }
-
 }
-

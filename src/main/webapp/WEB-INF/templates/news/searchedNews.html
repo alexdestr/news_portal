@@ -131,7 +131,7 @@ a {
 <button onclick="location.href = 'settings'" id="button_settings">Settings</button>
 <form method="get" action="/search">
     <div id="tfheader">
-            <input type="text" class="tftextinput" name="searchText" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
+        <input type="text" class="tftextinput" name="searchText" size="21" maxlength="120"><input type="submit" value="search" class="tfbutton">
         <div class="tfclear"></div>
     </div>
 </form>
@@ -164,25 +164,6 @@ a {
 </table>
 <body>
 
-<a th:each="prevList : ${prevList}" href="page.html" th:href="@{/?page={page}(page = ${prevList})}" th:text="|${prevList} |"></a>
+<a th:each="prevList : ${prevList}" href="page.html" th:href="@{/search?page={page}&searchText={searchText}(page = ${prevList}, searchText = ${searchText})}" th:text="|${prevList} |"></a>
 <a th:text="${page}">asd</a>
-<a th:each="nextList : ${nextList}" href="page.html" th:href="@{/?page={page}(page = ${nextList})}" th:text="|${nextList} |"></a>
-
-
-<h2>DEBUG</h2>
-<p>Spring Security debug table</p>
-<div sec:authorize="hasRole('USER')">Text visible to user.</div>
-<div sec:authorize="hasRole('ADMIN')">Text visible to admin.</div>
-<div sec:authorize="isAuthenticated()">
-    Text visible only to authenticated users.
-</div>
-
-
-<span sec:authorize="isAuthenticated()">
-                | Logged user: <span sec:authentication="name"></span> |
-                Roles: <span sec:authentication="principal.authorities"></span> |
-                <a th:href="@{/logout}">Sign Out</a>
-</span>
-
-</body>
-</html>
+<a th:each="nextList : ${nextList}" href="page.html" th:href="@{/search?page={page}&searchText={searchText}(page = ${nextList}, searchText = ${searchText})}" th:text="|${nextList} |"></a>

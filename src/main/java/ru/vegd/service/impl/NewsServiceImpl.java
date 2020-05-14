@@ -61,6 +61,18 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public List getPaginatedNewsByAuthor(Long ID, Long numberNews, String searchText) throws SQLException {
+        Long beginIndex = (ID - 1) * numberNews;
+        Long endIndex = ID * numberNews;
+
+        if (beginIndex != 0) {
+            beginIndex += 1;
+        }
+
+        return newsDAO.getPaginatedNewsByAuthor(beginIndex, endIndex, searchText);
+    }
+
+    @Override
     public Long getNumberNews() throws SQLException {
         return newsDAO.getNumberNews();
     }

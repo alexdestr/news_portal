@@ -48,6 +48,27 @@ public class NewsDAOImpl implements NewsDAO {
             "SELECT * \n" +
             "FROM result_news \n" +
             "WHERE (row_id BETWEEN ? AND ?)";
+    private static final String SQL_GET_PAGINATED_NEWS_BY_AUTHOR = "WITH temp_news AS\n" +
+            "(\n" +
+            "    SELECT * FROM news\n" +
+            "    WHERE to_tsvector(author_name) @@ to_tsquery(?) OR author_name LIKE ? \n" +
+            "),\n" +
+            "\n" +
+            "result_news AS \n" +
+            "(\n" +
+            "    SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) AS row_id, \n" +
+            "    news_id, \n" +
+            "    author_id,\n" +
+            "    author_name, \n" +
+            "    title, \n" +
+            "    news_text, \n" +
+            "    creation_date \n" +
+            "    FROM temp_news\n" +
+            ")\n" +
+            "\n" +
+            "SELECT * \n" +
+            "FROM result_news \n" +
+            "WHERE (row_id BETWEEN ? AND ?)";
     private static final String SQL_GET_NUMBER_NEWS = "SELECT COUNT(*)" +
             "FROM news " +
             "WHERE news_id > 0";
@@ -148,6 +169,47 @@ public class NewsDAOImpl implements NewsDAO {
 
         try {
             preparedStatement = connection.prepareStatement(SQL_GET_PAGINATED_NEWS_BY_SEARCH);
+
+            preparedStatement.setString(1,searchText);
+            preparedStatement.setString(2, "%" + searchText + "%");
+            preparedStatement.setLong(3, beginIndex);
+            preparedStatement.setLong(4, endIndex);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                News aNews = new News();
+
+                aNews.setNewsId(resultSet.getLong("news_id"));
+                aNews.setAuthorId(resultSet.getLong("author_id"));
+                aNews.setAuthorName(resultSet.getString("author_name"));
+                aNews.setTitle(resultSet.getString("title"));
+                aNews.setNewsText(resultSet.getString("news_text"));
+                aNews.setPublicDate(resultSet.getTimestamp("creation_date"));
+
+                newsList.add(aNews);
+            }
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
+        }
+        return newsList;
+    }
+
+    @Override
+    public List getPaginatedNewsByAuthor(Long beginIndex, Long endIndex, String searchText) throws SQLException {
+        List<News> newsList = new ArrayList<>();
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(SQL_GET_PAGINATED_NEWS_BY_AUTHOR);
 
             preparedStatement.setString(1,searchText);
             preparedStatement.setString(2, "%" + searchText + "%");
