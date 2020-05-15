@@ -65,6 +65,9 @@ public class SearchController {
             if (searchType.equals("searchByAuthor")) {
                 model.addAttribute("news", newsService.getPaginatedNewsByAuthor(ID, numberNewsOnPage, searchText));
             }
+            if (searchType.equals("searchByTags")) {
+                model.addAttribute("news", newsService.getPaginatedNewsByTags(ID, numberNewsOnPage, searchText));
+            }
 
         } catch (Exception e) {
             /*return ERROR;*/
