@@ -61,6 +61,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public Long getCountNewsByTitleSearch(String searchText) throws SQLException {
+        return newsDAO.getCountNewsByTitleSearch(searchText);
+    }
+
+    @Override
     public List getPaginatedNewsByAuthor(Long ID, Long numberNews, String searchText) throws SQLException {
         Long beginIndex = (ID - 1) * numberNews;
         Long endIndex = ID * numberNews;
@@ -73,6 +78,11 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
+    public Long getCountNewsByAuthorSearch(String searchText) throws SQLException {
+        return newsDAO.getCountNewsByAuthorSearch(searchText);
+    }
+
+    @Override
     public List getPaginatedNewsByTags(Long ID, Long numberNews, String searchText) throws SQLException {
         Long beginIndex = (ID - 1) * numberNews;
         Long endIndex = ID * numberNews;
@@ -82,6 +92,11 @@ public class NewsServiceImpl implements NewsService {
         }
 
         return newsDAO.getPaginatedNewsByTags(beginIndex, endIndex, searchText);
+    }
+
+    @Override
+    public Long getCountNewsByTagsSearch(String searchText) throws SQLException {
+        return newsDAO.getCountNewsByTagsSearch(searchText);
     }
 
     @Override

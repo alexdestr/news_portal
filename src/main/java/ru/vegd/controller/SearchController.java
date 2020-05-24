@@ -20,53 +20,44 @@ public class SearchController {
     @Autowired
     private NewsService newsService;
 
+    @Autowired
+    Paginator paginator;
+
     @RequestMapping(value = "/search", method = RequestMethod.GET)
-    public String searchNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long ID, @RequestParam(value = "searchText") String searchText) {
+    public String searchNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long id, @RequestParam(value = "searchText") String searchText) {
         Long numberNewsOnPage = 10L;
         Long maxNews;
         Long numPages;
         String searchType = "searchByTitle";
+
         if (request.getSession().getAttribute("searchType") != null) {
             searchType = (String) request.getSession().getAttribute("searchType");
         }
+        if (request.getSession().getAttribute("numberNewsOnPage") != null) {
+            numberNewsOnPage = Long.parseLong((String) request.getSession().getAttribute("numberNewsOnPage"));
+        }
+
+        paginator.configure(
+                id,
+                numberNewsOnPage,
+                searchText,
+                searchType
+        );
 
         try {
-            if (request.getSession().getAttribute("numberNewsOnPage") != null) {
-                numberNewsOnPage = Long.parseLong((String) request.getSession().getAttribute("numberNewsOnPage"));
-            }
-            maxNews = newsService.getNumberNews();
-            if (maxNews % numberNewsOnPage > 0) {
-                numPages = maxNews / numberNewsOnPage + 1;
-            } else {
-                numPages = maxNews / numberNewsOnPage;
-            }
-
-            List<Long> prevList = new ArrayList<>();
-            List<Long> nextList = new ArrayList<>();
-            for (Long i = ID - 1, z = ID - 4L; z <= i; z++) {
-                if (z > 0 && z != ID) {
-                    prevList.add(z);
-                }
-            }
-            for (Long i = ID, z = ID + 4L; i <= z; i++) {
-                if (i > 0 && i != ID && i <= numPages) {
-                    nextList.add(i);
-                }
-            }
-
-            model.addAttribute("page", ID);
-            model.addAttribute("prevList", prevList);
-            model.addAttribute("nextList", nextList);
+            model.addAttribute("page", id);
+            model.addAttribute("prevList", paginator.getPrevPages());
+            model.addAttribute("nextList", paginator.getNextPages());
             model.addAttribute("searchText", searchText);
 
             if (searchType.equals("searchByTitle")) {
-                model.addAttribute("news", newsService.getPaginatedNewsBySearch(ID, numberNewsOnPage, searchText));
+                model.addAttribute("news", newsService.getPaginatedNewsBySearch(id, numberNewsOnPage, searchText));
             }
             if (searchType.equals("searchByAuthor")) {
-                model.addAttribute("news", newsService.getPaginatedNewsByAuthor(ID, numberNewsOnPage, searchText));
+                model.addAttribute("news", newsService.getPaginatedNewsByAuthor(id, numberNewsOnPage, searchText));
             }
             if (searchType.equals("searchByTags")) {
-                model.addAttribute("news", newsService.getPaginatedNewsByTags(ID, numberNewsOnPage, searchText));
+                model.addAttribute("news", newsService.getPaginatedNewsByTags(id, numberNewsOnPage, searchText));
             }
 
         } catch (Exception e) {

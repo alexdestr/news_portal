@@ -48,6 +48,27 @@ public class NewsDAOImpl implements NewsDAO {
             "SELECT * \n" +
             "FROM result_news \n" +
             "WHERE (row_id BETWEEN ? AND ?)";
+    private static final String SQL_GET_COUNT_NEWS_BY_SEARCH = "WITH temp_news AS\n" +
+            "(\n" +
+            "    SELECT * FROM news\n" +
+            "    WHERE to_tsvector(title) @@ to_tsquery(?) OR title LIKE ? \n" +
+            "),\n" +
+            "\n" +
+            "result_news AS \n" +
+            "(\n" +
+            "    SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) AS row_id, \n" +
+            "    news_id, \n" +
+            "    author_id,\n" +
+            "    author_name, \n" +
+            "    title, \n" +
+            "    news_text, \n" +
+            "    creation_date \n" +
+            "    FROM temp_news\n" +
+            ")\n" +
+            "\n" +
+            "SELECT COUNT(*) \n" +
+            "FROM result_news \n" +
+            "WHERE true";
     private static final String SQL_GET_PAGINATED_NEWS_BY_AUTHOR = "WITH temp_news AS\n" +
             "(\n" +
             "    SELECT * FROM news\n" +
@@ -69,6 +90,27 @@ public class NewsDAOImpl implements NewsDAO {
             "SELECT * \n" +
             "FROM result_news \n" +
             "WHERE (row_id BETWEEN ? AND ?)";
+    private static final String SQL_GET_COUNT_NEWS_BY_AUTHOR_SEARCH = "WITH temp_news AS\n" +
+            "(\n" +
+            "    SELECT * FROM news\n" +
+            "    WHERE to_tsvector(author_name) @@ to_tsquery(?) OR author_name LIKE ? \n" +
+            "),\n" +
+            "\n" +
+            "result_news AS \n" +
+            "(\n" +
+            "    SELECT ROW_NUMBER() OVER (ORDER BY creation_date DESC) AS row_id, \n" +
+            "    news_id, \n" +
+            "    author_id,\n" +
+            "    author_name, \n" +
+            "    title, \n" +
+            "    news_text, \n" +
+            "    creation_date \n" +
+            "    FROM temp_news\n" +
+            ")\n" +
+            "\n" +
+            "SELECT COUNT(*) \n" +
+            "FROM result_news \n" +
+            "WHERE true";
     private static final String SQL_GET_PAGINATED_NEWS_BY_TAGS = "WITH temp_news AS \n" +
             "(  \n" +
             "\tSELECT news.news_id, author_id, author_name, title, news_text, creation_date  \n" +
@@ -92,6 +134,29 @@ public class NewsDAOImpl implements NewsDAO {
             "SELECT * \n" +
             "FROM result_news \n" +
             "WHERE (row_id BETWEEN ? AND ?)";
+    private static final String SQL_GET_COUNT_NEWS_BY_TAGS_SEARCH = "WITH temp_news AS \n" +
+            "(  \n" +
+            "\tSELECT news.news_id, author_id, author_name, title, news_text, creation_date  \n" +
+            "\tFROM news JOIN tags \n" +
+            "\tON news.news_id = tags.news_id \n" +
+            "\tWHERE to_tsvector(tags.tag_name) @@ to_tsquery(?) OR tags.tag_name LIKE ? \n" +
+            "), \n" +
+            "\n" +
+            "result_news AS \n" +
+            "( \n" +
+            "\tSELECT ROW_NUMBER() OVER (ORDER BY  creation_date DESC) AS row_id, \n" +
+            "\tnews_id, \n" +
+            "\tauthor_id, \n" +
+            "\tauthor_name, \n" +
+            "\ttitle, \n" +
+            "\tnews_text, \n" +
+            "\tcreation_date\n" +
+            "\tFROM temp_news  \n" +
+            ") \n" +
+            "\n" +
+            "SELECT COUNT(*) \n" +
+            "FROM result_news \n" +
+            "WHERE true";
     private static final String SQL_GET_NUMBER_NEWS = "SELECT COUNT(*)" +
             "FROM news " +
             "WHERE news_id > 0";
@@ -226,6 +291,24 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
+    public Long getCountNewsByTitleSearch(String searchText) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        preparedStatement = connection.prepareStatement(SQL_GET_COUNT_NEWS_BY_SEARCH);
+
+        preparedStatement.setString(1,searchText);
+        preparedStatement.setString(2, "%" + searchText + "%");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getLong(1);
+        }
+        return 10L;
+    }
+
+    @Override
     public List getPaginatedNewsByAuthor(Long beginIndex, Long endIndex, String searchText) throws SQLException {
         List<News> newsList = new ArrayList<>();
         Connection connection = dataSource.getConnection();
@@ -267,6 +350,24 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
+    public Long getCountNewsByAuthorSearch(String searchText) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        preparedStatement = connection.prepareStatement(SQL_GET_COUNT_NEWS_BY_AUTHOR_SEARCH);
+
+        preparedStatement.setString(1,searchText);
+        preparedStatement.setString(2, "%" + searchText + "%");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getLong(1);
+        }
+        return 10L;
+    }
+
+    @Override
     public List getPaginatedNewsByTags(Long beginIndex, Long endIndex, String searchText) throws SQLException {
         List<News> newsList = new ArrayList<>();
         Connection connection = dataSource.getConnection();
@@ -305,6 +406,24 @@ public class NewsDAOImpl implements NewsDAO {
             }
         }
         return newsList;
+    }
+
+    @Override
+    public Long getCountNewsByTagsSearch(String searchText) throws SQLException {
+        Connection connection = dataSource.getConnection();
+        PreparedStatement preparedStatement = null;
+
+        preparedStatement = connection.prepareStatement(SQL_GET_COUNT_NEWS_BY_TAGS_SEARCH);
+
+        preparedStatement.setString(1,searchText);
+        preparedStatement.setString(2, "%" + searchText + "%");
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (resultSet.next()) {
+            return resultSet.getLong(1);
+        }
+        return 10L;
     }
 
     @Override
