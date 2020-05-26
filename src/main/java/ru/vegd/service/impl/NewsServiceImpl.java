@@ -30,10 +30,18 @@ public class NewsServiceImpl implements NewsService {
     }
 
     @Override
-    public Long add(News aNews) throws SQLException {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        aNews.setPublicDate(timestamp);
-        return newsDAO.add(aNews);
+    public Long add(News news) throws SQLException {
+        if (news.getNewsText() != null &&
+                news.getTitle() != null &&
+                news.getAuthorName() != null &&
+                news.getTitle().trim().length() >= 3 &&
+                news.getNewsText().trim().length() >= 6)
+        {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            news.setPublicDate(timestamp);
+            return newsDAO.add(news);
+        }
+        return null;
     }
 
     @Override
@@ -106,18 +114,30 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public News read(Long ID) throws SQLException {
-        return newsDAO.read(ID);
+        if (ID != null && ID >= 0) {
+            return newsDAO.read(ID);
+        }
+        return null;
     }
 
     @Override
     public void delete(Long ID) throws SQLException {
-        commentDAO.deleteLinked(ID);
-        tagDAO.delete(ID);
-        newsDAO.delete(ID);
+        if (ID != null && ID >= 0) {
+            commentDAO.deleteLinked(ID);
+            tagDAO.delete(ID);
+            newsDAO.delete(ID);
+        }
     }
 
     @Override
-    public void update(News aNews) throws SQLException {
-        newsDAO.update(aNews);
+    public void update(News news) throws SQLException {
+        if (news.getNewsText() != null &&
+                news.getTitle() != null &&
+                news.getAuthorName() != null &&
+                news.getPublicDate() != null &&
+                news.getTitle().trim().length() >= 3 &&
+                news.getNewsText().trim().length() >= 6) {
+            newsDAO.update(news);
+        }
     }
 }

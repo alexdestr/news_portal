@@ -485,7 +485,7 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
-    public Long add(News aNews) throws SQLException {
+    public Long add(News news) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = null;
         Long lastInsertedNewsID = -1L;
@@ -493,11 +493,11 @@ public class NewsDAOImpl implements NewsDAO {
         try {
             preparedStatement = connection.prepareStatement(SQL_ADD, Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setLong(1, aNews.getAuthorId());
-            preparedStatement.setString(2, aNews.getAuthorName());
-            preparedStatement.setString(3, aNews.getTitle());
-            preparedStatement.setString(4, aNews.getNewsText());
-            preparedStatement.setTimestamp(5, aNews.getPublicDate());
+            preparedStatement.setLong(1, news.getAuthorId());
+            preparedStatement.setString(2, news.getAuthorName());
+            preparedStatement.setString(3, news.getTitle());
+            preparedStatement.setString(4, news.getNewsText());
+            preparedStatement.setTimestamp(5, news.getPublicDate());
 
             preparedStatement.executeUpdate();
 
@@ -579,17 +579,17 @@ public class NewsDAOImpl implements NewsDAO {
     }
 
     @Override
-    public void update(News aNews) throws SQLException {
+    public void update(News news) throws SQLException {
         Connection connection = dataSource.getConnection();
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(SQL_UPDATE);
 
-            preparedStatement.setLong(1, aNews.getAuthorId());
-            preparedStatement.setString(2, aNews.getTitle());
-            preparedStatement.setString(3, aNews.getNewsText());
-            preparedStatement.setLong(4, aNews.getNewsId());
+            preparedStatement.setLong(1, news.getAuthorId());
+            preparedStatement.setString(2, news.getTitle());
+            preparedStatement.setString(3, news.getNewsText());
+            preparedStatement.setLong(4, news.getNewsId());
 
             preparedStatement.executeUpdate();
             logger.info("Success update");

@@ -37,10 +37,18 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public Long add(User user) throws SQLException {
-        user.setHashPassword(passwordEncoder.encode(user.getHashPassword()));
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        user.setDateOfRegistration(timestamp);
-        return userDAO.add(user);
+        if (user.getHashPassword() != null &&
+                user.getHashPassword().trim().length() >= 5 &&
+                user.getLogin().trim().length() >= 3 &&
+                user.getFirstName().trim().length() >= 2 &&
+                user.getLastName().trim().length() >= 2)
+        {
+            user.setHashPassword(passwordEncoder.encode(user.getHashPassword()));
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            user.setDateOfRegistration(timestamp);
+            return userDAO.add(user);
+        }
+        return null;
     }
 
     @Override
@@ -50,27 +58,49 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void delete(Long ID) throws SQLException {
-        userDAO.delete(ID);
+        if (ID != null && ID >= 0) {
+            userDAO.delete(ID);
+        }
     }
 
     @Override
     public void update(User user) throws SQLException {
-        userDAO.update(user);
+        if (user.getHashPassword() != null &&
+                user.getHashPassword().trim().length() >= 5 &&
+                user.getLogin().trim().length() >= 3 &&
+                user.getFirstName().trim().length() >= 2 &&
+                user.getLastName().trim().length() >= 2) {
+            userDAO.update(user);
+        }
     }
 
     @Override
     public void updateData(User user) throws SQLException {
-        userDAO.updateData(user);
+        if (user.getFirstName() != null &&
+                user.getLastName() != null &&
+                user.getFirstName().trim().length() >= 2 &&
+                user.getLastName().trim().length() >= 2 &&
+                user.getUserId() >= 0)
+        {
+            userDAO.updateData(user);
+        }
     }
 
     @Override
     public void updatePassword(User user) throws SQLException {
-        userDAO.updatePassword(user);
+        if (user.getHashPassword() != null &&
+                user.getUserId() != null &&
+                user.getUserId() >= 0)
+        {
+            userDAO.updatePassword(user);
+        }
     }
 
     @Override
     public void updateRole(Long ID, Integer roleId) throws SQLException {
-        userDAO.updateRole(ID, roleId);
+        if (ID >= 0 && roleId != roleId) {
+            userDAO.updateRole(ID, roleId);
+        }
     }
 
     @Override

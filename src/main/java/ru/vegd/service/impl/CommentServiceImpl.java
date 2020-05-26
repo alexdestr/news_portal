@@ -23,14 +23,24 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void add(Comment comment) throws SQLException {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        comment.setSendingDate(timestamp);
-        commentDAO.add(comment);
+        if (comment.getAuthorName() != null &&
+                comment.getCommentText() != null &&
+                comment.getAuthorName() != null &&
+                comment.getNewsId() != null &&
+                comment.getCommentText().trim().length() > 1)
+        {
+            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+            comment.setSendingDate(timestamp);
+            commentDAO.add(comment);
+        }
     }
 
     @Override
     public Comment read(Long ID) throws SQLException {
-        return commentDAO.read(ID);
+        if (ID != null && ID >= 0) {
+            return commentDAO.read(ID);
+        }
+        return null;
     }
 
     @Override
@@ -40,16 +50,28 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void delete(Long ID) throws SQLException {
-        commentDAO.delete(ID);
+        if (ID != null && ID >= 0) {
+            commentDAO.delete(ID);
+        }
     }
 
     @Override
     public void deleteLinked(Long ID) throws SQLException {
-        commentDAO.deleteLinked(ID);
+        if (ID != null && ID >= 0) {
+            commentDAO.deleteLinked(ID);
+        }
     }
 
     @Override
     public void update(Comment comment) throws SQLException {
-        commentDAO.update(comment);
+        if (comment.getAuthorName() != null &&
+                comment.getCommentText() != null &&
+                comment.getAuthorId() != null &&
+                comment.getNewsId() != null &&
+                comment.getCommentText().trim().length() > 1 &&
+                comment.getCommentId() != null)
+        {
+            commentDAO.update(comment);
+        }
     }
 }

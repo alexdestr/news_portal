@@ -22,7 +22,11 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void add(Tag tag) throws SQLException {
-        tagDAO.add(tag);
+        if (tag.getTags().trim().length() >= 1 &&
+                tag.getTags() != null)
+        {
+            tagDAO.add(tag);
+        }
     }
 
     @Override
@@ -32,12 +36,18 @@ public class TagServiceImpl implements TagService {
 
     @Override
     public void delete(Long ID) throws SQLException {
-        tagDAO.delete(ID);
+        if (ID >= 0 && ID != null) {
+            tagDAO.delete(ID);
+        }
     }
 
     @Override
     public void update(Tag tag) throws SQLException {
-        tagDAO.update(tag);
+        if (tag.getTags().trim().length() >= 1 &&
+                tag.getNewsID() >= 0)
+        {
+            tagDAO.update(tag);
+        }
     }
 
 }
