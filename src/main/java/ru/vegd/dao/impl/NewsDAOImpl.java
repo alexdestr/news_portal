@@ -297,13 +297,24 @@ public class NewsDAOImpl implements NewsDAO {
 
         preparedStatement = connection.prepareStatement(SQL_GET_COUNT_NEWS_BY_SEARCH);
 
-        preparedStatement.setString(1,searchText);
-        preparedStatement.setString(2, "%" + searchText + "%");
+        try {
+            preparedStatement.setString(1, searchText);
+            preparedStatement.setString(2, "%" + searchText + "%");
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            return resultSet.getLong(1);
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
         }
         return 10L;
     }
@@ -351,18 +362,29 @@ public class NewsDAOImpl implements NewsDAO {
 
     @Override
     public Long getCountNewsByAuthorSearch(String searchText) throws SQLException {
-        Connection connection = dataSource.getConnection();
-        PreparedStatement preparedStatement = null;
+        Connection connection = null;
+            connection = dataSource.getConnection();
+            PreparedStatement preparedStatement = null;
 
-        preparedStatement = connection.prepareStatement(SQL_GET_COUNT_NEWS_BY_AUTHOR_SEARCH);
+            try {
+                preparedStatement = connection.prepareStatement(SQL_GET_COUNT_NEWS_BY_AUTHOR_SEARCH);
 
-        preparedStatement.setString(1,searchText);
-        preparedStatement.setString(2, "%" + searchText + "%");
+                preparedStatement.setString(1, searchText);preparedStatement.setString(2, "%" + searchText + "%");
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+                ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            return resultSet.getLong(1);
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
         }
         return 10L;
     }
@@ -415,13 +437,24 @@ public class NewsDAOImpl implements NewsDAO {
 
         preparedStatement = connection.prepareStatement(SQL_GET_COUNT_NEWS_BY_TAGS_SEARCH);
 
-        preparedStatement.setString(1,searchText);
-        preparedStatement.setString(2, "%" + searchText + "%");
+        try {
+            preparedStatement.setString(1, searchText);
+            preparedStatement.setString(2, "%" + searchText + "%");
 
-        ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            return resultSet.getLong(1);
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        } catch (SQLException e) {
+            logger.warn("Request eror");
+        } finally {
+            if (preparedStatement != null) {
+                preparedStatement.close();
+            }
+            if (!connection.isClosed()) {
+                connection.close();
+            }
         }
         return 10L;
     }

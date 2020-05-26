@@ -25,40 +25,29 @@ public class MainController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private Paginator paginator;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String showNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long ID) {
+    public String showNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long id) {
         Long numberNewsOnPage = 10L;
-        Long maxNews;
-        Long numPages;
 
         try {
             if (request.getSession().getAttribute("numberNewsOnPage") != null) {
                 numberNewsOnPage = Long.parseLong((String) request.getSession().getAttribute("numberNewsOnPage"));
             }
-            maxNews = newsService.getNumberNews();
-            if (maxNews % numberNewsOnPage > 0) {
-                numPages = maxNews / numberNewsOnPage + 1;
-            } else {
-                numPages = maxNews / numberNewsOnPage;
-            }
 
-            List<Long> prevList = new ArrayList<>();
-            List<Long> nextList = new ArrayList<>();
-            for (Long i = ID - 1, z = ID - 4L; z <= i; z++) {
-                if (z > 0 && z != ID) {
-                    prevList.add(z);
-                }
-            }
-            for (Long i = ID, z = ID + 4L; i <= z; i++) {
-                if (i > 0 && i != ID && i <= numPages) {
-                    nextList.add(i);
-                }
-            }
+            paginator.configure(
+                    id,
+                    numberNewsOnPage,
+                    null,
+                    null
+            );
 
-            model.addAttribute("page", ID);
-            model.addAttribute("prevList", prevList);
-            model.addAttribute("nextList", nextList);
-            model.addAttribute("news", newsService.getPaginatedNews(ID, numberNewsOnPage));
+            model.addAttribute("page", id);
+            model.addAttribute("prevList", paginator.getPrevPages());
+            model.addAttribute("nextList", paginator.getNextPages());
+            model.addAttribute("news", newsService.getPaginatedNews(id, numberNewsOnPage));
         } catch (Exception e) {
             /*return ERROR;*/
         }

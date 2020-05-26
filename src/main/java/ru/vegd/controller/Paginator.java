@@ -83,7 +83,16 @@ public class Paginator {
     public void configure(Long id, Long numberNewsOnPage, String searchText, String searchType) {
         setId(id);
         setNumberNewsOnPage(numberNewsOnPage);
-        setNumberSearchedNews(searchText, searchType);
+        if (searchText != null) {
+            setNumberSearchedNews(searchText, searchType);
+        }
+        else {
+            try {
+                setMaxNews(newsService.getNumberNews());
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
