@@ -90,6 +90,7 @@ font-size: 14px;
         <tr>
             <th> Author </th>
             <th> Comment </th>
+            <th> Profile </th>
         </tr>
         </thead>
         <tbody>
@@ -99,6 +100,7 @@ font-size: 14px;
         <tr th:each="comments : ${comments}">
             <td><span th:text="${comments.authorName}"> Author </span></td>
             <td><span th:text="${comments.commentText}"> Comments </span></td>
+            <td><a href="members.html" th:href="@{/users/{nickname}(nickname = ${comments.authorName})}"> Profile </a></td>
         </tr>
         </tbody>
     </table>

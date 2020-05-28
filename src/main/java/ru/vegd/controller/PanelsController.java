@@ -104,11 +104,6 @@ public class PanelsController {
 
     @GetMapping("/admin")
     public String admin(Model model) {
-        try {
-            model.addAttribute("users", userService.getAll());
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
         return PathConstants.PATH_ADMIN_PANEL;
     }
 
@@ -116,7 +111,7 @@ public class PanelsController {
     public String adminActionEditStatus(HttpServletRequest request) {
 
         User user1 = new User();
-        user1.setLogin(request.getParameter("userSelect1"));
+        user1.setLogin(request.getParameter("user1"));
         String action1 = request.getParameter("action1");
 
         if (action1.equals("Ban")) {
@@ -134,14 +129,13 @@ public class PanelsController {
                 e.printStackTrace();
             }
         }
-
         return PathConstants.REDIRECT + "admin";
     }
 
     @PostMapping("/actionEditRole")
     public String adminActionEditRole(HttpServletRequest request) {
         User user2 = new User();
-        user2.setLogin(request.getParameter("userSelect2"));
+        user2.setLogin(request.getParameter("user2"));
         user2.setRole(Role.valueOf("ROLE_" + request.getParameter("newRole")));
 
         try {
@@ -149,7 +143,6 @@ public class PanelsController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
 
         return PathConstants.REDIRECT + "admin";
     }

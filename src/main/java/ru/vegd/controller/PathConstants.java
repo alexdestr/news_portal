@@ -5,6 +5,7 @@ public class PathConstants {
     protected static final String PATH_USER_PANEL = "panels/userPanel";
     protected static final String PATH_ADMIN_PANEL = "panels/adminPanel";
     protected static final String PATH_CHANGE_USER_DATA = "panels/userChangeData";
+    protected static final String PATH_SHOW_USER = "panels/memberPanel";
 
     protected static final String PATH_MAIN = "news/allNews";
     protected static final String PATH_SEARCH = "news/searchedNews";

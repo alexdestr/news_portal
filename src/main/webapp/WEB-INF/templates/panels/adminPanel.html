@@ -8,12 +8,7 @@
 Ban/Unban
 <form action="/actionEditStatus" method="post">
 
-<div class="form-group">
-    <label for="userList1">Select User</label>
-    <select name="userSelect1" class="form-control" id="userList1">
-        <option th:each="users : ${users}" th:text="${users.login}"></option>
-    </select>
-</div>
+<input type="text" name="">
 
 <div class="form-group">
     <label for="action1">Select Action</label>

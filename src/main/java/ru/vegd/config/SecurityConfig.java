@@ -60,6 +60,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/news/delete").hasAnyAuthority("ROLE_MOD", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                 .antMatchers("/admin/**").hasAnyAuthority("ROLE_MOD", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                 .antMatchers("user/**").authenticated()
+                .antMatchers(HttpMethod.GET, "/users/**").permitAll()
+                .antMatchers(HttpMethod.POST, "users/**").hasAnyAuthority("ROLE_MOD", "ROLE_ADMIN", "ROLE_SUPER_ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

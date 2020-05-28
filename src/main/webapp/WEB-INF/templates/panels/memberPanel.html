@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+Login: <span th:text="${user.login}">A</span>
+<br>
+Roles: <span th:text="${user.role}">B</span>
+<br>
+Name: <span th:text="${user.firstName}">C</span>
+<br>
+Last Name: <span th:text="${user.lastName}">D</span>
+<br>
+<form method="post" action="asd">
+<input type="hidden" th:value="${user.login}">
+<input sec:authorize="hasAnyRole('MOD', 'ADMIN', 'SUPER_ADMIN')" type="submit" value="Ban">
+</form>
+</body>
+</html>

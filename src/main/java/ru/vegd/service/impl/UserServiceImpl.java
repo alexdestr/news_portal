@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public void updateRole(Long ID, Integer roleId) throws SQLException {
-        if (ID >= 0 && roleId != roleId) {
+        if (ID >= 0 && roleId != null) {
             userDAO.updateRole(ID, roleId);
         }
     }
