@@ -1,17 +1,14 @@
-package ru.vegd.controller;
+package ru.vegd.controller.SearchUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import ru.vegd.service.NewsService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
 public class Paginator {
 
-    @Autowired
     private NewsService newsService;
 
     private List prevList;
@@ -21,6 +18,12 @@ public class Paginator {
     private Long numberNewsOnPage;
     private Long maxNews;
     private Long numPages;
+
+    private static final Long newsRange = 4L;
+
+    public Paginator(NewsService newsService) {
+        this.newsService = newsService;
+    }
 
     public void setId(Long id) {
         this.id = id;
@@ -41,7 +44,7 @@ public class Paginator {
         } else {
             numPages = maxNews / numberNewsOnPage;
         }
-        for (Long i = id - 1, z = id - 4L; z <= i; z++) {
+        for (Long i = id - 1, z = id - newsRange; z <= i; z++) {
             if (z > 0 && z != id) {
                 prevList.add(z);
             }
@@ -56,7 +59,7 @@ public class Paginator {
         } else {
             numPages = maxNews / numberNewsOnPage;
         }
-        for (Long i = id, z = id + 4L; i <= z; i++) {
+        for (Long i = id, z = id + newsRange; i <= z; i++) {
             if (i > 0 && i != id && i <= numPages) {
                 nextList.add(i);
             }
@@ -64,15 +67,15 @@ public class Paginator {
         return nextList;
     }
 
-    public void setNumberSearchedNews(String searchText, String searchType) {
+    public void setNumberSearchedNews(String searchText, SearchType searchType) {
         try {
-            if (searchType.equals("searchByTitle")) {
+            if (SearchType.SEARCH_BY_TITLE.equals(searchType)) {
                 setMaxNews(newsService.getCountNewsByTitleSearch(searchText));
             }
-            if (searchType.equals("searchByAuthor")) {
+            if (SearchType.SEARCH_BY_AUTHOR.equals(searchType)) {
                 setMaxNews(newsService.getCountNewsByAuthorSearch(searchText));
             }
-            if (searchType.equals("searchByTags")) {
+            if (SearchType.SEARCH_BY_TAGS.equals(searchType)) {
                 setMaxNews(newsService.getCountNewsByTagsSearch(searchText));
             }
         } catch (SQLException e) {
@@ -80,13 +83,12 @@ public class Paginator {
         }
     }
 
-    public void configure(Long id, Long numberNewsOnPage, String searchText, String searchType) {
+    public void configure(Long id, Long numberNewsOnPage, String searchText, SearchType searchType) {
         setId(id);
         setNumberNewsOnPage(numberNewsOnPage);
         if (searchText != null) {
             setNumberSearchedNews(searchText, searchType);
-        }
-        else {
+        } else {
             try {
                 setMaxNews(newsService.getNumberNews());
             } catch (SQLException e) {

@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.vegd.controller.SearchUtils.Paginator;
 import ru.vegd.service.NewsService;
 import ru.vegd.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
 
 import static ru.vegd.controller.PathConstants.PATH_MAIN;
 
@@ -25,11 +24,9 @@ public class MainController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private Paginator paginator;
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String showNews(HttpServletRequest request, Model model, @RequestParam(value = "page", defaultValue = "1") Long id) {
+        Paginator paginator = new Paginator(newsService);
         Long numberNewsOnPage = 10L;
 
         try {

@@ -35,8 +35,7 @@ public class NewsServiceImpl implements NewsService {
                 news.getTitle() != null &&
                 news.getAuthorName() != null &&
                 news.getTitle().trim().length() >= 3 &&
-                news.getNewsText().trim().length() >= 6)
-        {
+                news.getNewsText().trim().length() >= 6) {
             Timestamp timestamp = new Timestamp(System.currentTimeMillis());
             news.setPublicDate(timestamp);
             return newsDAO.add(news);
