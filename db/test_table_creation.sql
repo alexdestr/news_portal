@@ -1,3 +1,20 @@
+CREATE ROLE testuser;
+CREATE SCHEMA IF NOT EXISTS tests;
+grant usage on schema public to postgres;
+grant create on schema public to postgres;
+revoke ALL on SCHEMA public FROM public;
+grant usage on schema tests to testuser;
+grant SELECT, INSERT, UPDATE, DELETE on ALL tables in schema tests TO testuser;
+grant SELECT, USAGE on ALL sequences in schema tests TO testuser;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT SELECT,USAGE ON SEQUENCES  TO testuser;
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres GRANT SELECT,INSERT,DELETE,UPDATE ON TABLES  TO testuser;
+
+CREATE TABLE tests.roles
+(
+    role_id INTEGER NOT NULL PRIMARY KEY,
+    role_name TEXT NOT NULL
+);
+
 CREATE TABLE tests.users
 (
     user_id BIGSERIAL NOT NULL PRIMARY KEY,
@@ -8,12 +25,6 @@ CREATE TABLE tests.users
     registration_date TIMESTAMP NOT NULL,
     role_id INTEGER NOT NULL REFERENCES tests."roles"(role_id),
     enabled BOOLEAN NOT NULL DEFAULT true
-);
-
-CREATE TABLE tests.roles
-(
-    role_id INTEGER NOT NULL PRIMARY KEY,
-    role_name TEXT NOT NULL
 );
 
 CREATE TABLE tests.news

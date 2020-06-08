@@ -1,3 +1,9 @@
+CREATE TABLE roles
+(
+    role_id INTEGER NOT NULL PRIMARY KEY,
+    role_name TEXT NOT NULL
+);
+
 CREATE TABLE users
 (
     user_id BIGSERIAL NOT NULL PRIMARY KEY,
@@ -8,12 +14,6 @@ CREATE TABLE users
     registration_date TIMESTAMP NOT NULL,
     role_id INTEGER NOT NULL REFERENCES public."roles"(role_id),
     enabled BOOLEAN NOT NULL DEFAULT true
-);
-
-CREATE TABLE roles
-(
-    role_id INTEGER NOT NULL PRIMARY KEY,
-    role_name TEXT NOT NULL
 );
 
 CREATE TABLE news
