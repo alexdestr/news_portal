@@ -9,6 +9,17 @@ VALUES (4, 'ROLE_SUPER_ADMIN');
 INSERT INTO roles (role_id, role_name)
 VALUES (0, 'ROLE_BANNED');
 
+INSERT INTO tests.roles (role_id, role_name)
+VALUES (1, 'ROLE_USER');
+INSERT INTO tests.roles (role_id, role_name)
+VALUES (2, 'ROLE_MOD');
+INSERT INTO tests.roles (role_id, role_name)
+VALUES (3, 'ROLE_ADMIN');
+INSERT INTO tests.roles (role_id, role_name)
+VALUES (4, 'ROLE_SUPER_ADMIN');
+INSERT INTO tests.roles (role_id, role_name)
+VALUES (0, 'ROLE_BANNED');
+
 
 INSERT INTO users (login, hash_password, user_name, user_last_name, registration_date, role_id)
 VALUES ('Test1', 'smthhashpass1', 'ab', 'abc', '2019-11-11 00:00:09.959', '1');
