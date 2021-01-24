@@ -80,9 +80,9 @@ public class UserDAOImplTest{
 
         Integer expectedNum = 3;
 
-        user.setLogin("AlexandrOchka1999");
+        user.setLogin("1");
         user.setFirstName("A?");
-        user.setLastName("Sasha");
+        user.setLastName("1");
         user.setHashPassword("hashPass1");
         user.setDateOfRegistration(Timestamp.valueOf("2019-05-05 16:10:56.00"));
         user.setRole(Role.ROLE_USER);
